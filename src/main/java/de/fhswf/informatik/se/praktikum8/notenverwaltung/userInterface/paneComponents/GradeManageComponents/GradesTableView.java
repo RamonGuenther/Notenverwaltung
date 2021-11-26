@@ -1,4 +1,4 @@
-package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents;
+package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
