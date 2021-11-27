@@ -4,9 +4,6 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.modullisten;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Studienrichtung;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.PflichtmodulRepostory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
@@ -18,9 +15,6 @@ import java.util.ArrayList;
  * @Version 1.0 vom 23. November 2021
  */
 public class ListeModuleStudienrichtung extends ArrayList {
-
-    @Autowired
-    private PflichtmodulRepostory repostory;
 
     private static final String STUDIENRICHTUNG = Studienrichtung.class.getSimpleName();
 
@@ -35,8 +29,8 @@ public class ListeModuleStudienrichtung extends ArrayList {
 
         switch (studienrichtung){
             case KUENSTLICHE_INTELLIGENZ:
-                repostory.save(new Pflichtmodul("Datenbanken 2", 3, 3, STUDIENRICHTUNG));
-                repostory.save(new Pflichtmodul("Einführung Machine Learning", 4, 4, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Datenbanken 2", 3, 3, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Einführung Machine Learning", 4, 4, STUDIENRICHTUNG));
                 add(new Pflichtmodul("Skriptsprachen", 4, 4, STUDIENRICHTUNG));
                 add(new Pflichtmodul("Natural Language Processing", 4, 5,STUDIENRICHTUNG));
                 add(new Pflichtmodul("Deep Learning", 4, 5,STUDIENRICHTUNG));

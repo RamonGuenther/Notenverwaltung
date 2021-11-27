@@ -10,8 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class StageInitializer implements ApplicationListener<StageReadyEvent> {
 
+//    @Autowired
+//    private PflichtmodulRepostory repostory;
+
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
+//        repostory.save(new Pflichtmodul("Test",5,1,"ka"));
         Stage stage = event.getStage();
         stage.setTitle("Hello World!");
         StackPane root = new StackPane();

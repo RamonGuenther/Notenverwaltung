@@ -1,4 +1,4 @@
-package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities;
+package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;

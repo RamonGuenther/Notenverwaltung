@@ -1,11 +1,13 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities;
 
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Noten;
+
 import javax.persistence.Embedded;
 import javax.persistence.Id;
 
 
 @javax.persistence.Entity
-public class Pflichtmodul implements Entity<String> {
+public class Pflichtmodul{
     @Id
     private String modulname;
 
@@ -30,14 +32,15 @@ public class Pflichtmodul implements Entity<String> {
         bestanden = false;
     }
 
-    @Override
+    public Pflichtmodul() {
+
+    }
+
+
     public String getId() {
         return modulname;
     }
 
-    public Pflichtmodul() {
-
-    }
 
     public String getModulname() {
         return modulname;
@@ -46,7 +49,6 @@ public class Pflichtmodul implements Entity<String> {
     public int getCreditpoints() {
         return creditpoints;
     }
-
 
     public int getSemester() {
         return semester;
