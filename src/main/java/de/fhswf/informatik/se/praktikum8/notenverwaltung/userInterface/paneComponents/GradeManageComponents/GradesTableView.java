@@ -2,10 +2,19 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComp
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Die Klasse GradesTableView erzeugt die Tabelle mit den Modulen
+ * des Studenten.
+ *
+ * @author Ivonne Kneißig
+ * @version 1.0 vom 25. November 2021
+ */
 public class GradesTableView extends TableView<String> {
 
+    /**
+     * Im Konstruktor von GradesTableView wird die Tabelle initialisiert.
+     */
     public GradesTableView(){
         TableColumn<String, String> columnModule = new TableColumn<>("Modul");
 
@@ -20,5 +29,4 @@ public class GradesTableView extends TableView<String> {
         getColumns().addAll(columnModule, columnModuleType, columnGrade, columnCreditpoints, columnSemester);
 
     }
-
 }

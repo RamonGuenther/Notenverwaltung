@@ -16,10 +16,6 @@ import javafx.scene.layout.BorderPane;
 
 public class GradeManagementBorderPane extends BorderPane {
 
-    private GradeManagementMenuBar menuBar;
-    private GradeManagementButtonBox buttonBox;
-    private GradeManagementSplitPane gradesTable;
-
     /**
      * Der Konstruktor von GradeManagementBorderPane setzt Elemente
      * für die Modulübersicht des Studenten zusammen.
@@ -33,13 +29,13 @@ public class GradeManagementBorderPane extends BorderPane {
      */
     public GradeManagementBorderPane(StageInitializer initializer){
 
-        this.menuBar = new GradeManagementMenuBar(initializer);
+        GradeManagementMenuBar menuBar = new GradeManagementMenuBar(initializer);
         setTop(menuBar);
 
-        this.gradesTable = new GradeManagementSplitPane();
+        GradeManagementSplitPane gradesTable = new GradeManagementSplitPane();
         setCenter(gradesTable);
 
-        this.buttonBox = new GradeManagementButtonBox(gradesTable);
+        GradeManagementButtonBox buttonBox = new GradeManagementButtonBox(gradesTable);
         setBottom(buttonBox);
     }
 }

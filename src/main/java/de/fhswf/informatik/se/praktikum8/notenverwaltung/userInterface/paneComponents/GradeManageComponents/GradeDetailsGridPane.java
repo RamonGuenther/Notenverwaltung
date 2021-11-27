@@ -1,5 +1,6 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents;
 
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.ComboBoxGrade;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,7 +16,7 @@ import javafx.scene.text.Font;
  * eines Moduls in der Modulübersicht des Studenten.
  *
  * @author Ivonne Kneißig
- * @version 1.1 vom 26. November 2021
+ * @version 1.2 vom 27. November 2021
  */
 public class GradeDetailsGridPane extends GridPane {
 
@@ -25,9 +26,9 @@ public class GradeDetailsGridPane extends GridPane {
     private TextField moduleValue;
     private TextField moduleTypeValue;
     private TextField semesterValue;
-    private TextField gradeOneValue;
-    private TextField gradeTwoValue;
-    private TextField gradeThreeValue;
+    private ComboBoxGrade gradeOneValue;
+    private ComboBoxGrade gradeTwoValue;
+    private ComboBoxGrade gradeThreeValue;
 
     private Button save;
     private Button cancel;
@@ -42,45 +43,62 @@ public class GradeDetailsGridPane extends GridPane {
         details.setStyle("-fx-font-weight: bold");
 
         Label module = new Label("Modul:");
+        module.setFont(new Font(16));
         Label moduleType = new Label("Modulart:");
+        moduleType.setFont(new Font(16));
         Label semester = new Label("Semester:");
+        semester.setFont(new Font(16));
         Label gradeOne = new Label("Note 1. Versuch:");
+        gradeOne.setFont(new Font(16));
         Label gradeTwo = new Label("Note 2. Versuch:");
+        gradeTwo.setFont(new Font(16));
         Label gradeThree = new Label("Note 3. Versuch:");
+        gradeThree.setFont(new Font(16));
 
-        this.grade = new Label("Endnote:");
-        grade.setFont(new Font(14));
+        grade = new Label("Endnote:");
+        grade.setFont(new Font(16));
         grade.setStyle("-fx-font-weight: bold");
-        this.creditpoints = new Label("Creditpoints:");
-        creditpoints.setFont(new Font(14));
+        creditpoints = new Label("Creditpoints:");
+        creditpoints.setFont(new Font(16));
         creditpoints.setStyle("-fx-font-weight: bold");
 
-        this.moduleValue = new TextField();
+        moduleValue = new TextField();
         moduleValue.setText("Hier Value anzeigen lassen");
         moduleValue.setDisable(true);
-        this.moduleTypeValue = new TextField();
+        moduleValue.setMinWidth(250);
+
+        moduleTypeValue = new TextField();
         moduleTypeValue.setDisable(true);
-        this.semesterValue = new TextField();
+        moduleValue.setMinWidth(250);
+
+        semesterValue = new TextField();
         semesterValue.setDisable(true);
-        this.gradeOneValue = new TextField();
+        semesterValue.setMinWidth(250);
+
+        gradeOneValue = new ComboBoxGrade();
         gradeOneValue.setDisable(true);
-        this.gradeTwoValue = new TextField();
+        gradeOneValue.setMinWidth(250);
+
+        gradeTwoValue = new ComboBoxGrade();
         gradeTwoValue.setDisable(true);
-        this.gradeThreeValue = new TextField();
+        gradeTwoValue.setMinWidth(250);
+
+        gradeThreeValue = new ComboBoxGrade();
         gradeThreeValue.setDisable(true);
+        gradeThreeValue.setMinWidth(250);
 
         HBox moduleResultBox = new HBox();
         moduleResultBox.getChildren().addAll(grade, creditpoints);
-        moduleResultBox.setMargin(grade, new Insets(0, 0, 0, -107));
-        moduleResultBox.setMargin(creditpoints, new Insets(0, 0, 0, 30));
+        HBox.setMargin(grade, new Insets(20, 0, 0, -126));
+        HBox.setMargin(creditpoints, new Insets(20, 0, 0, 80));
 
-        this.save = new Button("Speichern");
+        save = new Button("Speichern");
         save.setMinWidth(100);
         save.setDisable(true);
         save.setVisible(false);
         save.setOnAction(new UpdateGradeDetailsEventHandler());
 
-        this.cancel = new Button("Abbrechen");
+        cancel = new Button("Abbrechen");
         cancel.setMinWidth(100);
         cancel.setDisable(true);
         cancel.setVisible(false);
@@ -88,8 +106,8 @@ public class GradeDetailsGridPane extends GridPane {
 
         HBox moduleUpdateDetailsBox = new HBox();
         moduleUpdateDetailsBox.getChildren().addAll(save, cancel);
-        moduleUpdateDetailsBox.setMargin(save, new Insets(0, 0, 0, -50));
-        moduleUpdateDetailsBox.setMargin(cancel, new Insets(0, 0, 0, 40));
+        HBox.setMargin(save, new Insets(0, 0, 0, -50));
+        HBox.setMargin(cancel, new Insets(0, 0, 0, 40));
 
         // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
         addRow(0, details);
@@ -153,27 +171,27 @@ public class GradeDetailsGridPane extends GridPane {
         this.semesterValue = semesterValue;
     }
 
-    public TextField getGradeOneValue() {
+    public ComboBoxGrade getGradeOneValue() {
         return gradeOneValue;
     }
 
-    public void setGradeOneValue(TextField gradeOneValue) {
+    public void setGradeOneValue(ComboBoxGrade gradeOneValue) {
         this.gradeOneValue = gradeOneValue;
     }
 
-    public TextField getGradeTwoValue() {
+    public ComboBoxGrade getGradeTwoValue() {
         return gradeTwoValue;
     }
 
-    public void setGradeTwoValue(TextField gradeTwoValue) {
+    public void setGradeTwoValue(ComboBoxGrade gradeTwoValue) {
         this.gradeTwoValue = gradeTwoValue;
     }
 
-    public TextField getGradeThreeValue() {
+    public ComboBoxGrade getGradeThreeValue() {
         return gradeThreeValue;
     }
 
-    public void setGradeThreeValue(TextField gradeThreeValue) {
+    public void setGradeThreeValue(ComboBoxGrade gradeThreeValue) {
         this.gradeThreeValue = gradeThreeValue;
     }
 

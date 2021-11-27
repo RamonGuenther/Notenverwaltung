@@ -10,9 +10,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 /**
- * Die Klasse StageInitializer initialisiert die Stage für die Notenverwaltungs-
- * Applikation und implementiert die Möglichkeit zwischen verschiedenen Scenes
- * zu wechseln.
+ * Die Klasse StageInitializer initialisiert die Stage für die Notenverwaltungs-Applikation
+ * und implementiert die Möglichkeit zwischen verschiedenen Scenes zu wechseln.
  *
  * @author Ramon Günther & Ivonne Kneißig
  * @version 2.0 vom 26. November 2021
@@ -31,15 +30,15 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
      *
      * @param event     Stage der Applikation
      */
-
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
         stage = event.getStage();
         stage.setTitle("Notenverwaltung Informatik B.sc.");
         root = new GradeManagementBorderPane(this);
-        scene = new Scene(root, 800, 600);
+        scene = new Scene(root, 900, 600);
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
         //stage.setMaximized(true);
     }
 
@@ -50,7 +49,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
      */
     public void switchToGradeManagement() {
         root = new GradeManagementBorderPane(this);
-        scene = new Scene(root, 800, 600);
+        scene = new Scene(root, 900, 600);
         stage.setScene(scene);
         stage.show();
     }
@@ -62,7 +61,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
      */
     public void switchToDegreeAndKolloquium(){
         root = new BachelorThesisAndKolloquiumBorderPane(this);
-        scene = new Scene(root, 800, 600);
+        scene = new Scene(root, 900, 600);
         stage.setScene(scene);
         stage.show();
     }

@@ -2,6 +2,7 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.panes;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.StageInitializer;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.menuBar.GradeManagementMenuBar;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.BachelorThesisAndKolloquiumComponents.BachelorThesisAndKolloquiumGridPane;
 import javafx.scene.layout.BorderPane;
 
 /**
@@ -14,8 +15,6 @@ import javafx.scene.layout.BorderPane;
  */
 public class BachelorThesisAndKolloquiumBorderPane extends BorderPane {
 
-    private GradeManagementMenuBar menuBar;
-
     /**
      * Der Konstruktor von BachelorThesisAndKolloquiumBorderPane setzt
      * die Elemente der Ansicht zusammen.
@@ -27,7 +26,10 @@ public class BachelorThesisAndKolloquiumBorderPane extends BorderPane {
      *                          die Scenes wechseln zu können.
      */
     public BachelorThesisAndKolloquiumBorderPane(StageInitializer initializer){
-        menuBar = new GradeManagementMenuBar(initializer);
+        GradeManagementMenuBar menuBar = new GradeManagementMenuBar(initializer);
         setTop(menuBar);
+
+        BachelorThesisAndKolloquiumGridPane bachelorThesisAndKolloquiumDetails = new BachelorThesisAndKolloquiumGridPane();
+        setCenter(bachelorThesisAndKolloquiumDetails);
     }
 }
