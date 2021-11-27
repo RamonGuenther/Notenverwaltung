@@ -11,12 +11,12 @@ public class Pflichtmodul{
     @Id
     private String modulname;
 
-    private int creditpoints;
+    private Integer creditpoints;
 
     @Embedded
     private Noten note;
 
-    private int semester;
+    private Integer semester;
     private boolean bestanden;
     private String modulart;
 
@@ -29,11 +29,12 @@ public class Pflichtmodul{
         this.creditpoints = creditpoints;
         this.semester = semester;
         this.modulart = modulart;
-        bestanden = false;
+        note = new Noten();
+        bestanden = false; //=????
     }
 
     public Pflichtmodul() {
-
+        note = new Noten();
     }
 
 

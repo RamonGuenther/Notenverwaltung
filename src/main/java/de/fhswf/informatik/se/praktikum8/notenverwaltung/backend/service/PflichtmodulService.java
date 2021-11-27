@@ -28,6 +28,12 @@ public class PflichtmodulService {
         return repository.findAllByModulart(s);
     }
 
+    public void setNote(String modulname, double note){
+        Pflichtmodul pflichtmodul = repository.findByModulname(modulname);
+        pflichtmodul.getNote().setNote1(note);
+        repository.save(pflichtmodul);
+    }
+
 //    public List<Pflichtmodul> findByNote(double note){
 //        return repository.findAllByNoteLessThanEqual(note);
 //    }

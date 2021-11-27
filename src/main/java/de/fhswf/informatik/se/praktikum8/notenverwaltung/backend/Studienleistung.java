@@ -81,6 +81,10 @@ public class Studienleistung {
         return pflichtmodule;
     }
 
+    public void updateNote(String modulname, double note){
+        service.setNote(modulname, note);
+    }
+
 //    public List<Pflichtmodul> test(double note){
 //        return service.findByNote(note);
 //    }

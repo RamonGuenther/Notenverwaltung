@@ -22,23 +22,36 @@ public class ListePflichtmodule extends ArrayList {
      * den allgemeinen Pflichtmodulen.
      */
     public ListePflichtmodule(){
-        add(new Pflichtmodul("Basistechniken", 5, 1, PFLICHTMODUL));
+        //Abschluss: bachelor = 12 , Kolloquium 3 =15
+        //Wahlpflichtmodul da = 12
+
+        //27
+        add(new Pflichtmodul("Basistechniken", 3, 1, PFLICHTMODUL));
         add(new Pflichtmodul("Grundlagen der Informatik 1", 5, 1, PFLICHTMODUL));
-        add(new Pflichtmodul("Mathematik für Informatiker 1", 5, 1, PFLICHTMODUL));
-        add(new Pflichtmodul("Programmierung mit C++ 1", 5, 1, PFLICHTMODUL));
+        add(new Pflichtmodul("Mathematik für Informatiker 1", 7, 1, PFLICHTMODUL));
+        add(new Pflichtmodul("Programmierung mit C++ 1", 7, 1, PFLICHTMODUL));
         add(new Pflichtmodul("Rechnerarchitektur", 5, 1, PFLICHTMODUL));
-        add(new Pflichtmodul("Vertiefung Basistechniken", 5, 2, PFLICHTMODUL));
-        add(new Pflichtmodul("Grundlagen der Infomatik 2", 5, 2, PFLICHTMODUL));
-        add(new Pflichtmodul("Mathematik für Informatiker 2", 5, 2, PFLICHTMODUL));
-        add(new Pflichtmodul("Programmierung mit C++ 2", 5, 2, PFLICHTMODUL));
-        add(new Pflichtmodul("Datenbanken 1", 5, 2, PFLICHTMODUL));
-        add(new Pflichtmodul("Betriebssysteme 1", 5, 2, PFLICHTMODUL));
+
+        //35
+        add(new Pflichtmodul("Vertiefung Basistechniken", 4, 2, PFLICHTMODUL));
+        add(new Pflichtmodul("Grundlagen der Informatik 2", 5, 2, PFLICHTMODUL));
+        add(new Pflichtmodul("Mathematik für Informatiker 2", 7, 2, PFLICHTMODUL));
+        add(new Pflichtmodul("Programmierung mit C++ 2", 7, 2, PFLICHTMODUL));
+        add(new Pflichtmodul("Datenbanken 1", 6, 2, PFLICHTMODUL));
+        add(new Pflichtmodul("Betriebssysteme 1", 6, 2, PFLICHTMODUL));
+
+        //16
         add(new Pflichtmodul("Grundlagen der Informatik 3", 5, 3, PFLICHTMODUL));
-        add(new Pflichtmodul("Java Programmierung 1", 5, 3, PFLICHTMODUL));
+        add(new Pflichtmodul("Java Programmierung 1", 6, 3, PFLICHTMODUL));
         add(new Pflichtmodul("Rechnernetze", 5, 3, PFLICHTMODUL));
-        add(new Pflichtmodul("Internettechnologien", 5, 4, PFLICHTMODUL));
-        add(new Pflichtmodul("IT-Projektmanagement", 5, 4, PFLICHTMODUL));
-        add(new Pflichtmodul("Software Engineering", 5, 5, PFLICHTMODUL));
-        add(new Pflichtmodul("Projektarbeit", 5, 6, PFLICHTMODUL));
+
+        //12
+        add(new Pflichtmodul("Internettechnologien", 6, 4, PFLICHTMODUL));
+        add(new Pflichtmodul("IT-Projektmanagement", 6, 4, PFLICHTMODUL));
+
+        //15
+        add(new Pflichtmodul("Software Engineering", 6, 5, PFLICHTMODUL));
+
+        add(new Pflichtmodul("Projektarbeit", 9, 6, PFLICHTMODUL));
     }
 }

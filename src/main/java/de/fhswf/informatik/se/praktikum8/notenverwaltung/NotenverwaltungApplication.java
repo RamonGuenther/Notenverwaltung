@@ -12,9 +12,12 @@ import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
- * TODO: - WAHLFÄCHER ENUMS , CREDITPOINTS ANPASSEN NACH MODULHANDBUCH!!!!!!!!!!
+ * TODO: - WAHLFÄCHER ENUMS
+ *          - Wahlfplichtmodul/Wahlmodul werden per Methode angelegt und nicht als Liste mit nem Case
  *          - update note mit bedinung wegen nur 3 Noten und darf nur gehen wenn man durchgefallen ist sonst natülich nicht
+ *          - if note < 4 bestanden = true und crdditpoints werden mit beachtet bei summe sowie durchschnitt auch also abhängig von bestanden
  *         - Alle repositories in einer Service Klasse oder mehrere Service Klassen in Studienleistung
+ *         - Kommentare machen
  *
  * Folgende Randbedingungen müssen erfüllt sein:
  *
@@ -58,6 +61,8 @@ public class NotenverwaltungApplication {
         for(Pflichtmodul pflichtmodul : list){
             System.out.println(pflichtmodul.getModulname());
         }
+
+        studienleistung.updateNote("Grundlagen der Informatik 1", 4);
 
 //        List<Pflichtmodul> list1 = studienleistung.test(4);
 //

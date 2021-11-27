@@ -22,16 +22,16 @@ public class Wahlpflichtmodul {
 	private int semester;
 	private boolean bestanden;
 
-	public Wahlpflichtmodul(Wahlpflichtfach wahlpflichtfach, int creditpoints, int semester) {
+	public Wahlpflichtmodul(Wahlpflichtfach wahlpflichtfach, int semester) {
 		this.wahlpflichtfach = wahlpflichtfach;
-		this.creditpoints = creditpoints;
+		this.creditpoints = 6; //jedes gibt 6 Punkte
 		this.noten = new ArrayList<>();
 		this.semester = semester;
 	}
 
 	public String getWahlpflichtfach() {
 		return wahlpflichtfach.label;
-	} //Hier hab ich label hinzugefügt damit wir das nicht immer benutzen müssen sowie in Pflichtmodul
+	}
 
 	public void setWahlpflichtfach(Wahlpflichtfach wahlpflichtfach) {
 		this.wahlpflichtfach = wahlpflichtfach;

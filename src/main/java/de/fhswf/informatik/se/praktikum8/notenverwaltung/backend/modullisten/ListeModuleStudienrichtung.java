@@ -26,36 +26,36 @@ public class ListeModuleStudienrichtung extends ArrayList {
      */
 
     public ListeModuleStudienrichtung(Studienrichtung studienrichtung) {
-
-        switch (studienrichtung){
-            case KUENSTLICHE_INTELLIGENZ:
-                add(new Pflichtmodul("Datenbanken 2", 3, 3, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Einführung Machine Learning", 4, 4, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Skriptsprachen", 4, 4, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Natural Language Processing", 4, 5,STUDIENRICHTUNG));
-                add(new Pflichtmodul("Deep Learning", 4, 5,STUDIENRICHTUNG));
-                break;
-            case UMWELTINFORMATIK:
-                add(new Pflichtmodul("Allgemeine Chemie", 3, 3,STUDIENRICHTUNG));
-                add(new Pflichtmodul("Mensch und Umwelt", 4, 3,  STUDIENRICHTUNG));
-                add(new Pflichtmodul("Ökosysteme", 4, 4, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Umweltinformationssysteme", 4, 4, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Systembiologie", 4, 5, STUDIENRICHTUNG));
-                break;
-            case SYSTEMINTEGRATION:
-                add(new Pflichtmodul("Betriebssysteme 2", 3, 3, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Betriebssysteme 3", 4, 4, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Rechnernetze 2", 4, 4, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Skriptsprachen", 4, 5, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Virtualisierung", 4, 5, STUDIENRICHTUNG));
-                break;
-            case ANWENDUNGSENTWICKLUNG:
-                add(new Pflichtmodul("Datenbanken 2", 3, 3, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Effiziente Algorithmen", 4, 4, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Java Programmierung 2", 4, 4, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Mobile Applikationen", 4, 5, STUDIENRICHTUNG));
-                add(new Pflichtmodul("Fortgeschrittene Internettechnologien", 4, 5, STUDIENRICHTUNG));
-                break;
+//30
+        switch (studienrichtung) {
+            case ANWENDUNGSENTWICKLUNG -> {
+                add(new Pflichtmodul("Datenbanken 2", 6, 3, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Effiziente Algorithmen", 6, 4, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Java Programmierung 2", 6, 4, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Mobile Applikationen", 6, 5, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Fortgeschrittene Internettechnologien", 6, 5, STUDIENRICHTUNG));
+            }
+            case KUENSTLICHE_INTELLIGENZ -> {
+                add(new Pflichtmodul("Datenbanken 2", 6, 3, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Einführung Machine Learning", 6, 4, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Skriptsprachen", 6, 4, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Natural Language Processing", 6, 5, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Deep Learning", 6, 5, STUDIENRICHTUNG));
+            }
+            case UMWELTINFORMATIK -> {
+                add(new Pflichtmodul("Allgemeine Chemie", 6, 3, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Mensch und Umwelt", 6, 3, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Ökosysteme", 6,4, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Umweltinformationssysteme", 6, 4, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Systembiologie", 6, 5, STUDIENRICHTUNG));
+            }
+            case SYSTEMINTEGRATION -> {
+                add(new Pflichtmodul("Betriebssysteme 2", 6, 3, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Betriebssysteme 3", 6, 4, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Rechnernetze 2", 6, 4, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Skriptsprachen", 6, 5, STUDIENRICHTUNG));
+                add(new Pflichtmodul("Virtualisierung", 6, 5, STUDIENRICHTUNG));
+            }
         }
     }
 }
