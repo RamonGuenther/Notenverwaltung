@@ -21,7 +21,7 @@ public class ListePflichtmodule extends ArrayList {
      * Der Konstruktor ListeModuleStudienrichtung füllt die Liste mit
      * den allgemeinen Pflichtmodulen.
      */
-    public ListePflichtmodule(){
+    public ListePflichtmodule() {
         //Abschluss: bachelor = 12 , Kolloquium 3 =15
         //Wahlpflichtmodul da = 12
 

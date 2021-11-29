@@ -7,7 +7,7 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums;
  * @author Ramon Günther & Ivonne Kneißig
  * @version 1.1 vom 22. November 2021
  */
-public enum Wahlmodul {
+public enum WahlmodulEnum {
 
     BIONIK("Bionik"),
     ENGLISH1("English 1"),
@@ -17,7 +17,7 @@ public enum Wahlmodul {
 
     public final String label;
 
-    Wahlmodul(String label) {
+    WahlmodulEnum(String label) {
         this.label = label;
     }
 }

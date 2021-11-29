@@ -3,10 +3,11 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Noten;
 
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.Id;
 
 
-@javax.persistence.Entity
+@Entity
 public class Pflichtmodul{
     @Id
     private String modulname;
@@ -14,27 +15,26 @@ public class Pflichtmodul{
     private Integer creditpoints;
 
     @Embedded
-    private Noten note;
+    Noten note;
 
     private Integer semester;
-    private boolean bestanden;
+
     private String modulart;
 
-    public Noten getNote() {
-        return note;
-    }
+    private boolean bestanden;
+
 
     public Pflichtmodul(String modulname, int creditpoints, int semester, String modulart) {
         this.modulname = modulname;
         this.creditpoints = creditpoints;
         this.semester = semester;
         this.modulart = modulart;
+        bestanden = false;
         note = new Noten();
-        bestanden = false; //=????
     }
 
     public Pflichtmodul() {
-        note = new Noten();
+
     }
 
 
@@ -55,11 +55,19 @@ public class Pflichtmodul{
         return semester;
     }
 
+    public String getModulart() {
+        return modulart;
+    }
+
     public boolean isBestanden() {
         return bestanden;
     }
 
-    public String getModulart() {
-        return modulart;
+    public void setBestanden(){
+        bestanden = true;
+    }
+
+    public Noten getNote() {
+        return note;
     }
 }

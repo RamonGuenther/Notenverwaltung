@@ -1,16 +1,20 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.service;
 
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Notendurchschnitt;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.PflichtmodulRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PflichtmodulService {
 
-    private PflichtmodulRepository repository;
+
+    private static final List<Double> NOTENINTERVALL = List.of(1.0, 1.3, 1.7, 2.0, 2.3,2.7,3.0,3.3,3.7,4.0,5.0);
+
+    private final PflichtmodulRepository repository;
 
     public PflichtmodulService(PflichtmodulRepository repository) {
         this.repository = repository;
@@ -24,18 +28,41 @@ public class PflichtmodulService {
        return repository.findByModulname(modulname);
     }
 
-    public List<Pflichtmodul> findAllPflichtModule(String s){
-        return repository.findAllByModulart(s);
+    public List<Pflichtmodul> findAllPflichtModule(){
+        return repository.findAll();
     }
 
-    public void setNote(String modulname, double note){
+    public void setNote(String modulname, Double note){
+        if(!NOTENINTERVALL.contains(note)) {
+            throw new IllegalArgumentException("Fehler in " + this.getClass().getSimpleName() +
+                    ": Die Note ist nicht im Intervall.");
+        }
+
         Pflichtmodul pflichtmodul = repository.findByModulname(modulname);
-        pflichtmodul.getNote().setNote1(note);
+
+        if(pflichtmodul == null){
+            throw new IllegalArgumentException("Fehler in " + this.getClass().getSimpleName() +
+                    ": Das gesuchte Modul wurde nicht gefunden.");
+        }
+        if(note <= 4){
+            pflichtmodul.setBestanden();
+        }
+        pflichtmodul.getNote().setNote(note);
+        pflichtmodul.getNote().checkEndnote();
         repository.save(pflichtmodul);
     }
 
-//    public List<Pflichtmodul> findByNote(double note){
-//        return repository.findAllByNoteLessThanEqual(note);
-//    }
-
+    public List<Notendurchschnitt> getNotenliste(){
+        List<Pflichtmodul> test = repository.findAll();
+        List<Notendurchschnitt> notenListe = new ArrayList<>();
+        for(Pflichtmodul pflichtmodul : test){
+            if(pflichtmodul.getNote().getEndNote() != 0.0) {
+                notenListe.add(new Notendurchschnitt(
+                        pflichtmodul.getNote().getEndNote(),
+                        pflichtmodul.getCreditpoints()
+                ));
+            }
+        }
+        return notenListe;
+    }
 }

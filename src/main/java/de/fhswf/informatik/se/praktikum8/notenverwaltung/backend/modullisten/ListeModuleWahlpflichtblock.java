@@ -26,7 +26,7 @@ public class ListeModuleWahlpflichtblock extends ArrayList {
      * @param wahlpflichtblock  Der vom Studenten gewählte Wahlpflichtblock
      */
 
-    public ListeModuleWahlpflichtblock (Wahlpflichtblock wahlpflichtblock){
+    public ListeModuleWahlpflichtblock (Wahlpflichtblock wahlpflichtblock) {
 //18
         switch (wahlpflichtblock){
             case KUENSTLICHE_INTELLIGENZ:

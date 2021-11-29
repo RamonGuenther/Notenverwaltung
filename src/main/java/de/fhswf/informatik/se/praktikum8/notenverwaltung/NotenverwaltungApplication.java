@@ -1,76 +1,106 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung;
 
-
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Studienrichtung;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.AbschlussRepository;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.PflichtmodulRepository;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.WahlmodulRepository;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.WahlpflichtmodulRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.annotation.PostConstruct;
-import java.util.List;
-
 /**
- * TODO: - WAHLFÄCHER ENUMS
- *          - Wahlfplichtmodul/Wahlmodul werden per Methode angelegt und nicht als Liste mit nem Case
- *          - update note mit bedinung wegen nur 3 Noten und darf nur gehen wenn man durchgefallen ist sonst natülich nicht
- *          - if note < 4 bestanden = true und crdditpoints werden mit beachtet bei summe sowie durchschnitt auch also abhängig von bestanden
- *         - Alle repositories in einer Service Klasse oder mehrere Service Klassen in Studienleistung
+ * TODO:
+ *         - Testfall summeCreditpointsNotendurchschnittTests -> NotendurchschnittTests funktionieren nicht nochmal in Ruhe schauen
  *         - Kommentare machen
  *
- * Folgende Randbedingungen müssen erfüllt sein:
- *
- * o Korrekte Noteneingabe im zulässigen Wertebereich
- * o Verwendung der Creditpoints als Gewichtungsfaktors
- * o Hinterlegung geeigneter Wahlpflichtfächer
- * o Erreichen von 180 CP bei erfolgreichem Abschluss
- *
- *
- *
- * - Noten müssen im Bereich 1.0 - 5.0 sein. Notenschritte sind zu beachten.
- * - Noten können nur eingetragen werden, wenn entweder keine Note vorhanden oder die letzte
- *   Note eine 5.0 war.
- * - Es dürfen keine Fächer doppelt auftreten (Case Sensitivität).
- * - Creditpoints liegen zwischen 0-30.
- * - Die Durchschnittsnote wird ohne Wahlfächer und ohne nicht bestandene Leistungen
- *   berechnet.
- * - Abschlussarbeit und Kolloquium haben nur zwei Versuche.
- * - Es sind Wahl- und Pflichtfächer beim Anlegen von Fächern zu unterscheiden.
- *
- *
- */
+ *         Hinweise:
+ *         - Abschluss wird mit erstellt wenn Pflichtmodule erstellt werden?
+ *         - Auf oberflöche:
+ *              - Man kann nur alle Noten auf einmal löschen und muss sie dann wieder einzeln eintragen sonst kann man meine Ifs umgehen
+ *              - Man kann Pflichtmodule neu anlegen nur und nicht einzelne löschen oder bearbeiten bis auf die Noten
+ **/
 @SpringBootApplication
 public class NotenverwaltungApplication {
 
     @Autowired
-    private PflichtmodulRepository repository;
+    private PflichtmodulRepository pflichtmodulRepository;
+
+    @Autowired
+    private WahlpflichtmodulRepository wahlpflichtmodulRepository;
+
+    @Autowired
+    private WahlmodulRepository wahlmodulRepository;
+
+    @Autowired
+    private AbschlussRepository abschlussRepository;
 
 
     public static void main(String[] args) {
         javafx.application.Application.launch(ChartApplication.class, args);
     }
 
-    @PostConstruct
-    public void testDB() {
-        Studienleistung studienleistung = new Studienleistung(repository);
-        studienleistung.pflichtmoduleAnlegen();
-        studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
-        studienleistung.setPflichtmodule();
-        List<Pflichtmodul> list = studienleistung.getPflichtmodule();
-        for(Pflichtmodul pflichtmodul : list){
-            System.out.println(pflichtmodul.getModulname());
-        }
-
-        studienleistung.updateNote("Grundlagen der Informatik 1", 4);
-
-//        List<Pflichtmodul> list1 = studienleistung.test(4);
+//    @PostConstruct
+//    public void testDB() {
+//        Studienleistung studienleistung = new Studienleistung(
+//                pflichtmodulRepository, wahlpflichtmodulRepository, wahlmodulRepository, abschlussRepository);
+//        studienleistung.pflichtmoduleAnlegen();
+//        studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
+////        studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.SYSTEMINTEGRATION);
+//        studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.WIRTSCHAFT);
+////        studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.KUENSTLICHE_INTELLIGENZ);
 //
-//        System.out.println("____________________________________________");
-//        for(Pflichtmodul pflichtmodul : list1){
-//            System.out.println(pflichtmodul.getModulname());
+//        List<Pflichtmodul> list = studienleistung.getPflichtmoduleByPflichtmodul();
+//        for(Pflichtmodul pflichtmodul : list){
+//            System.out.println(pflichtmodul.getModulart());
 //        }
-
-    }
+//
+//        studienleistung.updateNotePflichtmodul("Grundlagen der Informatik 1", 5.0);
+//        studienleistung.updateNotePflichtmodul("Grundlagen der Informatik 1", 2.0);
+////        studienleistung.updateNotePflichtmodul("Grundlagen der Informatik 1", 2.2);
+//
+//        studienleistung.updateNotePflichtmodul("Basistechniken", 1.0);
+//        studienleistung.updateNotePflichtmodul("Rechnerarchitektur", 3.0);
+//
+//        studienleistung.updateNotePflichtmodul("Mathematik für Informatiker 1", 3.7);
+//        studienleistung.updateNotePflichtmodul("Programmierung mit C++ 1", 2.3);
+//        Pflichtmodul pflichtmodul = pflichtmodulRepository.findByModulname("Grundlagen der Informatik 1");
+//        studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK,5);
+////        studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK,5);
+//        studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.BETRIEBSSYSTEME3,6);
+////        studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.PRAKTISCHE_ANWENDUNG_VON_ALGORITHMEN,6);
+//
+//
+////        studienleistung.updateNoteWahlpflichtmodul(Wahlpflichtfach.GEOINFORMATIK.label, 5.0);
+////        studienleistung.updateNoteWahlpflichtmodul(Wahlpflichtfach.GEOINFORMATIK.label, 2.4);
+//
+//        System.out.println(studienleistung.getSummeCreditpoints());
+//
+//        studienleistung.getNotendurchschnitt();
+//
+//        studienleistung.wahlmodulHinzufuegen(WahlmodulEnum.ENGLISH1, 5);
+//
+//        studienleistung.updateNoteWahlmodul(WahlmodulEnum.ENGLISH1.label, 5.0);
+//        studienleistung.updateNoteWahlmodul(WahlmodulEnum.ENGLISH1.label, 5.0);
+//        studienleistung.updateNoteWahlmodul(WahlmodulEnum.ENGLISH1.label, 5.0);
+////        studienleistung.updateNoteWahlmodul(WahlmodulEnum.ENGLISH1.label, 5.0);
+//
+////        studienleistung.updateNoteBachelor(5.0);
+//        studienleistung.updateNoteBachelor(1.0);
+//
+//        studienleistung.updateNoteKolloquium(2.0);
+//
+//        System.out.println("Notendurchscnitt Abschluss: " + studienleistung.getNotendurchschnittAbschluss());
+//
+////        System.out.println(studienleistung.getNotendurchschnittGesamt());
+////        studienleistung.wahlmodulHinzufuegen(WahlmodulEnum.ENGLISH1, 5);
+//
+//
+////        List<Pflichtmodul> list1 = studienleistung.test(4);
+////
+////        System.out.println("____________________________________________");
+////        for(Pflichtmodul pflichtmodul : list1){
+////            System.out.println(pflichtmodul.getModulname());
+////        }
+//
+//    }
 
 }
