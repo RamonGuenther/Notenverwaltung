@@ -18,8 +18,10 @@ import java.util.List;
 
 /**
  * TODO:
+ *         -  - //Löschen testen und wieder einfügen
  *         - Kommentare machen AUCH DIE TESTS
  *         - Wenn alles implementiert diese Klasse hier alles löschen bis auf die main
+ *
  *
  **/
 @SpringBootApplication

@@ -33,11 +33,18 @@ public class Wahlmodul{
     private final static String MODULART = "Wahlmodul";
 
     public Wahlmodul(String modulname, int semester) {
-        this.modulname = modulname;
-        this.semester = semester;
-        bestanden = false;
-        note = new Noten();
-        modulart = MODULART;
+        try{
+            this.semester = semester;
+            this.modulname = modulname;
+            bestanden = false;
+            note = new Noten();
+            modulart = MODULART;
+        }
+        catch(NumberFormatException e){
+            throw new IllegalArgumentException("Fehler in " + this.getClass().getSimpleName() +
+                    ": Das eingegeben Semester ist keine ganzzahlige Zahl!");
+        }
+
     }
 
     public Wahlmodul() {

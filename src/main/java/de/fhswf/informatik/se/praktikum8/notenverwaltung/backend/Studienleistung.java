@@ -88,7 +88,7 @@ public class Studienleistung {
     }
 
     /**********************************************************************************************
-     Module Hinzufügen
+                                         Module Hinzufügen
      **********************************************************************************************/
 
     /**
@@ -205,6 +205,20 @@ public class Studienleistung {
         wahlmodulService.saveWahlmodul(wahlmodul);
         System.out.println("Das Wahlmodul " + wahlmodul.getModulname() + " wurde erstellt.");
     }
+
+    /**********************************************************************************************
+                                         Module löschen
+     **********************************************************************************************/
+
+    public void deleteWahlpflichtmodul(String modulname){
+        wahlmodulService.deleteWahlmodul(modulname);
+    }
+
+    public void deleteWahlmodul(String modulname){
+        wahlmodulService.deleteWahlmodul(modulname);
+    }
+
+
 
 
     /**********************************************************************************************

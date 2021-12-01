@@ -36,7 +36,16 @@ public class WahlpflichtmodulService {
 
     public List<Wahlpflichtmodul> findAllOffeneWahlpflichtmodule(){return repository.findAllByBestandenIsFalse();}
 
+    public void deleteWahlpflichtmodul(String modulname){
+        Wahlpflichtmodul wahlpflichtmodul = repository.findByModulname(modulname);
+        repository.delete(wahlpflichtmodul);
+    }
+
     public void setNote(String modulname, Double note){
+
+        if(note == null){
+            return;
+        }
         if(!NOTENINTERVALL.contains(note)) {
             throw new IllegalArgumentException("Fehler in " + this.getClass().getSimpleName() +
                     ": Die Note ist nicht im Intervall.");

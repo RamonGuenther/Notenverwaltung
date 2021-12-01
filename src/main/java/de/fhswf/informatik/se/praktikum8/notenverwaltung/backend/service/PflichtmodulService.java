@@ -11,8 +11,11 @@ import java.util.List;
 @Service
 public class PflichtmodulService {
 
-
     private static final List<Double> NOTENINTERVALL = List.of(1.0, 1.3, 1.7, 2.0, 2.3,2.7,3.0,3.3,3.7,4.0,5.0);
+
+    public static final String WAHLPFLICHTBLOCK = "Wahlpflichtblock";
+
+    public static final String STUDIENRICHTUNG = "Studienrichtung";
 
     private final PflichtmodulRepository repository;
 
@@ -36,8 +39,20 @@ public class PflichtmodulService {
 
     public List<Pflichtmodul> findAllOffenePflichtmodule(){return repository.findAllByBestandenIsFalse();}
 
+    public void deleteAllByWahlpflichtblock(){
+        repository.deleteAllByModulart(WAHLPFLICHTBLOCK);
+    }
+
+    public void deleteAllByStudienrichtung(){
+        repository.deleteAllByModulart(STUDIENRICHTUNG);
+    }
+
 
     public void setNote(String modulname, Double note){
+        if(note == null){
+            return;
+        }
+
         if(!NOTENINTERVALL.contains(note)) {
             throw new IllegalArgumentException("Fehler in " + this.getClass().getSimpleName() +
                     ": Die Note ist nicht im Intervall.");

@@ -29,7 +29,16 @@ public class WahlmodulService {
         return repository.findAll();
     }
 
+    public void deleteWahlmodul(String modulname){
+        Wahlmodul wahlmodul = repository.findByModulname(modulname);
+        repository.delete(wahlmodul);
+    }
+
     public void setNote(String modulname, Double note) {
+        if(note == null){
+            return;
+        }
+
         if (!NOTENINTERVALL.contains(note)) {
             throw new IllegalArgumentException("Fehler in " + this.getClass().getSimpleName() +
                     ": Die Note ist nicht im Intervall.");

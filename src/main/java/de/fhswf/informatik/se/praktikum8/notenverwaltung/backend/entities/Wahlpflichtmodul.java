@@ -37,12 +37,18 @@ public class Wahlpflichtmodul {
 
 
     public Wahlpflichtmodul(String modulname, int semester) {
-        this.modulname = modulname;
-        this.creditpoints = 6;
-        this.semester = semester;
-        bestanden = false;
-        modulart = MODULART;
-        note = new Noten();
+        try{
+            this.semester = semester;
+            this.modulname = modulname;
+            this.creditpoints = 6;
+            bestanden = false;
+            modulart = MODULART;
+            note = new Noten();
+        }
+        catch(NumberFormatException e){
+            throw new IllegalArgumentException("Fehler in " + this.getClass().getSimpleName() +
+                    ": Das eingegeben Semester ist keine ganzzahlige Zahl!");
+        }
     }
 
     public Wahlpflichtmodul() {
