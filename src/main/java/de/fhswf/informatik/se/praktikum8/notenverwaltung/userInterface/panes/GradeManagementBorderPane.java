@@ -36,7 +36,7 @@ public class GradeManagementBorderPane extends BorderPane {
         GradeManagementSplitPane gradesTable = new GradeManagementSplitPane(studienleistung);
         setCenter(gradesTable);
 
-        GradeManagementButtonBox buttonBox = new GradeManagementButtonBox(gradesTable);
+        GradeManagementButtonBox buttonBox = new GradeManagementButtonBox(gradesTable, studienleistung);
         setBottom(buttonBox);
     }
 }

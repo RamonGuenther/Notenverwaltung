@@ -74,7 +74,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
         stage = event.getStage();
         stage.setTitle("Notenverwaltung Informatik B.sc.");
         root = new GradeManagementBorderPane(this, studienleistung);
-        scene = new Scene(root, 900, 600);
+        scene = new Scene(root, 950, 600);
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
@@ -159,7 +159,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
      */
     public void switchToGradeManagement() {
         root = new GradeManagementBorderPane(this, studienleistung);
-        scene = new Scene(root, 900, 600);
+        scene = new Scene(root, 950, 600);
         stage.setScene(scene);
         stage.show();
     }
@@ -171,12 +171,9 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
      */
     public void switchToDegreeAndKolloquium(){
         root = new BachelorThesisAndKolloquiumBorderPane(this, studienleistung);
-        scene = new Scene(root, 900, 600);
+        scene = new Scene(root, 950, 600);
         stage.setScene(scene);
         stage.show();
     }
-
-
-
 
 }

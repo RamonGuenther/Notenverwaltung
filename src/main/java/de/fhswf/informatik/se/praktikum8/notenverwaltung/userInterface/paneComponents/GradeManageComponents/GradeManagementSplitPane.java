@@ -10,7 +10,7 @@ import javafx.scene.control.SplitPane;
  * einem ausgewählten Modul.
  *
  * @author Ivonne Kneißig
- * @version 1.0 vom 25. November 2021
+ * @version 1.1 vom 1. Dezember 2021
  */
 public class GradeManagementSplitPane extends SplitPane {
 
@@ -26,7 +26,7 @@ public class GradeManagementSplitPane extends SplitPane {
         this.gradeDetails = new GradeDetailsGridPane(studienleistung);
         this.gradesTable = new GradesTableViewBorderPane(studienleistung, gradeDetails);
 
-
+        setDividerPositions(0.56);
         getItems().addAll(gradesTable, gradeDetails);
     }
 

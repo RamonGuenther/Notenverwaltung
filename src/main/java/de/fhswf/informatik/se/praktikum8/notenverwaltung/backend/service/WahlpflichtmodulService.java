@@ -37,6 +37,9 @@ public class WahlpflichtmodulService {
     public List<Wahlpflichtmodul> findAllOffeneWahlpflichtmodule(){return repository.findAllByBestandenIsFalse();}
 
     public void deleteWahlpflichtmodul(String modulname){
+        if(repository.findByModulname(modulname) == null){
+            throw new IllegalArgumentException("Das gewählte Wahlpflichtfach wurde nicht gefunden.");
+        }
         Wahlpflichtmodul wahlpflichtmodul = repository.findByModulname(modulname);
         repository.delete(wahlpflichtmodul);
     }

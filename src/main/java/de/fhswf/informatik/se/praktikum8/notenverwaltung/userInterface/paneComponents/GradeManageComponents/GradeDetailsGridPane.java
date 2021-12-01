@@ -9,6 +9,7 @@ import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneCompo
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -20,7 +21,7 @@ import javafx.scene.text.Font;
  * eines Moduls in der Modulübersicht des Studenten.
  *
  * @author Ivonne Kneißig
- * @version 1.2 vom 27. November 2021
+ * @version 1.3 vom 1. Dezember 2021
  */
 public class GradeDetailsGridPane extends GridPane {
 
@@ -39,7 +40,7 @@ public class GradeDetailsGridPane extends GridPane {
     private Button save;
     private Button cancel;
 
-    private String apfel;
+    private String moduleType;
     private String moduleName;
 
     /**
@@ -244,24 +245,28 @@ public class GradeDetailsGridPane extends GridPane {
             cancel.setVisible(false);
 
 
-
-            switch (apfel){
-                case "Pflichtmodul":
-                    System.out.println("HALLLO");
-                    studienleistung.updateNotePflichtmodul(moduleName, gradeOneValue.getValue());
-//                    studienleistung.updateNotePflichtmodul(moduleName, gradeTwoValue.getValue());
-//                    studienleistung.updateNotePflichtmodul(moduleName, gradeThreeValue.getValue());
-                    break;
-                case "Wahlpflichtmodul":
-                    studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeOneValue.getValue());
-                    studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeTwoValue.getValue());
-                    studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeThreeValue.getValue());
-                    break;
-                case "Wahlmodul":
-                    studienleistung.updateNoteWahlmodul(moduleName, gradeOneValue.getValue());
-                    studienleistung.updateNoteWahlmodul(moduleName, gradeTwoValue.getValue());
-                    studienleistung.updateNoteWahlmodul(moduleName, gradeThreeValue.getValue());
-                    break;
+            try {
+                switch (moduleType) {
+                    case "Pflichtmodul":
+                        studienleistung.updateNotePflichtmodul(moduleName, gradeOneValue.getValue());
+                        studienleistung.updateNotePflichtmodul(moduleName, gradeTwoValue.getValue());
+                        studienleistung.updateNotePflichtmodul(moduleName, gradeThreeValue.getValue());
+                        break;
+                    case "Wahlpflichtmodul":
+                        studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeOneValue.getValue());
+                        studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeTwoValue.getValue());
+                        studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeThreeValue.getValue());
+                        break;
+                    case "Wahlmodul":
+                        studienleistung.updateNoteWahlmodul(moduleName, gradeOneValue.getValue());
+                        studienleistung.updateNoteWahlmodul(moduleName, gradeTwoValue.getValue());
+                        studienleistung.updateNoteWahlmodul(moduleName, gradeThreeValue.getValue());
+                        break;
+                }
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+                alert.setResizable(true);
+                alert.showAndWait();
             }
         }
     }
@@ -297,7 +302,7 @@ public class GradeDetailsGridPane extends GridPane {
                     wahlmodul.getNote(), wahlmodul.getEndNote());
             creditpoints.setText("");
             moduleName = wahlmodul.getModulname();
-            apfel = "Wahlmodul";
+            moduleType = "Wahlmodul";
         } else {
             try {
                 Wahlpflichtmodul wahlpflichtmodul = (Wahlpflichtmodul) module;
@@ -305,7 +310,7 @@ public class GradeDetailsGridPane extends GridPane {
                         String.valueOf(wahlpflichtmodul.getSemester()), wahlpflichtmodul.getNote(), wahlpflichtmodul.getEndNote());
                 creditpoints.setText(wahlpflichtmodul.isBestanden() == false ? "Creditpoints: " : "Creditpoints: " + wahlpflichtmodul.getCreditpoints());
                 moduleName = wahlpflichtmodul.getModulname();
-                apfel = "Wahlpflichtmodul";
+                moduleType = "Wahlpflichtmodul";
 
 
             } catch (Exception e) {
@@ -314,7 +319,7 @@ public class GradeDetailsGridPane extends GridPane {
                         String.valueOf(pflichtmodul.getSemester()), pflichtmodul.getNote(), pflichtmodul.getEndNote());
                 creditpoints.setText(pflichtmodul.isBestanden() == false ? "Creditpoints: " : "Creditpoints: " + pflichtmodul.getCreditpoints());
                 moduleName = pflichtmodul.getModulname();
-                apfel = "Pflichtmodul";
+                moduleType = "Pflichtmodul";
 
             }
         }

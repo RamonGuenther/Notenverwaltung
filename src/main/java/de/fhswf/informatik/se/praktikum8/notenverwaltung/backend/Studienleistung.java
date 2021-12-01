@@ -43,8 +43,8 @@ public class Studienleistung {
         abschlussService = new AbschlussService(abschlussRepository);
     }
 
-    public List<Pflichtmodul> getPflichtmoduleByPflichtmodul() {
-        return pflichtmodulService.findAllPflichtModule();
+    public List<Wahlpflichtmodul> getWahlpflichtmodule() {
+        return wahlpflichtmodulService.findAllWahlpflichtModule();
     }
 
     public List<Object> getWahlmodule(){
@@ -211,14 +211,20 @@ public class Studienleistung {
      **********************************************************************************************/
 
     public void deleteWahlpflichtmodul(String modulname){
-        wahlmodulService.deleteWahlmodul(modulname);
+        wahlpflichtmodulService.deleteWahlpflichtmodul(modulname);
     }
 
     public void deleteWahlmodul(String modulname){
         wahlmodulService.deleteWahlmodul(modulname);
     }
 
+    public void deleteAllByWahlpflichtblock(){
+        pflichtmodulService.deleteAllByWahlpflichtblock();
+    }
 
+    public void deleteAllByStudienrichtung(){
+        pflichtmodulService.deleteAllByStudienrichtung();
+    }
 
 
     /**********************************************************************************************

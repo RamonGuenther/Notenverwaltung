@@ -30,6 +30,9 @@ public class WahlmodulService {
     }
 
     public void deleteWahlmodul(String modulname){
+        if(repository.findByModulname(modulname) == null){
+            throw new IllegalArgumentException("Das gewählte Wahlmodul wurde nicht gefunden.");
+        }
         Wahlmodul wahlmodul = repository.findByModulname(modulname);
         repository.delete(wahlmodul);
     }
