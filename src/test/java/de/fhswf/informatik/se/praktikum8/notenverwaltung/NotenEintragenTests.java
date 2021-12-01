@@ -35,6 +35,13 @@ public class NotenEintragenTests {
 
     private Studienleistung studienleistung;
 
+    void alleModuleLoeschen() {
+        pflichtmodulRepository.deleteAll();
+        abschlussRepository.deleteAll();
+        wahlmodulRepository.deleteAll();
+        wahlpflichtmodulRepository.deleteAll();
+    }
+
     @BeforeEach
     void init() {
         alleModuleLoeschen();
@@ -44,13 +51,6 @@ public class NotenEintragenTests {
         studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.WIRTSCHAFT);
         studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK, 5);
         studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.BETRIEBSSYSTEME3, 6);
-    }
-
-    void alleModuleLoeschen() {
-        pflichtmodulRepository.deleteAll();
-        abschlussRepository.deleteAll();
-        wahlmodulRepository.deleteAll();
-        wahlpflichtmodulRepository.deleteAll();
     }
 
     @Test

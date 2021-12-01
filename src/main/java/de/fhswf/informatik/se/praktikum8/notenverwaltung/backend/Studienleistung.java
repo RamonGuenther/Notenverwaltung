@@ -2,6 +2,7 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend;
 
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.*;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Notendurchschnitt;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Studienrichtung;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.WahlmodulEnum;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Wahlpflichtblock;
@@ -19,7 +20,10 @@ import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.service.Wahlmod
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.service.WahlpflichtmodulService;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Studienleistung {
 
@@ -27,10 +31,6 @@ public class Studienleistung {
     private final WahlpflichtmodulService wahlpflichtmodulService;
     private final WahlmodulService wahlmodulService;
     private final AbschlussService abschlussService;
-
-
-    private Studienrichtung studienrichtung;
-    private Wahlpflichtblock wahlpflichtblock;
 
     public Studienleistung(PflichtmodulRepository pflichtmodulRepository,
                            WahlpflichtmodulRepository wahlpflichtmodulRepository,
@@ -41,42 +41,63 @@ public class Studienleistung {
         wahlpflichtmodulService = new WahlpflichtmodulService(wahlpflichtmodulRepository);
         wahlmodulService = new WahlmodulService(wahlmodulRepository);
         abschlussService = new AbschlussService(abschlussRepository);
-
-//        pflichtmodulService.refreshNoten();
-//        wahlpflichtmodulService.refreshNoten();
-//        wahlmodulService.refreshNoten();
-
-//        Abschluss abschluss = new Abschluss();
     }
 
 
-
-    public void setStudienrichtung(Studienrichtung studienrichtung) {
-        this.studienrichtung = studienrichtung;
-    }
-
-    public void setWahlpflichtblock(Wahlpflichtblock wahlpflichtblock) {
-        this.wahlpflichtblock = wahlpflichtblock;
-    }
 
     public List<Pflichtmodul> getPflichtmoduleByPflichtmodul() {
         return pflichtmodulService.findAllPflichtModule();
     }
 
+    /**
+     * Die Methode gibt eine Liste mit allen
+     * @return
+     */
+    public List<Object> getAllePflichtmoduleUndWahlpflichtmodule(){
+       return Stream.of(
+               pflichtmodulService.findAllPflichtModule(),
+               wahlpflichtmodulService.findAllWahlpflichtModule())
+               .flatMap(Collection::stream)
+               .collect(Collectors.toList())
+               ;
+    }
 
+    public List<Object> getOffenePflichtmoduleUndWahlpflichtmodule(){
+        return Stream.of(
+                        pflichtmodulService.findAllOffenePflichtmodule(),
+                        wahlpflichtmodulService.findAllOffeneWahlpflichtmodule())
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList())
+                ;
+    }
+
+    public List<Object> getBestandenePflichtmoduleUndWahlpflichtmodule(){
+         return Stream.of(
+               pflichtmodulService.findAllBestandenePflichtmodule(),
+               wahlpflichtmodulService.findAllBestandeneWahlpflichtmodule())
+               .flatMap(Collection::stream)
+               .collect(Collectors.toList())
+               ;
+    }
+
+    /**********************************************************************************************
+     Module Hinzufügen
+     **********************************************************************************************/
 
     /**
      * Die Methode pflichtmoduleAnlegen erstellt eine Liste mit allen von der
      * Studienrichtung unabhängigen Pflichtmodulen des Studiengangs Informatik B.sc.
      */
     public void pflichtmoduleAnlegen() {
+        if(!pflichtmodulService.findAllPflichtModule().isEmpty()) {
+            throw new IllegalArgumentException(this.getClass().getSimpleName() +
+                    ": Pflichtmodule bereits angelegt.");
+        }
         pflichtmodulService.savePflichtmodule(new ListePflichtmodule());
         abschlussService.saveAbschluss(new Abschluss());
     }
 
-    /**********************************************************************************************
-                                        Module Hinzufügen
-     **********************************************************************************************/
+
     /**
      * Die Methode pflichtmoduleAnwendungsrichtungFestlegen fügt der Liste der
      * Pflichtmodule alle von der Studienrichtung abhängigen Pflichtmodule hinzu.
@@ -85,12 +106,21 @@ public class Studienleistung {
      * @param studienrichtung	Studienrichtung, die der Student gewählt hat
      */
     public void pflichtmoduleStudienrichtungFestlegen(Studienrichtung studienrichtung) {
-        if(this.studienrichtung != null){
+        if(abschlussService.findAbschluss() == null){
+            throw new IllegalArgumentException(this.getClass().getSimpleName() +
+                    ": Es wurde kein Abschluss gefunden");
+        }
+        Abschluss abschluss = abschlussService.findAbschluss();
+        if(abschluss == null){
+            System.out.println("TETSTTTSTS");
+        }
+        if(abschluss.getStudienrichtung() != null){
             throw new IllegalArgumentException(this.getClass().getSimpleName() +
                     ": Studienrichtung bereits festgelegt.");
         }
-        setStudienrichtung(studienrichtung);
-        pflichtmodulService.savePflichtmodule(new ListeModuleStudienrichtung(studienrichtung));
+        abschluss.setStudienrichtung(studienrichtung);
+        abschlussService.saveAbschluss(abschluss);
+        pflichtmodulService.savePflichtmodule(new ListeModuleStudienrichtung(abschluss.getStudienrichtung()));
     }
 
     /**
@@ -101,19 +131,25 @@ public class Studienleistung {
      * @param wahlpflichtblock	Wahlpflichtblock, den der Student gewählt hat
      */
     public void pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock wahlpflichtblock){
-        if(this.wahlpflichtblock != null){
+        if(abschlussService.findAbschluss() == null){
+            throw new IllegalArgumentException(this.getClass().getSimpleName() +
+                ": Es wurde kein Abschluss gefunden");
+        }
+        Abschluss abschluss = abschlussService.findAbschluss();
+        if(abschluss.getWahlpflichtblock() != null){
             throw new IllegalArgumentException(this.getClass().getSimpleName() +
                     ": Wahlpflichtbock bereits festgelegt.");
         }
-        if(studienrichtung == null){
+        if(abschluss.getStudienrichtung() == null){
             throw new IllegalArgumentException(this.getClass().getSimpleName() +
                     ": Es muss erst eine Studienrichtung eingetragen.");
         }
-        if(wahlpflichtblock.label.equals(studienrichtung.label)){
+        if(wahlpflichtblock.label.equals(abschluss.getStudienrichtung().label)){
             throw new IllegalArgumentException(this.getClass().getSimpleName() +
                     ": Der Wahlpflichtblock muss sich von der Studienrichtung unterscheiden");
         }
-        setWahlpflichtblock(wahlpflichtblock);
+        abschluss.setWahlpflichtblock(wahlpflichtblock);
+        abschlussService.saveAbschluss(abschluss);
         pflichtmodulService.savePflichtmodule(new ListeModuleWahlpflichtblock(wahlpflichtblock));
     }
 

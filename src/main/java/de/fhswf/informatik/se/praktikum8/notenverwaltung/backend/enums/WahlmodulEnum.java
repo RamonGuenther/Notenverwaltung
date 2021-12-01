@@ -4,7 +4,7 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums;
  * Die Enumeration Wahlmodul enthält alle möglichen Wahlmodule
  * für den Studiengang Informatik B.sc. der Fachhochschule Südwestfalen BPO 2013.
  *
- * @author Ramon Günther & Ivonne Kneißig
+ * @author Ramon Günther
  * @version 1.1 vom 22. November 2021
  */
 public enum WahlmodulEnum {

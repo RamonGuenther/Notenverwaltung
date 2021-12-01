@@ -1,6 +1,6 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.service;
 
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Notendurchschnitt;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Notendurchschnitt;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.PflichtmodulRepository;
 import org.springframework.stereotype.Service;
@@ -31,6 +31,11 @@ public class PflichtmodulService {
     public List<Pflichtmodul> findAllPflichtModule(){
         return repository.findAll();
     }
+
+    public List<Pflichtmodul> findAllBestandenePflichtmodule(){return repository.findAllByBestandenIsTrue();}
+
+    public List<Pflichtmodul> findAllOffenePflichtmodule(){return repository.findAllByBestandenIsFalse();}
+
 
     public void setNote(String modulname, Double note){
         if(!NOTENINTERVALL.contains(note)) {

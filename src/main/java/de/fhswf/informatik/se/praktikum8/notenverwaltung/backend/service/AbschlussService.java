@@ -1,7 +1,7 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.service;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Abschluss;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Notendurchschnitt;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Notendurchschnitt;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.AbschlussRepository;
 import org.springframework.stereotype.Service;
 

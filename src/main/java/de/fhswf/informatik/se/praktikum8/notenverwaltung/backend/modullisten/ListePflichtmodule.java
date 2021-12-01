@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Pflichtmodulen für den Studiengang Informatik B.sc. an der Fachhochschule
  * Südwestfalen
  *
- * @author Ramon Günther & Ivonne Kneißig
+ * @author Ramon Günther
  * @Version 1.0 vom 23. November 2021
  */
 

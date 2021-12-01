@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * Die Klasse ListeModuleStudienrichtung erstellt eine Liste mit den Pflicht-
  * modulen der vom Studenten gewählten Studienrichtung.
  *
- * @author Ramon Günther & Ivonne Kneißig
+ * @author Ramon Günther
  * @Version 1.0 vom 23. November 2021
  */
 public class ListeModuleStudienrichtung extends ArrayList {

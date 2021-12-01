@@ -3,17 +3,18 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Noten;
 
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * Die Klasse Wahlpflichtmodul enthält alle wichtigen Informationen zu einem
  * Wahlpflichtmodul für den Studiengang Informatik B.sc.
- * Ein Wahlpflichtmodul entspricht einem Modul aus der Enumeration-Klasse Wahlpflichtfach.
  *
- * @author Ramon Günther & Ivonne Kneißig
- * @version 1.0 vom 20. November 2021
+ * @author Ramon Günther
+ * @version 1.0 vom 1. Dezember 2021
  */
-@javax.persistence.Entity
+@Entity
 public class Wahlpflichtmodul {
 
     @Id
@@ -26,7 +27,13 @@ public class Wahlpflichtmodul {
 
     private Integer semester;
 
+    private String modulart;
+
     private boolean bestanden;
+
+
+    @Transient
+    private final static String MODULART = "Wahlpflichtmodul";
 
 
     public Wahlpflichtmodul(String modulname, int semester) {
@@ -34,6 +41,7 @@ public class Wahlpflichtmodul {
         this.creditpoints = 6;
         this.semester = semester;
         bestanden = false;
+        modulart = MODULART;
         note = new Noten();
     }
 
@@ -41,11 +49,9 @@ public class Wahlpflichtmodul {
 
     }
 
-
     public String getId() {
         return modulname;
     }
-
 
     public String getModulname() {
         return modulname;
@@ -59,6 +65,9 @@ public class Wahlpflichtmodul {
         return semester;
     }
 
+    public String getModulart() {
+        return modulart;
+    }
 
     public boolean isBestanden() {
         return bestanden;
@@ -70,5 +79,10 @@ public class Wahlpflichtmodul {
 
     public Noten getNote() {
         return note;
+    }
+
+    //TODO: ENTFERNEN DENTE NUR FÜR TESTS
+    public void setModulart(String modulart) {
+        this.modulart = modulart;
     }
 }

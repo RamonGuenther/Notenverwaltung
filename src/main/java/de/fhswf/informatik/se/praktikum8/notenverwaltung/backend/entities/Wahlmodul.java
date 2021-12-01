@@ -6,6 +6,13 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+/**
+ * Die Klasse Wahlmodul enthält alle wichtigen Daten zu einem
+ * Wahlmodul des Studiengangs Informatik B.sc.
+ *
+ * @author Ramon Günther
+ * @version 1.1 vom 1. Dezember 2021
+ */
 @Entity
 public class Wahlmodul{
 

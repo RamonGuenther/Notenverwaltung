@@ -2,7 +2,13 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.value
 
 import javax.persistence.Embeddable;
 
-
+/**
+ * Die Klasse Bachelorarbeit ist ein Bestandteil der Klasse Abschluss und
+ * enthält die Studienleistungen der Bachelorarbeit.
+ *
+ * @author Ramon Günther
+ * @version 1.0 vom 1. Dezember 2021
+ */
 @Embeddable
 public class Bachelorarbeit {
 
@@ -34,6 +40,11 @@ public class Bachelorarbeit {
         return endNoteBachelor * creditpointsBachelorarbeit;
     }
 
+    /**
+     * Methode um eine Note für den Bachelor zu speichern.
+     *
+     * @param note einzutragene Note
+     */
     public void setNote(Double note) {
         if (noteBachelorarbeit1 == 0.0) {
             noteBachelorarbeit1 = note;
@@ -45,6 +56,10 @@ public class Bachelorarbeit {
         }
     }
 
+    /**
+     * Methode um die bestandene Endnote der Bachelorarbeit zu ermitteln
+     * und zu speichern.
+     */
     public void checkEndnote() {
         if (noteBachelorarbeit1 <= 4.0) {
             endNoteBachelor = noteBachelorarbeit1;

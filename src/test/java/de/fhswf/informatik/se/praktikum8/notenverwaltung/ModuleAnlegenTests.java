@@ -14,9 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Die Testfälle überschreiben den Inhalt der Datenbank!
+ *
+ * WICHTIG: Properties auf UPDATE und @Component bei Stageinitializer.class entfernen sonst laufen die Tests nicht
  */
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ModuleAnlegenTests {
 
     @Autowired
@@ -33,28 +36,34 @@ class ModuleAnlegenTests {
 
     private Studienleistung studienleistung;
 
-
-    @BeforeEach
-    void init(){
+    @BeforeAll
+    public void init(){
+        alleModuleLoeschen();
         studienleistung = new Studienleistung(pflichtmodulRepository, wahlpflichtmodulRepository, wahlmodulRepository, abschlussRepository);
     }
 
-    void alleModuleLoeschen(){
+    @BeforeEach
+    public void alleModuleLoeschen(){
         pflichtmodulRepository.deleteAll();
         abschlussRepository.deleteAll();
         wahlmodulRepository.deleteAll();
         wahlpflichtmodulRepository.deleteAll();
     }
 
+
     @Test
     void pflichtmoduleAnlegen(){
-        studienleistung.pflichtmoduleAnlegen(); // Sollte man es verhindern?
         studienleistung.pflichtmoduleAnlegen();
+        assertThrows(IllegalArgumentException.class, () ->{
+            studienleistung.pflichtmoduleAnlegen();
+        });
     }
 
 
     @Test
     void studienrichtungAngeben(){
+        studienleistung.pflichtmoduleAnlegen();
+
         studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
 
         //Darf nicht gehen, da eine Studienrichtung schon festgelegt wurde
@@ -65,6 +74,8 @@ class ModuleAnlegenTests {
 
     @Test
     void wahlpflichtblockFestlegen(){
+        studienleistung.pflichtmoduleAnlegen();
+
         //Darf nicht gehen weil noch keine Studienrichtung angegeben worden ist
         assertThrows(IllegalArgumentException.class, () ->{
             studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.WIRTSCHAFT);
@@ -80,6 +91,11 @@ class ModuleAnlegenTests {
 
     @Test
     void wahlpflichtmodulAnlegen(){
+
+        studienleistung.pflichtmoduleAnlegen();
+        studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
+
+
         wahlpflichtmodulRepository.deleteAll();
 
         studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK,5);

@@ -2,6 +2,13 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.value
 
 import javax.persistence.Embeddable;
 
+/**
+ * Die Klasse Bachelorarbeit ist ein Bestandteil der Klasse Abschluss und
+ * enthält die Studienleistungen des Kolloquium.
+ *
+ * @author Ramon Günther
+ * @version 1.0 vom 1. Dezember 2021
+ */
 @Embeddable
 public class Kolloquium {
 
@@ -33,6 +40,11 @@ public class Kolloquium {
         return endNoteKolloquium * creditpointsKolloquium;
     }
 
+    /**
+     * Methode um eine Note für das Kolloquium zu speichern.
+     *
+     * @param note einzutragene Note
+     */
     public void setNote(Double note) {
         if (noteKolloquium1 == 0.0) {
             noteKolloquium1 = note;
@@ -44,6 +56,10 @@ public class Kolloquium {
         }
     }
 
+    /**
+     * Methode um die bestandene Endnote der Bachelorarbeit zu ermitteln
+     * und zu speichern.
+     */
     public void checkEndnote() {
         if (noteKolloquium1 <= 4.0) {
             endNoteKolloquium = noteKolloquium1;

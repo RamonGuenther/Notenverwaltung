@@ -6,7 +6,13 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-
+/**
+ * Die Klasse Pflichtmodul enthält alle wichtigen Daten zu einem
+ * Pflichtmodul des Studiengangs Informatik B.sc.
+ *
+ * @author Ramon Günther
+ * @version 1.1 vom 1. Dezember 2021
+ */
 @Entity
 public class Pflichtmodul{
     @Id
@@ -42,7 +48,6 @@ public class Pflichtmodul{
         return modulname;
     }
 
-
     public String getModulname() {
         return modulname;
     }
@@ -70,4 +75,11 @@ public class Pflichtmodul{
     public Noten getNote() {
         return note;
     }
+
+    //TODO: ENTFERNEN DENTE NUR FÜR TESTS
+    public void setModulart(String modulart) {
+        this.modulart = modulart;
+    }
+
+
 }

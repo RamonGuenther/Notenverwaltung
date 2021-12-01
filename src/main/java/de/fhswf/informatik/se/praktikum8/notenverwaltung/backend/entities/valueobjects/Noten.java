@@ -2,6 +2,14 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.value
 
 import javax.persistence.Embeddable;
 
+
+/**
+ * Die Klasse Note wird für Pflichtmodule, Wahlpflichtmodule
+ * und Wahlmodule verwendet, um die jeweiligen Noten zu speichern.
+ *
+ * @author Ramon Günther
+ * @version 1.0 vom 1. Dezember 2021
+ */
 @Embeddable
 public class Noten {
 
@@ -31,8 +39,12 @@ public class Noten {
 
     public double getEndNote(){ return endNote;}
 
-    public void setEndNote(Double endNote){ this.endNote = endNote;}
 
+    /**
+     * Methode um eine Note für das jeweilige Modul zu speichern
+     *
+     * @param note einzutragene Note
+     */
     public void setNote(Double note){
         if(note1 == 0.0) {
             note1 = note;
@@ -49,6 +61,10 @@ public class Noten {
         }
     }
 
+    /**
+     * Methode um die bestandene Endnote des jeweiligen Moduls zu ermitteln
+     * und zu speichern
+     */
     public void checkEndnote (){
         if(note1 <= 4.0) {
             endNote = note1;
