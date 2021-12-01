@@ -1,12 +1,16 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents;
 
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlmodul;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlpflichtmodul;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Noten;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.ComboBoxGrade;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -20,12 +24,14 @@ import javafx.scene.text.Font;
  */
 public class GradeDetailsGridPane extends GridPane {
 
+    private Studienleistung studienleistung;
+
     private Label grade;
     private Label creditpoints;
 
-    private TextField moduleValue;
-    private TextField moduleTypeValue;
-    private TextField semesterValue;
+    private Label moduleValue;
+    private Label moduleTypeValue;
+    private Label semesterValue;
     private ComboBoxGrade gradeOneValue;
     private ComboBoxGrade gradeTwoValue;
     private ComboBoxGrade gradeThreeValue;
@@ -33,11 +39,17 @@ public class GradeDetailsGridPane extends GridPane {
     private Button save;
     private Button cancel;
 
+    private String apfel;
+    private String moduleName;
+
     /**
      * Der Konstruktor erstellt bzw. initialisiert die einzelnen
      * Elemente der Detailansicht.
      */
-    public GradeDetailsGridPane(){
+    public GradeDetailsGridPane(Studienleistung studienleistung) {
+
+        this.studienleistung = studienleistung;
+
         Label details = new Label("Details");
         details.setFont(new Font(30));
         details.setStyle("-fx-font-weight: bold");
@@ -55,24 +67,23 @@ public class GradeDetailsGridPane extends GridPane {
         Label gradeThree = new Label("Note 3. Versuch:");
         gradeThree.setFont(new Font(16));
 
-        grade = new Label("Endnote:");
+        grade = new Label("Endnote: ");
         grade.setFont(new Font(16));
         grade.setStyle("-fx-font-weight: bold");
         creditpoints = new Label("Creditpoints:");
         creditpoints.setFont(new Font(16));
         creditpoints.setStyle("-fx-font-weight: bold");
 
-        moduleValue = new TextField();
-        moduleValue.setText("Hier Value anzeigen lassen");
-        moduleValue.setDisable(true);
+        moduleValue = new Label();
+        moduleValue.setFont(new Font(16));
         moduleValue.setMinWidth(250);
 
-        moduleTypeValue = new TextField();
-        moduleTypeValue.setDisable(true);
+        moduleTypeValue = new Label();
+        moduleTypeValue.setFont(new Font(16));
         moduleValue.setMinWidth(250);
 
-        semesterValue = new TextField();
-        semesterValue.setDisable(true);
+        semesterValue = new Label();
+        semesterValue.setFont(new Font(16));
         semesterValue.setMinWidth(250);
 
         gradeOneValue = new ComboBoxGrade();
@@ -112,19 +123,19 @@ public class GradeDetailsGridPane extends GridPane {
         // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
         addRow(0, details);
         add(module, 0, 1, 1, 1);
-        add(moduleValue,1,1,1,1);
-        add(moduleType, 0, 2,1,1);
-        add(moduleTypeValue,1,2,1,1);
-        add(semester, 0, 3,1,1);
-        add(semesterValue, 1,3,1,1);
-        add(gradeOne, 0, 4,1,1);
-        add(gradeOneValue,1,4,1,1);
-        add(gradeTwo, 0, 5,1,1);
-        add(gradeTwoValue,1,5,1,1);
-        add(gradeThree, 0, 6,1,1);
-        add(gradeThreeValue,1,6,1,1);
-        add(moduleResultBox,1,7,2,1);
-        add(moduleUpdateDetailsBox,1,8,2,1);
+        add(moduleValue, 1, 1, 1, 1);
+        add(moduleType, 0, 2, 1, 1);
+        add(moduleTypeValue, 1, 2, 1, 1);
+        add(semester, 0, 3, 1, 1);
+        add(semesterValue, 1, 3, 1, 1);
+        add(gradeOne, 0, 4, 1, 1);
+        add(gradeOneValue, 1, 4, 1, 1);
+        add(gradeTwo, 0, 5, 1, 1);
+        add(gradeTwoValue, 1, 5, 1, 1);
+        add(gradeThree, 0, 6, 1, 1);
+        add(gradeThreeValue, 1, 6, 1, 1);
+        add(moduleResultBox, 1, 7, 2, 1);
+        add(moduleUpdateDetailsBox, 1, 8, 2, 1);
 
         setVgap(20);
         setHgap(10);
@@ -147,27 +158,27 @@ public class GradeDetailsGridPane extends GridPane {
         this.creditpoints = creditpoints;
     }
 
-    public TextField getModuleValue() {
+    public Label getModuleValue() {
         return moduleValue;
     }
 
-    public void setModuleValue(TextField moduleValue) {
+    public void setModuleValue(Label moduleValue) {
         this.moduleValue = moduleValue;
     }
 
-    public TextField getModuleTypeValue() {
+    public Label getModuleTypeValue() {
         return moduleTypeValue;
     }
 
-    public void setModuleTypeValue(TextField moduleTypeValue) {
+    public void setModuleTypeValue(Label moduleTypeValue) {
         this.moduleTypeValue = moduleTypeValue;
     }
 
-    public TextField getSemesterValue() {
+    public Label getSemesterValue() {
         return semesterValue;
     }
 
-    public void setSemesterValue(TextField semesterValue) {
+    public void setSemesterValue(Label semesterValue) {
         this.semesterValue = semesterValue;
     }
 
@@ -218,14 +229,11 @@ public class GradeDetailsGridPane extends GridPane {
      * die Textfelder deaktiviert, die Daten gespeichert und die Buttons zum
      * Speichern und Abbrechen wieder ausgeblendet.
      */
-    class UpdateGradeDetailsEventHandler implements EventHandler<ActionEvent>{
+    class UpdateGradeDetailsEventHandler implements EventHandler<ActionEvent> {
 
         @Override
         public void handle(ActionEvent actionEvent) {
 
-            moduleValue.setDisable(true);
-            moduleTypeValue.setDisable(true);
-            semesterValue.setDisable(true);
             gradeOneValue.setDisable(true);
             gradeTwoValue.setDisable(true);
             gradeThreeValue.setDisable(true);
@@ -234,6 +242,27 @@ public class GradeDetailsGridPane extends GridPane {
             save.setVisible(false);
             cancel.setDisable(true);
             cancel.setVisible(false);
+
+
+
+            switch (apfel){
+                case "Pflichtmodul":
+                    System.out.println("HALLLO");
+                    studienleistung.updateNotePflichtmodul(moduleName, gradeOneValue.getValue());
+//                    studienleistung.updateNotePflichtmodul(moduleName, gradeTwoValue.getValue());
+//                    studienleistung.updateNotePflichtmodul(moduleName, gradeThreeValue.getValue());
+                    break;
+                case "Wahlpflichtmodul":
+                    studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeOneValue.getValue());
+                    studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeTwoValue.getValue());
+                    studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeThreeValue.getValue());
+                    break;
+                case "Wahlmodul":
+                    studienleistung.updateNoteWahlmodul(moduleName, gradeOneValue.getValue());
+                    studienleistung.updateNoteWahlmodul(moduleName, gradeTwoValue.getValue());
+                    studienleistung.updateNoteWahlmodul(moduleName, gradeThreeValue.getValue());
+                    break;
+            }
         }
     }
 
@@ -243,14 +272,11 @@ public class GradeDetailsGridPane extends GridPane {
      * die Textfelder deaktiviert und eventuell getätigte Eingaben nicht übernommen.
      * Die Buttons zum Speichern und Abbrechen wieder ausgeblendet.
      */
-    class CancelUpdateGradeDetailsEventHandler implements EventHandler<ActionEvent>{
+    class CancelUpdateGradeDetailsEventHandler implements EventHandler<ActionEvent> {
 
         @Override
         public void handle(ActionEvent actionEvent) {
 
-            moduleValue.setDisable(true);
-            moduleTypeValue.setDisable(true);
-            semesterValue.setDisable(true);
             gradeOneValue.setDisable(true);
             gradeTwoValue.setDisable(true);
             gradeThreeValue.setDisable(true);
@@ -259,6 +285,48 @@ public class GradeDetailsGridPane extends GridPane {
             save.setVisible(false);
             cancel.setDisable(true);
             cancel.setVisible(false);
+
         }
+    }
+
+    public void setDetails(Object module, String radioValue) {
+
+        if (radioValue.equals("Wahlmodule")) {
+            Wahlmodul wahlmodul = (Wahlmodul) module;
+            setItems(wahlmodul.getModulname(), wahlmodul.getModulart(), String.valueOf(wahlmodul.getSemester()),
+                    wahlmodul.getNote(), wahlmodul.getEndNote());
+            creditpoints.setText("");
+            moduleName = wahlmodul.getModulname();
+            apfel = "Wahlmodul";
+        } else {
+            try {
+                Wahlpflichtmodul wahlpflichtmodul = (Wahlpflichtmodul) module;
+                setItems(wahlpflichtmodul.getModulname(), wahlpflichtmodul.getModulart(),
+                        String.valueOf(wahlpflichtmodul.getSemester()), wahlpflichtmodul.getNote(), wahlpflichtmodul.getEndNote());
+                creditpoints.setText(wahlpflichtmodul.isBestanden() == false ? "Creditpoints: " : "Creditpoints: " + wahlpflichtmodul.getCreditpoints());
+                moduleName = wahlpflichtmodul.getModulname();
+                apfel = "Wahlpflichtmodul";
+
+
+            } catch (Exception e) {
+                Pflichtmodul pflichtmodul = (Pflichtmodul) module;
+                setItems(pflichtmodul.getModulname(), pflichtmodul.getModulart(),
+                        String.valueOf(pflichtmodul.getSemester()), pflichtmodul.getNote(), pflichtmodul.getEndNote());
+                creditpoints.setText(pflichtmodul.isBestanden() == false ? "Creditpoints: " : "Creditpoints: " + pflichtmodul.getCreditpoints());
+                moduleName = pflichtmodul.getModulname();
+                apfel = "Pflichtmodul";
+
+            }
+        }
+    }
+
+    private void setItems(String modulname, String modulart, String s, Noten note, String endNote) {
+        moduleValue.setText(modulname);
+        moduleTypeValue.setText(modulart);
+        semesterValue.setText(s);
+        gradeOneValue.setValue(note.getNote1() == 0.0 ? null : note.getNote1());
+        gradeTwoValue.setValue(note.getNote2() == 0.0 ? null : note.getNote2());
+        gradeThreeValue.setValue(note.getNote3() == 0.0 ? null : note.getNote3());
+        grade.setText(endNote == " " ? "Endnote: " : "Endnote: " + endNote);
     }
 }

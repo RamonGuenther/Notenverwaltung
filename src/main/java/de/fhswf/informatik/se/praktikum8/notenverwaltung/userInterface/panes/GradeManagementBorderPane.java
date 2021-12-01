@@ -1,6 +1,7 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.panes;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.StageInitializer;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.menuBar.GradeManagementMenuBar;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents.GradeManagementButtonBox;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents.GradeManagementSplitPane;
@@ -27,12 +28,12 @@ public class GradeManagementBorderPane extends BorderPane {
      *                          weitergereicht, um in dessen EventHandlern
      *                          die Scenes wechseln zu können.
      */
-    public GradeManagementBorderPane(StageInitializer initializer){
+    public GradeManagementBorderPane(StageInitializer initializer, Studienleistung studienleistung){
 
         GradeManagementMenuBar menuBar = new GradeManagementMenuBar(initializer);
         setTop(menuBar);
 
-        GradeManagementSplitPane gradesTable = new GradeManagementSplitPane();
+        GradeManagementSplitPane gradesTable = new GradeManagementSplitPane(studienleistung);
         setCenter(gradesTable);
 
         GradeManagementButtonBox buttonBox = new GradeManagementButtonBox(gradesTable);

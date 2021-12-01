@@ -43,10 +43,17 @@ public class Studienleistung {
         abschlussService = new AbschlussService(abschlussRepository);
     }
 
-
-
     public List<Pflichtmodul> getPflichtmoduleByPflichtmodul() {
         return pflichtmodulService.findAllPflichtModule();
+    }
+
+    public List<Object> getWahlmodule(){
+        List<Wahlmodul> wahlmodulList =wahlmodulService.findAllWahlmodule();
+        List<Object> objectList = new ArrayList<>();
+
+        objectList.addAll(wahlmodulList);
+
+        return objectList;
     }
 
     /**

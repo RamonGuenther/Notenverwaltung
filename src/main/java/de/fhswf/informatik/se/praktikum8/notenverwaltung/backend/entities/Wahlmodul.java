@@ -5,6 +5,7 @@ import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueo
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * Die Klasse Wahlmodul enthält alle wichtigen Daten zu einem
@@ -26,11 +27,17 @@ public class Wahlmodul{
 
     private boolean bestanden;
 
+    private String modulart;
+
+    @Transient
+    private final static String MODULART = "Wahlmodul";
+
     public Wahlmodul(String modulname, int semester) {
         this.modulname = modulname;
         this.semester = semester;
         bestanden = false;
         note = new Noten();
+        modulart = MODULART;
     }
 
     public Wahlmodul() {
@@ -55,5 +62,13 @@ public class Wahlmodul{
 
     public void setBestanden() {
         bestanden = true;
+    }
+
+    public String getModulart() {
+        return modulart;
+    }
+
+    public String getEndNote(){
+        return note.getEndNote() == 0.0 ? " " : String.valueOf(note.getEndNote());
     }
 }

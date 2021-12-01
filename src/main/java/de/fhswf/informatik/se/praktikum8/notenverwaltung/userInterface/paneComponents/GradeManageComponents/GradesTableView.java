@@ -1,7 +1,13 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents;
 
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlmodul;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlpflichtmodul;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Die Klasse GradesTableView erzeugt die Tabelle mit den Modulen
@@ -10,23 +16,74 @@ import javafx.scene.control.TableView;
  * @author Ivonne Kneißig
  * @version 1.0 vom 25. November 2021
  */
-public class GradesTableView extends TableView<String> {
+public class GradesTableView extends TableView<Object> {
 
+    private TableColumn<Object, Integer> columnCreditpoints;
+
+    private GradeDetailsGridPane gradeDetails;
+
+    private Studienleistung studienleistung;
+
+    private String radioValue;
     /**
      * Im Konstruktor von GradesTableView wird die Tabelle initialisiert.
      */
-    public GradesTableView(){
-        TableColumn<String, String> columnModule = new TableColumn<>("Modul");
+    public GradesTableView(Studienleistung studienleistung, GradeDetailsGridPane gradeDetails){
 
-        TableColumn<String, String> columnModuleType = new TableColumn<>("Modulart");
+        this.studienleistung = studienleistung;
+        this.gradeDetails = gradeDetails;
+        radioValue = "Alle Module";
 
-        TableColumn<String, String> columnGrade = new TableColumn<>("Note");
+        TableColumn<Object, String> columnModule = new TableColumn<>("Modul");
+        columnModule.setCellValueFactory(new PropertyValueFactory<>("modulname"));
 
-        TableColumn<String, String> columnCreditpoints = new TableColumn<>("Creditpoints");
 
-        TableColumn<String, String> columnSemester = new TableColumn<>("Semester");
+        TableColumn<Object, String> columnModuleType = new TableColumn<>("Modulart");
+        columnModuleType.setCellValueFactory(new PropertyValueFactory<>("modulart"));
+
+
+        TableColumn<Object, String> columnGrade = new TableColumn<>("Note");
+        columnGrade.setCellValueFactory(new PropertyValueFactory<>("endNote"));
+
+        columnCreditpoints = new TableColumn<>("Creditpoints");
+        columnCreditpoints.setCellValueFactory(new PropertyValueFactory<>("creditpoints"));
+
+        TableColumn<Object, Integer> columnSemester = new TableColumn<>("Semester");
+        columnSemester.setCellValueFactory(new PropertyValueFactory<>("semester"));
 
         getColumns().addAll(columnModule, columnModuleType, columnGrade, columnCreditpoints, columnSemester);
+        getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
 
+        setOnMouseClicked((MouseEvent event2) -> {
+            if (event2.getClickCount() >= 1) {
+                onEdit();
+            }
+        });
+    }
+
+    public String getRadioValue() {
+        return radioValue;
+    }
+
+    public void setRadioValue(String radioValue) {
+        this.radioValue = radioValue;
+    }
+
+    public void setColumnsPflichtmodule(){
+        if(!getColumns().get(3).equals(columnCreditpoints)){
+            getColumns().add(3, columnCreditpoints);
+        }
+    }
+
+    public void setColumnsWahlmodule(){
+        getColumns().remove(3);
+    }
+
+    public void onEdit() {
+        if( getSelectionModel().getSelectedItem() == null){
+            return;
+        }
+
+        gradeDetails.setDetails(getSelectionModel().getSelectedItem(),radioValue);
     }
 }

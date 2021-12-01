@@ -53,6 +53,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     private Parent root;
     private Stage stage;
     private Scene scene;
+    private Studienleistung studienleistung;
 
     /**
      * Die Methode onApplicationEvent erzeugt die Stage und die Scene
@@ -63,90 +64,93 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
     @Override
     public void onApplicationEvent(StageReadyEvent event) {
 
-        Studienleistung studienleistung = new Studienleistung(
+        studienleistung = new Studienleistung(
                 pflichtmodulRepository,
                 wahlpflichtmodulRepository,
                 wahlmodulRepository,
                 abschlussRepository
         );
 
-
         stage = event.getStage();
-
-        Scene scene = new Scene(new Group());
-        stage.setTitle("Table View Sample");
-        stage.setWidth(300);
-        stage.setHeight(500);
-
-        final Label label = new Label("Krasses Beispiel");
-        label.setFont(new Font("Arial", 20));
-
-        table.setEditable(true);
-
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        TableColumn<Object,String> modulenameCol = new TableColumn<>("Modulname");
-        modulenameCol.setCellValueFactory(new PropertyValueFactory<>("modulname"));
-
-
-        TableColumn<Object,String> moduleTypeCol = new TableColumn("Modulart");
-        moduleTypeCol.setCellValueFactory(new PropertyValueFactory<>("modulart"));
-
-        TableColumn<Object,Integer>creditpointsCol = new TableColumn("Creditpoints");
-        creditpointsCol.setCellValueFactory(new PropertyValueFactory<>("creditpoints"));
-
-
-        table.getColumns().addAll(modulenameCol, moduleTypeCol, creditpointsCol);
-
-//        table.getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
-        table.getItems().addAll(studienleistung.getBestandenePflichtmoduleUndWahlpflichtmodule());
-//        table.getItems().addAll(studienleistung.getOffenePflichtmoduleUndWahlpflichtmodule());
-
-
-        final VBox vbox = new VBox();
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10, 0, 0, 10));
-
-
-//TODO: So könnte es ungefähr dann aussehen wegen rechte Seite formular füllen
-        table.setOnMouseClicked((MouseEvent event2) -> {
-            if (event2.getClickCount() > 1) {
-                onEdit();
-            }
-        });
-
-        vbox.getChildren().addAll(label, table);
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
+        stage.setTitle("Notenverwaltung Informatik B.sc.");
+        root = new GradeManagementBorderPane(this, studienleistung);
+        scene = new Scene(root, 900, 600);
         stage.setScene(scene);
         stage.show();
+        stage.setResizable(false);
+
+
+        //stage.setMaximized(true);
 
 //        stage = event.getStage();
-//        stage.setTitle("Notenverwaltung Informatik B.sc.");
-//        root = new GradeManagementBorderPane(this);
-//        scene = new Scene(root, 900, 600);
+//
+//        Scene scene = new Scene(new Group());
+//        stage.setTitle("Table View Sample");
+//        stage.setWidth(300);
+//        stage.setHeight(500);
+
+//        final Label label = new Label("Krasses Beispiel");
+//        label.setFont(new Font("Arial", 20));
+//
+//        table.setEditable(true);
+//
+//        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//
+//        TableColumn<Object,String> modulenameCol = new TableColumn<>("Modulname");
+//        modulenameCol.setCellValueFactory(new PropertyValueFactory<>("modulname"));
+//
+//
+//        TableColumn<Object,String> moduleTypeCol = new TableColumn("Modulart");
+//        moduleTypeCol.setCellValueFactory(new PropertyValueFactory<>("modulart"));
+//
+//        TableColumn<Object,Integer>creditpointsCol = new TableColumn("Creditpoints");
+//        creditpointsCol.setCellValueFactory(new PropertyValueFactory<>("creditpoints"));
+//
+//
+//        table.getColumns().addAll(modulenameCol, moduleTypeCol, creditpointsCol);
+//
+////        table.getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
+//        table.getItems().addAll(studienleistung.getBestandenePflichtmoduleUndWahlpflichtmodule());
+////        table.getItems().addAll(studienleistung.getOffenePflichtmoduleUndWahlpflichtmodule());
+
+//
+//        final VBox vbox = new VBox();
+//        vbox.setSpacing(5);
+//        vbox.setPadding(new Insets(10, 0, 0, 10));
+//
+//
+////TODO: So könnte es ungefähr dann aussehen wegen rechte Seite formular füllen
+//        table.setOnMouseClicked((MouseEvent event2) -> {
+//            if (event2.getClickCount() > 1) {
+//                onEdit();
+//            }
+//        });
+//
+//        vbox.getChildren().addAll(label, table);
+//        ((Group) scene.getRoot()).getChildren().addAll(vbox);
 //        stage.setScene(scene);
 //        stage.show();
-//        stage.setResizable(false);
-//        //stage.setMaximized(true);
+
+
     }
-//TODO: So könnte es ungefähr dann aussehen wegen rechte Seite formular füllen
-    public void onEdit() {
-        try {
-            Wahlpflichtmodul wahlpflichtmodul = (Wahlpflichtmodul) table.getSelectionModel().getSelectedItem();
-            System.out.println(wahlpflichtmodul.getModulname() + " " + wahlpflichtmodul.getModulart() + " " + wahlpflichtmodul.getNote().getEndNote());
-            wahlpflichtmodul.setModulart("Apfel");
-            //Note eintragen button löst studienleistung methode aus
-            System.out.println("Wahlpflcht: Modulart = Apfel");
-            wahlpflichtmodulRepository.save(wahlpflichtmodul);
-        }
-        catch (Exception e) {
-            Pflichtmodul pflichtmodul = (Pflichtmodul) table.getSelectionModel().getSelectedItem();
-            System.out.println(pflichtmodul.getModulname());
-            pflichtmodul.setModulart("Apfel");
-            System.out.println("Pflichtmodul: Modulart = Apfel");
-            pflichtmodulRepository.save(pflichtmodul);
-        }
-    }
+////TODO: So könnte es ungefähr dann aussehen wegen rechte Seite formular füllen
+//    public void onEdit() {
+//        try {
+//            Wahlpflichtmodul wahlpflichtmodul = (Wahlpflichtmodul) table.getSelectionModel().getSelectedItem();
+//            System.out.println(wahlpflichtmodul.getModulname() + " " + wahlpflichtmodul.getModulart() + " " + wahlpflichtmodul.getNote().getEndNote());
+//            wahlpflichtmodul.setModulart("Apfel");
+//            //Note eintragen button löst studienleistung methode aus
+//            System.out.println("Wahlpflcht: Modulart = Apfel");
+//            wahlpflichtmodulRepository.save(wahlpflichtmodul);
+//        }
+//        catch (Exception e) {
+//            Pflichtmodul pflichtmodul = (Pflichtmodul) table.getSelectionModel().getSelectedItem();
+//            System.out.println(pflichtmodul.getModulname());
+//            pflichtmodul.setModulart("Apfel");
+//            System.out.println("Pflichtmodul: Modulart = Apfel");
+//            pflichtmodulRepository.save(pflichtmodul);
+//        }
+//    }
 
     /**
      * Die Methode switchToGradeManagement wechselt die Ansicht zur
@@ -154,7 +158,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
      * Studenten.
      */
     public void switchToGradeManagement() {
-        root = new GradeManagementBorderPane(this);
+        root = new GradeManagementBorderPane(this, studienleistung);
         scene = new Scene(root, 900, 600);
         stage.setScene(scene);
         stage.show();
@@ -166,7 +170,7 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
      * Kolloquium.
      */
     public void switchToDegreeAndKolloquium(){
-        root = new BachelorThesisAndKolloquiumBorderPane(this);
+        root = new BachelorThesisAndKolloquiumBorderPane(this, studienleistung);
         scene = new Scene(root, 900, 600);
         stage.setScene(scene);
         stage.show();

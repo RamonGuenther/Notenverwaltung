@@ -1,5 +1,6 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents;
 
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
 import javafx.scene.control.SplitPane;
 
 /**
@@ -20,10 +21,11 @@ public class GradeManagementSplitPane extends SplitPane {
      * Der Konstruktor von GradeManagementSplitPane initialisiert die Elemente
      * der SplitPane.
      */
-    public GradeManagementSplitPane(){
+    public GradeManagementSplitPane(Studienleistung studienleistung){
 
-        this.gradesTable = new GradesTableViewBorderPane();
-        this.gradeDetails = new GradeDetailsGridPane();
+        this.gradeDetails = new GradeDetailsGridPane(studienleistung);
+        this.gradesTable = new GradesTableViewBorderPane(studienleistung, gradeDetails);
+
 
         getItems().addAll(gradesTable, gradeDetails);
     }

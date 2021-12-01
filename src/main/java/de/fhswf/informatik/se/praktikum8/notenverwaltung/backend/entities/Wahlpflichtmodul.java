@@ -85,4 +85,8 @@ public class Wahlpflichtmodul {
     public void setModulart(String modulart) {
         this.modulart = modulart;
     }
+
+    public String getEndNote(){
+        return note.getEndNote() == 0.0 ? " " : String.valueOf(note.getEndNote());
+    }
 }

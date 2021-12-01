@@ -81,5 +81,7 @@ public class Pflichtmodul{
         this.modulart = modulart;
     }
 
-
+    public String getEndNote(){
+        return note.getEndNote() == 0.0 ? " " : String.valueOf(note.getEndNote());
+    }
 }
