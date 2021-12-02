@@ -39,7 +39,7 @@ public class GradeManagementButtonBox extends HBox {
         Button deleteModule = new Button("Modul entfernen");
         deleteModule.setMinWidth(180);
         setMargin(deleteModule, new Insets(20, 0, 20, 0));
-        deleteModule.setOnAction(new DeleteModuleEventHandler(studienleistung));
+        deleteModule.setOnAction(new DeleteModuleEventHandler(studienleistung, pane));
 
         updateModule = new Button ("Prüfungsleistung aktualisieren");
         updateModule.setMinWidth(180);

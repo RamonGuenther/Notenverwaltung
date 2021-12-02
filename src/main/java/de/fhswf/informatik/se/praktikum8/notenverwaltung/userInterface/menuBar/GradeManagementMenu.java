@@ -17,6 +17,10 @@ public class GradeManagementMenu extends Menu {
     /**
      * Der Konstruktor von HelpMenu initialisiert den Prüfungsleistung-Menüpunkt
      * für die MenuBar der Anwendung.
+     *
+     * @param initializer   StageInitializer wird an Komponenten
+     *                      weitergereicht, um in dessen EventHandlern
+     *                      die Scenes wechseln zu können.
      */
     public GradeManagementMenu(StageInitializer initializer){
         setText("_Prüfungsleistungen");

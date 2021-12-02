@@ -3,13 +3,15 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.eventHan
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents.GradeManagementSplitPane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 
 /**
  * Die Klasse GradeDetailsEventHandler ist für das Verhalten des Buttons
  * "Prüfungsleistung aktualisieren" in der Modulübersicht der Anwendung.
  * Mit dem Klickt auf den Button können bestimmte Details der gewählten
  * Prüfungsleistung verändert werden.
+ *
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
+ * @version 1.2 vom 3. Dezember 2021
  */
 public class GradeDetailsEventHandler implements EventHandler<ActionEvent> {
 

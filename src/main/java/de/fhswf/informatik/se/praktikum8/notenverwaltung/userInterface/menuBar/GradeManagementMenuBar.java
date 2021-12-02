@@ -14,6 +14,10 @@ public class GradeManagementMenuBar extends MenuBar {
     /**
      * Der Konstruktor von GradeManagementMenuBar setzt die Elemente der MenuBar
      * zusammen.
+     *
+     * @param initializer   StageInitializer wird an Komponenten
+     *                      weitergereicht, um in dessen EventHandlern
+     *                      die Scenes wechseln zu können.
      */
     public GradeManagementMenuBar(StageInitializer initializer){
         getMenus().addAll(new DataMenu(), new GradeManagementMenu(initializer), new HelpMenu());

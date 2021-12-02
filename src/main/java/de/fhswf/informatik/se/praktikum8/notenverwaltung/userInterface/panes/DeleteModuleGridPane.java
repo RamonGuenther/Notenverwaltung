@@ -3,6 +3,7 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.panes;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlpflichtmodul;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents.GradesTableView;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -23,6 +24,7 @@ public class DeleteModuleGridPane extends GridPane {
 
     private final Stage stage;
     private Studienleistung studienleistung;
+    private GradesTableView table;
     private Alert alert;
 
     private final ComboBox<String> moduleType;
@@ -38,10 +40,11 @@ public class DeleteModuleGridPane extends GridPane {
      * @param stage     Stage-Object des Fensters. Wird im cancelEventHandler zum
      *                  Schließen des Fensters benötigt.
      */
-    public DeleteModuleGridPane(Stage stage, Studienleistung studienleistung) {
+    public DeleteModuleGridPane(Stage stage, Studienleistung studienleistung, GradesTableView table) {
 
         this.stage = stage;
         this.studienleistung = studienleistung;
+        this.table = table;
 
         Label title = new Label("Module entfernen");
         title.setFont(new Font(30));
@@ -205,6 +208,22 @@ public class DeleteModuleGridPane extends GridPane {
                     default:
                         break;
                 }
+                table.getItems().clear();
+                switch (table.getRadioValue()){
+                    case "Alle Module":
+                        table.getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
+                        break;
+                    case "Offen":
+                        table.getItems().addAll(studienleistung.getOffenePflichtmoduleUndWahlpflichtmodule());
+                        break;
+                    case "Bestanden":
+                        table.getItems().addAll(studienleistung.getBestandenePflichtmoduleUndWahlpflichtmodule());
+                        break;
+                    case "Wahlmodule":
+                        table.getItems().addAll(studienleistung.getWahlmodule());
+                        break;
+                }
+
                 stage.close();
             }
             catch(Exception e) {
