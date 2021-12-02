@@ -6,7 +6,7 @@ import javax.persistence.Embeddable;
  * Die Klasse Bachelorarbeit ist ein Bestandteil der Klasse Abschluss und
  * enthält die Studienleistungen der Bachelorarbeit.
  *
- * @author Ramon Günther
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
  * @version 1.0 vom 1. Dezember 2021
  */
 @Embeddable

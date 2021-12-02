@@ -1,5 +1,6 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.service;
 
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Abschluss;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Notendurchschnitt;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.PflichtmodulRepository;
@@ -39,18 +40,24 @@ public class PflichtmodulService {
 
     public List<Pflichtmodul> findAllOffenePflichtmodule(){return repository.findAllByBestandenIsFalse();}
 
-    public void deleteAllByWahlpflichtblock(){
+    public void deleteAllByWahlpflichtblock(AbschlussService abschlussService){
         if(repository.findAllByModulart(WAHLPFLICHTBLOCK).isEmpty()){
             throw new IllegalArgumentException("Es wurden keine Module vom Typ Wahlpflichtblock gefunden.");
         }
+        Abschluss abschluss = abschlussService.findAbschluss();
+        abschluss.setWahlpflichtblock(null);
+        abschlussService.saveAbschluss(abschluss);
         List<Pflichtmodul> pflichtmodulList = repository.findAllByModulart(WAHLPFLICHTBLOCK);
         repository.deleteAll(pflichtmodulList);
     }
 
-    public void deleteAllByStudienrichtung(){
+    public void deleteAllByStudienrichtung(AbschlussService abschlussService){
         if(repository.findAllByModulart(STUDIENRICHTUNG).isEmpty()){
             throw new IllegalArgumentException("Es wurden keine Module vom Typ Studienrichtung gefunden.");
         }
+        Abschluss abschluss = abschlussService.findAbschluss();
+        abschluss.setStudienrichtung(null);
+        abschlussService.saveAbschluss(abschluss);
         List<Pflichtmodul> pflichtmodulList = repository.findAllByModulart(STUDIENRICHTUNG);
         repository.deleteAll(pflichtmodulList);
     }

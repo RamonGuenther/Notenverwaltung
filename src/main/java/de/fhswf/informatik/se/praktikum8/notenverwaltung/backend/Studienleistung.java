@@ -238,11 +238,11 @@ public class Studienleistung {
     }
 
     public void deleteAllByWahlpflichtblock(){
-        pflichtmodulService.deleteAllByWahlpflichtblock();
+        pflichtmodulService.deleteAllByWahlpflichtblock(abschlussService);
     }
 
     public void deleteAllByStudienrichtung(){
-        pflichtmodulService.deleteAllByStudienrichtung();
+        pflichtmodulService.deleteAllByStudienrichtung(abschlussService);
     }
 
 
