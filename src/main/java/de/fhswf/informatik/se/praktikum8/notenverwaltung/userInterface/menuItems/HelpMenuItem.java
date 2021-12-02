@@ -50,7 +50,7 @@ public class HelpMenuItem extends MenuItem {
                 Stage stage = new Stage();
                 stage.setTitle("Notenverwaltung Informatik B.sc. - Module hinzufügen");
                 Parent root = new HelpStackPane(stage);
-                Scene scene = new Scene(root, 400, 280);
+                Scene scene = new Scene(root, 400, 200);
                 stage.setScene(scene);
                 stage.show();
             }

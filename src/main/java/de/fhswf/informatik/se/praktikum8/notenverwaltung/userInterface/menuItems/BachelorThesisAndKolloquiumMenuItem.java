@@ -54,8 +54,9 @@ public class BachelorThesisAndKolloquiumMenuItem extends MenuItem {
             catch(Exception e) {
                 Alert alert =
                         new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + this.getClass().getSimpleName() +
-                                        ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
+                                e.getMessage());
+//                                "Klasse " + this.getClass().getSimpleName() +
+//                                        ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
             }

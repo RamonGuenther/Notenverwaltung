@@ -243,9 +243,10 @@ public class AddModuleGridPane extends GridPane {
                     default -> {
                     }
                 }
-
+                table.getItems().clear();
                 switch (table.getRadioValue()){
                     case "Alle Module":
+
                         table.getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
                         break;
                     case "Offen":

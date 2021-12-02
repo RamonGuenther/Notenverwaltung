@@ -2,8 +2,6 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComp
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.ComboBoxGrade;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -32,18 +30,25 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
     private final ComboBoxGrade gradeBachelorThesis2;
     private final Label creditpointsBachelorThesis;
 
-    private final ComboBoxGrade gradeKolloquium;
+    private final ComboBoxGrade gradeKolloquium1;
+    private final ComboBoxGrade gradeKolloquium2;
     private final Label creditpointsKolloquium;
 
     private final Label averageGradeModules;
     private final Label averageGradeBachelor;
     private final Label sumCreditpoints;
+    private final Label averageGradeAll;
 
-    private final Button update;
-    private final Button save;
+    private final Button updateBachelor;
+    private final Button updateKolloquium;
+    private final Button saveBachelor;
+    private final Button saveKolloquium;
     private final Button cancel;
 
+
+
     /**
+     *
      * Im Konstruktor von BachelorThesisAndKolloquiumGridPane werden
      * die einzelnen Elemente der ansicht erzeugt bzw. initialisiert und
      * auf der GridPane entsprechend angeordnet.
@@ -52,11 +57,15 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
 
         this.studienleistung = studienleistung;
 
+        if(studienleistung.getSummeCreditpointsOhneAbschluss() < 165){
+            setDisable(true);
+        }
+
         Label title = new Label("Abschluss & Kolloquium");
         title.setFont(new Font(30));
         title.setStyle("-fx-font-weight: bold");
 
-        Label labelGradeBachelorThesis1 = new Label("Note der Bachelorarbeit");
+        Label labelGradeBachelorThesis1 = new Label("Note der Bachelorarbeit (1. Versuch)");
         labelGradeBachelorThesis1.setFont(new Font(16));
         gradeBachelorThesis1 = new ComboBoxGrade();
 
@@ -74,7 +83,8 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         setValignment(gradeBachelorThesis1, VPos.TOP);
         gradeBachelorThesis1.setDisable(true);
 
-        Label labelGradeBachelorThesis2 = new Label("Note der Bachelorarbeit");
+
+        Label labelGradeBachelorThesis2 = new Label("Note der Bachelorarbeit (2.Versuch)");
         labelGradeBachelorThesis2.setFont(new Font(16));
         gradeBachelorThesis2 = new ComboBoxGrade();
 
@@ -87,15 +97,20 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
                 .getBachelorarbeit()
                 .getNoteBachelorarbeit2() : null
         );
+
         gradeBachelorThesis2.setMinWidth(150);
         setValignment(gradeBachelorThesis2, VPos.TOP);
         gradeBachelorThesis2.setDisable(true);
 
-        Label labelGradeKolloquium = new Label("Note des Kolloquiums");
-        labelGradeKolloquium.setFont(new Font(16));
-        gradeKolloquium = new ComboBoxGrade();
 
-        gradeKolloquium.setValue(studienleistung
+        // KOLLOQUIUM
+
+
+        Label labelGradeKolloquium1 = new Label("Note des Kolloquiums (1.Versuch)");
+        labelGradeKolloquium1.setFont(new Font(16));
+        gradeKolloquium1 = new ComboBoxGrade();
+
+        gradeKolloquium1.setValue(studienleistung
                 .getAbschluss()
                 .getKolloquium()
                 .getEndNoteKolloquium()
@@ -104,10 +119,28 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
                 .getEndNoteKolloquium() : null
         );
 
-        gradeKolloquium.setMinWidth(150);
-        setValignment(gradeKolloquium, VPos.TOP);
-        gradeKolloquium.setDisable(true);
+        gradeKolloquium1.setMinWidth(150);
+        setValignment(gradeKolloquium1, VPos.TOP);
+        gradeKolloquium1.setDisable(true);
 
+        Label labelGradeKolloquium2 = new Label("Note des Kolloquiums (2. Versuch)");
+        labelGradeKolloquium2.setFont(new Font(16));
+        gradeKolloquium2 = new ComboBoxGrade();
+
+        gradeKolloquium2.setValue(studienleistung
+                .getAbschluss()
+                .getKolloquium()
+                .getEndNoteKolloquium()
+                != 0.0 ? studienleistung
+                .getAbschluss().getKolloquium()
+                .getEndNoteKolloquium() : null
+        );
+
+        gradeKolloquium2.setMinWidth(150);
+        setValignment(gradeKolloquium2, VPos.TOP);
+        gradeKolloquium2.setDisable(true);
+
+        // REST
 
         creditpointsBachelorThesis = new Label();
         creditpointsBachelorThesis.setFont(new Font(16));
@@ -127,27 +160,57 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
 
         averageGradeModules = new Label("Notendurchschnitt der Module: " + studienleistung.getNotendurchschnittModule());
         averageGradeModules.setFont(new Font(16));
+        setValignment(averageGradeModules, VPos.BOTTOM);
 
-        averageGradeBachelor = new Label("Notendurchschnitt der Bachelorarbeit: ");
-        averageGradeBachelor.setText("Notendurchschnitt der Bachelorarbeit: " + studienleistung.getNotendurchschnittAbschluss());
+        averageGradeBachelor = new Label("Notendurchschnitt Bachelorarbeit und Kolloquium: " + studienleistung.getNotendurchschnittAbschluss());
         averageGradeBachelor.setFont(new Font(16));
 
-        sumCreditpoints =  new Label("Summe der Creditpoints: ");
-        sumCreditpoints.setText("Summe der Creditpoints: " + studienleistung.getSummeCreditPointsMitAbschluss());
+        sumCreditpoints =  new Label("Summe der Creditpoints: " + studienleistung.getSummeCreditPointsMitAbschluss());
         sumCreditpoints.setFont(new Font(16));
 
-        update = new Button("Bearbeiten");
-        update.setMinWidth(150);
-        setHalignment(update, HPos.CENTER);
-        setValignment(update, VPos.BOTTOM);
-        update.setOnAction(new updateBachelorThesisAndKolloquiumEventHandler());
+        averageGradeAll = new Label("Notendurchschnitt Gesamt:");
+        String checkAverageGradeAll = studienleistung.getSummeCreditPointsMitAbschluss() != 180 ? " " : String.valueOf(studienleistung.getNotendurchschnittGesamt());
+        averageGradeAll.setText("Notendurchschnitt Gesamt: " + checkAverageGradeAll);
+        averageGradeAll.setFont(new Font(16));
 
-        save = new Button("Speichern");
-        save.setMinWidth(150);
-        setHalignment(save, HPos.CENTER);
-        setValignment(save, VPos.BOTTOM);
-        save.setVisible(false);
-        save.setOnAction(new saveBachelorThesisAndKolloquiumEventHandler());
+        updateBachelor = new Button("Bearbeiten");
+        updateBachelor.setMinWidth(150);
+        setValignment(updateBachelor, VPos.BOTTOM);
+        updateBachelor.setOnAction(new updateBachelorEvent());
+
+        if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0){
+            updateBachelor.setDisable(true);
+        }
+
+        updateKolloquium= new Button("Bearbeiten");
+        updateKolloquium.setMinWidth(150);
+        setValignment(updateKolloquium, VPos.BOTTOM);
+        updateKolloquium.setOnAction(new updateKolloquiumEvent());
+
+        if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0){
+            updateKolloquium.setDisable(false);
+        }
+        else{
+            updateKolloquium.setDisable(true);
+        }
+        if(studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0){
+            updateKolloquium.setDisable(true);
+        }
+
+
+        saveBachelor = new Button("Speichern");
+        saveBachelor.setMinWidth(150);
+        setHalignment(saveBachelor, HPos.CENTER);
+        setValignment(saveBachelor, VPos.BOTTOM);
+        saveBachelor.setVisible(false);
+        saveBachelor.setOnAction(new saveBachelorEvent());
+
+        saveKolloquium = new Button("Speichern");
+        saveKolloquium.setMinWidth(150);
+        setHalignment(saveKolloquium, HPos.CENTER);
+        setValignment(saveKolloquium, VPos.BOTTOM);
+        saveKolloquium.setVisible(false);
+        saveKolloquium.setOnAction(new saveKolloquiumEvent());
 
         cancel = new Button("Abbrechen");
         cancel.setMinWidth(150);
@@ -165,18 +228,23 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         add(labelGradeBachelorThesis2,0,3,2,1);
         add(gradeBachelorThesis2,0,4,2,1);
         add(creditpointsBachelorThesis,0,5,2,1);
+        add(updateBachelor,0,6,1,1);
 
-        add(labelGradeKolloquium,1,1,2,1);
-        add(gradeKolloquium,1,2,2,1);
+        add(labelGradeKolloquium1,1,1,2,1);
+        add(gradeKolloquium1,1,2,2,1);
+        add(labelGradeKolloquium2,1,3,2,1);
+        add(gradeKolloquium2,1,4,2,1);
         add(creditpointsKolloquium,1,5,2,1);
+        add(updateKolloquium,1,6,1,1);
 
-        add(averageGradeModules,0,6,4,1);
-        add(averageGradeBachelor,0,7,4,1);
-        add(sumCreditpoints,0,8,4,1);
+        add(averageGradeModules,0,7,4,1);
+        add(averageGradeBachelor,0,8,4,1);
+        add(sumCreditpoints,0,9,4,1);
+        add(averageGradeAll,0,10,4,1);
 
-        add(update,0,9,2,10);
-        add(save,0,9, 1,10);
-        add(cancel,1,9, 1,10);
+        add(saveBachelor,0,11, 1,10);
+        add(saveKolloquium,0,11, 1,10);
+        add(cancel,1,11, 1,10);
 
         setPadding(new Insets(30, 0, 30, 50 ));
         setVgap(10);
@@ -194,9 +262,11 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         RowConstraints row6 = new RowConstraints();
         row6.setMinHeight(20);
         RowConstraints row7 = new RowConstraints();
-        row7.setMinHeight(20);
+        row7.setMinHeight(40);
+        RowConstraints row8 = new RowConstraints();
+        row8.setMinHeight(60);
 
-        getRowConstraints().addAll(row1, row2, row3, row4, row5, row6, row7);
+        getRowConstraints().addAll(row1, row2, row3, row4, row5, row6, row7, row8);
 
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setMinWidth(400);
@@ -204,6 +274,8 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         col2.setMinWidth(400);
 
         getColumnConstraints().addAll(col1, col2);
+
+
 
     }
 
@@ -213,45 +285,27 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
      * zur Bearbeitung freigeschaltet und der Speichern-Button und
      * Abbrechen-Button eingeblendet.
      */
-    class updateBachelorThesisAndKolloquiumEventHandler implements EventHandler<ActionEvent> {
+    class updateBachelorEvent implements EventHandler<ActionEvent> {
 
         @Override
         public void handle(ActionEvent event)
         {
-
-
-
             try {
-                save.disableProperty().bind(
-                        gradeBachelorThesis1.valueProperty().isNull()
-                                .and(gradeKolloquium.valueProperty().isNull()));
-
-//                //Damit der Save Button grau bleibt bis die Felder gesetzt wurden
-//                //TODO: WENN MAN DIREKT WIEDER DEN BEARBEITEN BUTTON DRÜCK WIRD DER SAFE BUTTON NICHT GRAU BEIM VERLASSEN UND HINGEHEN SCHON
-//                if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0 && studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0){
-//                    save.setDisable(true);
-//                }
-//                else {
-//
-//                    );
-//                }
-
-                if(gradeBachelorThesis1.getValue() != null){
-                    gradeBachelorThesis1.setDisable(true);
-                    gradeBachelorThesis2.setDisable(false);
-
-                }
-                else{
+                if(gradeBachelorThesis1.getValue() == null ){
                     gradeBachelorThesis1.setDisable(false);
                     gradeBachelorThesis2.setDisable(true);
+                    saveBachelor.disableProperty().bind(gradeBachelorThesis1.valueProperty().isNull());
                 }
+                else if(gradeBachelorThesis1.getValue() >= 0.0 && gradeBachelorThesis2.getValue() == null){
+                    gradeBachelorThesis2.setDisable(false);
+                    saveBachelor.disableProperty().bind(gradeBachelorThesis2.valueProperty().isNull());
+                }
+                updateBachelor.setVisible(false);
+                updateKolloquium.setDisable(true);
+                saveBachelor.setVisible(true);
 
-                gradeKolloquium.setDisable(false);
-
-                update.setVisible(false);
-                save.setVisible(true);
+                saveKolloquium.setVisible(false);
                 cancel.setVisible(true);
-
 
             }
             catch(Exception e) {
@@ -264,45 +318,126 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         }
     }
 
-    /**
-     * Die Klasse saveBachelorThesisAndKolloquiumEventHandler kümmert sich um das Verhalten des
-     * Speichern-Buttons. Er deaktiviert die mögliche Bearbeitung der Notenfelder und speichert
-     * die zuvor eingegebenen Werte. Außerdem wird der Bearbeiten-Button wieder eingeblendet.
-     */
-    class saveBachelorThesisAndKolloquiumEventHandler implements EventHandler<ActionEvent> {
+
+    class updateKolloquiumEvent implements EventHandler<ActionEvent> {
 
         @Override
         public void handle(ActionEvent event)
         {
             try {
-
-                save.setVisible(false);
-                cancel.setVisible(false);
-                update.setVisible(true);
-
-                //TODO: DIE IFS ERGEBEN KEINEN SINN, DA SIE BEIM ZWEITEN RUN BEIDE ZUTREFFEN AU?ER ERSTE
-                if(gradeBachelorThesis1.getValue() == null ||
-                        gradeKolloquium.getValue() == null ){
-
-                    throw new IllegalArgumentException("Die Note für den Bachelor oder für das Kolloquium wurde nicht ausgewählt.");
+                if(gradeKolloquium1.getValue() == null ){
+                    gradeKolloquium1.setDisable(false);
+                    gradeKolloquium2.setDisable(true);
+                    saveKolloquium.disableProperty().bind(gradeKolloquium1.valueProperty().isNull());
                 }
-                else if(gradeBachelorThesis1.getValue()!= null &&
-                        gradeKolloquium.getValue() != null){
-                    gradeBachelorThesis1.setValue(gradeBachelorThesis1.getValue());
+                else if(gradeKolloquium1.getValue() >= 0.0 && gradeKolloquium2.getValue() == null){
+                    gradeKolloquium2.setDisable(false);
+                    saveKolloquium.disableProperty().bind(gradeKolloquium2.valueProperty().isNull());
+                }
+                updateKolloquium.setVisible(false);
+                updateBachelor.setDisable(true);
+                saveKolloquium.setVisible(true);
+
+                saveBachelor.setVisible(false);
+                cancel.setVisible(true);
+            }
+            catch(Exception e) {
+                Alert alert =
+                        new Alert(Alert.AlertType.ERROR,
+                                e.getMessage(), ButtonType.OK);
+                alert.setResizable(true);
+                alert.showAndWait();
+            }
+        }
+    }
+
+    /**
+     * Die Klasse saveBachelorThesisAndKolloquiumEventHandler kümmert sich um das Verhalten des
+     * Speichern-Buttons. Er deaktiviert die mögliche Bearbeitung der Notenfelder und speichert
+     * die zuvor eingegebenen Werte. Außerdem wird der Bearbeiten-Button wieder eingeblendet.
+     */
+    class saveBachelorEvent implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent event)
+        {
+            try {
+                if(!gradeBachelorThesis1.isDisabled()){
                     studienleistung.updateNoteBachelor(gradeBachelorThesis1.getValue());
-                    studienleistung.updateNoteKolloquium(gradeKolloquium.getValue());
                 }
-                else if(gradeBachelorThesis2.getValue()!= null &&
-                        gradeKolloquium.getValue() != null){
-                    System.out.println("Hallol");
+                else if(!gradeBachelorThesis2.isDisabled()){
                     studienleistung.updateNoteBachelor(gradeBachelorThesis2.getValue());
-                    studienleistung.updateNoteKolloquium(gradeKolloquium.getValue());
                 }
 
                 gradeBachelorThesis1.setDisable(true);
                 gradeBachelorThesis2.setDisable(true);
-                gradeKolloquium.setDisable(true);
+                saveBachelor.setVisible(false);
+                cancel.setVisible(false);
 
+                if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0 ||
+                    studienleistung.getAbschluss().getBachelorarbeit().getNoteBachelorarbeit2() > 4.0){
+                    if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0){
+                        updateKolloquium.setVisible(true);
+                        updateKolloquium.setDisable(false);
+                    }
+                    updateBachelor.setVisible(true);
+                    updateBachelor.setDisable(true);
+                }
+                else{
+                    updateBachelor.setDisable(false);
+                    updateBachelor.setVisible(true);
+                }
+
+                averageGradeModules.setText("Notendurchschnitt der Module: " + studienleistung.getNotendurchschnittModule());
+                averageGradeBachelor.setText("Notendurchschnitt Bachelorarbeit und Kolloquium: " + studienleistung.getNotendurchschnittAbschluss());
+                sumCreditpoints.setText("Summe der Creditpoints: " + studienleistung.getSummeCreditPointsMitAbschluss());
+                creditpointsBachelorThesis.setText("Creditpoints: " + studienleistung.getAbschluss().getBachelorarbeit().getCreditpointsBachelorarbeit());
+                String checkAverageGradeAll = studienleistung.getSummeCreditPointsMitAbschluss() != 180 ? " " : String.valueOf(studienleistung.getNotendurchschnittGesamt());
+                averageGradeAll.setText("Notendurchschnitt Gesamt: " + checkAverageGradeAll);
+            }
+            catch(Exception e) {
+                Alert alert =
+                        new Alert(Alert.AlertType.ERROR,
+                                e.getMessage(), ButtonType.OK);
+                alert.setResizable(true);
+                alert.showAndWait();
+            }
+        }
+    }
+
+    class saveKolloquiumEvent implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent event)
+        {
+            try {
+                if(!gradeKolloquium1.isDisabled()){
+                    studienleistung.updateNoteKolloquium(gradeKolloquium1.getValue());
+                }
+                else if(!gradeKolloquium2.isDisabled()){
+                    studienleistung.updateNoteKolloquium(gradeKolloquium2.getValue());
+                }
+
+                gradeKolloquium1.setDisable(true);
+                gradeKolloquium2.setDisable(true);
+                saveKolloquium.setVisible(false);
+                cancel.setVisible(false);
+
+                if(studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium()!= 0.0 ||
+                        studienleistung.getAbschluss().getKolloquium().getNoteKolloquium2() > 4.0){
+                    updateKolloquium.setVisible(true);
+                    updateKolloquium.setDisable(true);
+                }
+                else{
+                    updateKolloquium.setDisable(false);
+                    updateKolloquium.setVisible(true);
+                }
+                averageGradeModules.setText("Notendurchschnitt der Module: " + studienleistung.getNotendurchschnittModule());
+                averageGradeBachelor.setText("Notendurchschnitt Bachelorarbeit und Kolloquium: " + studienleistung.getNotendurchschnittAbschluss());
+                sumCreditpoints.setText("Summe der Creditpoints: " + studienleistung.getSummeCreditPointsMitAbschluss());
+                creditpointsBachelorThesis.setText("Creditpoints: " + studienleistung.getAbschluss().getKolloquium().getCreditpointsKolloquium());
+                String checkAverageGradeAll = studienleistung.getSummeCreditPointsMitAbschluss() != 180 ? " " : String.valueOf(studienleistung.getNotendurchschnittGesamt());
+                averageGradeAll.setText("Notendurchschnitt Gesamt: " + checkAverageGradeAll);
             }
             catch(Exception e) {
                 Alert alert =
@@ -326,11 +461,11 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         {
             try {
                 gradeBachelorThesis1.setDisable(true);
-                gradeKolloquium.setDisable(true);
+                gradeKolloquium1.setDisable(true);
 
-                save.setVisible(false);
+                saveBachelor.setVisible(false);
                 cancel.setVisible(false);
-                update.setVisible(true);
+                updateBachelor.setVisible(true);
 
             }
             catch(Exception e) {

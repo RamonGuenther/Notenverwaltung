@@ -2,10 +2,15 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.panes;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -30,11 +35,20 @@ public class HelpStackPane extends StackPane {
 
         this.stage = stage;
 
+        VBox items = new VBox();
+
+        Label help = new Label("Sorry, hier kann dir keiner Helfen. :)");
+        help.setFont(new Font(20));
+
         Button close = new Button("Schließen");
         close.setOnAction(new closeEventHandler());
 
-        getChildren().add(close);
+        items.setAlignment(Pos.BASELINE_CENTER);
+        items.setMargin(help, new Insets(20, 0, 20, 0));
+        items.setSpacing(50);
 
+        items.getChildren().addAll(help, close);
+        getChildren().addAll(items);
     }
 
     /**
