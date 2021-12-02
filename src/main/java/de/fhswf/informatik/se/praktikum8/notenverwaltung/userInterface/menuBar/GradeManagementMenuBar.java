@@ -6,7 +6,7 @@ import javafx.scene.control.MenuBar;
 /**
  * Die Klasse GradeManagementMenuBar erstellt eine Menubar für die Anwendung.
  *
- * @author Ivonne Kneißig
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
  * @version 1.0 vom 25. November 2021
  */
 public class GradeManagementMenuBar extends MenuBar {

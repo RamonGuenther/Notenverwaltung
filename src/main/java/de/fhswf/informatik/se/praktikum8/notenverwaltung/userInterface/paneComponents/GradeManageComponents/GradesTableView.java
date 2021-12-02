@@ -1,10 +1,6 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlmodul;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlpflichtmodul;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,27 +10,31 @@ import javafx.scene.input.MouseEvent;
  * Die Klasse GradesTableView erzeugt die Tabelle mit den Modulen
  * des Studenten.
  *
- * @author Ivonne Kneißig
- * @version 1.0 vom 25. November 2021
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
+ * @version 1.1 vom 2. November 2021
  */
 public class GradesTableView extends TableView<Object> {
 
-    private GradeManagementSplitPane splitPane;
+    private final GradeManagementSplitPane splitPane;
 
-    private TableColumn<Object, Integer> columnCreditpoints;
+    private final TableColumn<Object, Integer> columnCreditpoints;
 
-    private GradeDetailsGridPane gradeDetails;
-
-    private Studienleistung studienleistung;
+    private final GradeDetailsGridPane gradeDetails;
 
     private String radioValue;
 
     /**
      * Im Konstruktor von GradesTableView wird die Tabelle initialisiert.
+     *
+     * @param studienleistung   Studienleistungsobjekt der Anwendung, das
+     *                          alle Module und den Abschluss enthält.
+     * @param gradeDetails      GridPane der Modulübersicht, welche die Detailansicht
+     *                          der Module zeigt
+     * @param splitPane         SplitPane der Modulübersicht, welche die Tabelle und
+     *                          die Details anzeigt.
      */
     public GradesTableView(Studienleistung studienleistung, GradeDetailsGridPane gradeDetails, GradeManagementSplitPane splitPane){
 
-        this.studienleistung = studienleistung;
         this.gradeDetails = gradeDetails;
         this.splitPane = splitPane;
         gradeDetails.setTable(this);
@@ -43,10 +43,8 @@ public class GradesTableView extends TableView<Object> {
         TableColumn<Object, String> columnModule = new TableColumn<>("Modul");
         columnModule.setCellValueFactory(new PropertyValueFactory<>("modulname"));
 
-
         TableColumn<Object, String> columnModuleType = new TableColumn<>("Modulart");
         columnModuleType.setCellValueFactory(new PropertyValueFactory<>("modulart"));
-
 
         TableColumn<Object, String> columnGrade = new TableColumn<>("Note");
         columnGrade.setCellValueFactory(new PropertyValueFactory<>("endNote"));
@@ -60,12 +58,16 @@ public class GradesTableView extends TableView<Object> {
         getColumns().addAll(columnModule, columnModuleType, columnGrade, columnCreditpoints, columnSemester);
         getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
 
-        setOnMouseClicked((MouseEvent event2) -> {
-            if (event2.getClickCount() >= 1) {
-                onEdit();
+        setOnMouseClicked((MouseEvent mouseEvent) -> {
+            if (mouseEvent.getClickCount() >= 1) {
+                onSelect();
             }
         });
     }
+
+    /*------------------------------------------------------------------------------------
+                                    GETTER UND SETTER
+     -------------------------------------------------------------------------------------*/
 
     public String getRadioValue() {
         return radioValue;
@@ -80,12 +82,20 @@ public class GradesTableView extends TableView<Object> {
             getColumns().add(3, columnCreditpoints);
         }
     }
-
     public void setColumnsWahlmodule(){
         getColumns().remove(3);
     }
 
-    public void onEdit() {
+    /*------------------------------------------------------------------------------------
+                                        METHODEN
+     -------------------------------------------------------------------------------------*/
+
+    /**
+     * Die Methode onSelect aktiviert oder deaktiviert Elemente der Detailansicht,
+     * je nach ausgewähltem Modul und setzt die entsprechenden Werte in die Detailfelder
+     * ein.
+     */
+    public void onSelect() {
         if( getSelectionModel().getSelectedItem() == null){
             return;
         }

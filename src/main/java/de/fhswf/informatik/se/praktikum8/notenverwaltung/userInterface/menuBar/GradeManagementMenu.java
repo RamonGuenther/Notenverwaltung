@@ -9,7 +9,7 @@ import javafx.scene.control.Menu;
  * Die Klasse GradeManagementMenu erstellt einen Prüfungsleistungen-Menüpunkt
  * für die MenuBar der Anwendung
  *
- * @author Ivonne Kneißig
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
  * @version 1.0 vom 25. November 2021
  */
 public class GradeManagementMenu extends Menu {

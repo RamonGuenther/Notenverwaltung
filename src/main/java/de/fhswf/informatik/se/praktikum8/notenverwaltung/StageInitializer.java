@@ -2,7 +2,6 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.ChartApplication.StageReadyEvent;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.*;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.AbschlussRepository;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.PflichtmodulRepository;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.WahlmodulRepository;
@@ -15,10 +14,6 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Die Klasse StageInitializer initialisiert die Stage für die Notenverwaltungs-Applikation

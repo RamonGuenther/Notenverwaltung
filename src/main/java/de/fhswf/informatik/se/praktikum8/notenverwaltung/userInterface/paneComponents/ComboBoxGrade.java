@@ -6,8 +6,8 @@ import javafx.scene.control.ComboBox;
  * Die Klasse ChoiceBoxGrade erstellt eine Selections-Auswahl mit allen
  * möglichen Noten für ein Modul.
  *
- * @author Ivonne Kneißig
- * @version 1.0 vom 27. November 2021
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
+ * @version 1.1 vom 2. November 2021
  */
 public class ComboBoxGrade extends ComboBox<Double> {
 

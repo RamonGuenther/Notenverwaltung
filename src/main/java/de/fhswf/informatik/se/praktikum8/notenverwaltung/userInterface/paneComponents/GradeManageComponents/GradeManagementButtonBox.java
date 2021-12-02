@@ -14,12 +14,12 @@ import javafx.scene.layout.HBox;
  * zum Hinzufügen eines Moduls, zum Entfernen eines Moduls und zum Aktualisieren
  * der Prüfungsleistung eines Moduls für die Modulübersicht.
  *
- * @author Ivonne Kneißig
- * @version 1.1 vom 27. November 2021
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
+ * @version 1.2 vom 2. Dezember 2021
  */
 public class GradeManagementButtonBox extends HBox {
 
-    private Button updateModule;
+    private final Button updateModule;
     /**
      * Der Konstruktor von GradeManagementSplitPane initialisiert die Elemente
      * der Buttonzeile
@@ -27,7 +27,8 @@ public class GradeManagementButtonBox extends HBox {
      * @param pane              SplitPane der Modulübersicht, welche die Tabelle und
      *                          die Details anzeigt. Wird dem GradeDetailsEventHandler
      *                          übergeben.
-     * @param studienleistung
+     * @param studienleistung   Studienleistungsobjekt der Anwendung, das
+     *                          alle Module und den Abschluss enthält.
      */
     public GradeManagementButtonBox(GradeManagementSplitPane pane, Studienleistung studienleistung){
 
@@ -55,9 +56,5 @@ public class GradeManagementButtonBox extends HBox {
 
     public Button getUpdateModule() {
         return updateModule;
-    }
-
-    public void setUpdateModule(Button updateModule) {
-        this.updateModule = updateModule;
     }
 }

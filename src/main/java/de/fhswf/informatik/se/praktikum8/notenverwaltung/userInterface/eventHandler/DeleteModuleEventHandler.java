@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  * für den Studenten stehen. :)
  *
  * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
- * @version 1.0 vom 3. Dezember 2021
+ * @version 1.0 vom 2. Dezember 2021
  */
 public class DeleteModuleEventHandler implements EventHandler<ActionEvent> {
 
@@ -50,9 +50,7 @@ public class DeleteModuleEventHandler implements EventHandler<ActionEvent> {
             stage.show();
         }
         catch(Exception e) {
-            Alert alert =
-                    new Alert(Alert.AlertType.ERROR,
-                            "Klasse " + this.getClass().getSimpleName() +
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Klasse " + this.getClass().getSimpleName() +
                                     ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
             alert.setResizable(true);
             alert.showAndWait();

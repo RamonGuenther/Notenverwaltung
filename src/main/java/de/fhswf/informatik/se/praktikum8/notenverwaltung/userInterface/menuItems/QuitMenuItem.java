@@ -14,7 +14,7 @@ import javafx.scene.input.KeyCombination;
  * Die Klasse QuitMenuItem erstellt eine Menüoption für das Dateimenü der MenuBar.
  * Das Menü-Item beendet die Anwendung.
  *
- * @author Ivonne Kneißig
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
  * @version 1.0 vom 26. November 2021
  */
 public class QuitMenuItem extends MenuItem {
@@ -43,12 +43,11 @@ public class QuitMenuItem extends MenuItem {
                 Platform.exit();
             }
             catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + this.getClass().getSimpleName() +
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Klasse " + this.getClass().getSimpleName() +
                                         ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }

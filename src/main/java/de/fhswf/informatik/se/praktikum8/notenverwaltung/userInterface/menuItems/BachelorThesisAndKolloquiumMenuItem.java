@@ -15,7 +15,7 @@ import javafx.scene.input.KeyCombination;
  * Menüoption für das Prüfungsleistungsmenü der MenuBar. Das Menü-Item
  * führt zur Übersichtsseite für die Bachelorarbeit und das Kolloquium.
  *
- * @author Ivonne Kneißig
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
  * @version 1.0 vom 26. November 2021
  */
 public class BachelorThesisAndKolloquiumMenuItem extends MenuItem {
@@ -52,9 +52,7 @@ public class BachelorThesisAndKolloquiumMenuItem extends MenuItem {
                 initializer.switchToDegreeAndKolloquium();
             }
             catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + this.getClass().getSimpleName() +
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Klasse " + this.getClass().getSimpleName() +
                                         ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();

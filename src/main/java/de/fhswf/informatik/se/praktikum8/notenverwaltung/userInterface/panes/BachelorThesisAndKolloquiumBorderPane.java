@@ -11,8 +11,8 @@ import javafx.scene.layout.BorderPane;
  * Ansicht für den Abschluss des Studenten. Hier werden Noten und Creditpoints
  * für die Bachelorarbeit und das Kolloquium eingetragen und angezeigt.
  *
- * @author Ivonne Kneißig
- * @version 1.0 vom 26. November 2021
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
+ * @version 1.1 vom 2. Dezember 2021
  */
 public class BachelorThesisAndKolloquiumBorderPane extends BorderPane {
 
@@ -25,6 +25,8 @@ public class BachelorThesisAndKolloquiumBorderPane extends BorderPane {
      * @param initializer       StageInitializer wird an Komponenten
      *                          weitergereicht, um in dessen EventHandlern
      *                          die Scenes wechseln zu können.
+     * @param studienleistung   Studienleistungsobjekt der Anwendung, das
+     *                          alle Module und den Abschluss enthält.
      */
     public BachelorThesisAndKolloquiumBorderPane(StageInitializer initializer, Studienleistung studienleistung){
         GradeManagementMenuBar menuBar = new GradeManagementMenuBar(initializer);

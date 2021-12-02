@@ -11,7 +11,7 @@ import javafx.event.EventHandler;
  * Prüfungsleistung verändert werden.
  *
  * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
- * @version 1.2 vom 3. Dezember 2021
+ * @version 1.2 vom 2. Dezember 2021
  */
 public class GradeDetailsEventHandler implements EventHandler<ActionEvent> {
 

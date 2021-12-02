@@ -11,8 +11,8 @@ import javafx.scene.layout.BorderPane;
  * Die Klasse GradeManagementBorderPane ist die Basis für die
  * Ansicht der Modulübersicht des Studenten.
  *
- * @author Ivonne Kneißig
- * @version 1.1 vom 26. November 2021
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
+ * @version 1.2 vom 1. Dezember 2021
  */
 
 public class GradeManagementBorderPane extends BorderPane {
@@ -27,6 +27,8 @@ public class GradeManagementBorderPane extends BorderPane {
      * @param initializer       StageInitializer wird an Komponenten
      *                          weitergereicht, um in dessen EventHandlern
      *                          die Scenes wechseln zu können.
+     * @param studienleistung   Studienleistungsobjekt der Anwendung, das
+     *                          alle Module und den Abschluss enthält.
      */
     public GradeManagementBorderPane(StageInitializer initializer, Studienleistung studienleistung){
 

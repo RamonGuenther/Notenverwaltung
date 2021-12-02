@@ -19,20 +19,19 @@ import javafx.scene.text.Font;
  * bzw. angezeigt, die jeweiligen Notendurchschnitte berechnet und die Summe
  * der Creditpoints angezeigt
  *
- * @author Ivonne Kneißig
- * @version 1.0 vom 27. November 2021
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
+ * @version 1.1 vom 2. Dezember 2021
  */
 public class BachelorThesisAndKolloquiumGridPane extends GridPane {
 
     private final Studienleistung studienleistung;
 
-    private final ComboBoxGrade gradeBachelorThesis1; //TODO IVONNE DAS MIT FINAL ZEIGEN
+    private final ComboBoxGrade gradeBachelorThesis1;
     private final ComboBoxGrade gradeBachelorThesis2;
     private final Label creditpointsBachelorThesis;
 
     private final ComboBoxGrade gradeKolloquium1;
     private final ComboBoxGrade gradeKolloquium2;
-    private final Label creditpointsKolloquium;
 
     private final Label averageGradeModules;
     private final Label averageGradeBachelor;
@@ -45,13 +44,13 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
     private final Button saveKolloquium;
     private final Button cancel;
 
-
-
     /**
-     *
      * Im Konstruktor von BachelorThesisAndKolloquiumGridPane werden
      * die einzelnen Elemente der ansicht erzeugt bzw. initialisiert und
      * auf der GridPane entsprechend angeordnet.
+     *
+     * @param studienleistung   Studienleistungsobjekt der Anwendung, das
+     *                          alle Module und den Abschluss enthält.
      */
     public BachelorThesisAndKolloquiumGridPane(Studienleistung studienleistung){
 
@@ -64,6 +63,10 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         Label title = new Label("Abschluss & Kolloquium");
         title.setFont(new Font(30));
         title.setStyle("-fx-font-weight: bold");
+
+        /*------------------------------------------------------------------------------------
+                                        SEITE BACHELORARBEIT
+        ---------------------------------------------------------------------------------------*/
 
         Label labelGradeBachelorThesis1 = new Label("Note der Bachelorarbeit (1. Versuch)");
         labelGradeBachelorThesis1.setFont(new Font(16));
@@ -83,7 +86,6 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         setValignment(gradeBachelorThesis1, VPos.TOP);
         gradeBachelorThesis1.setDisable(true);
 
-
         Label labelGradeBachelorThesis2 = new Label("Note der Bachelorarbeit (2.Versuch)");
         labelGradeBachelorThesis2.setFont(new Font(16));
         gradeBachelorThesis2 = new ComboBoxGrade();
@@ -102,9 +104,9 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         setValignment(gradeBachelorThesis2, VPos.TOP);
         gradeBachelorThesis2.setDisable(true);
 
-
-        // KOLLOQUIUM
-
+        /*------------------------------------------------------------------------------------
+                                           SEITE KOLLOQUIUM
+        --------------------------------------------------------------------------------------- */
 
         Label labelGradeKolloquium1 = new Label("Note des Kolloquiums (1.Versuch)");
         labelGradeKolloquium1.setFont(new Font(16));
@@ -140,12 +142,14 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         setValignment(gradeKolloquium2, VPos.TOP);
         gradeKolloquium2.setDisable(true);
 
-        // REST
+         /*------------------------------------------------------------------------------------
+                                    CREDITPOINTS UND DURCHSCHNITTSNOTEN
+        --------------------------------------------------------------------------------------- */
 
         creditpointsBachelorThesis = new Label();
         creditpointsBachelorThesis.setFont(new Font(16));
 
-        creditpointsKolloquium = new Label("Creditpoints: ");
+        Label creditpointsKolloquium = new Label("Creditpoints: ");
         creditpointsKolloquium.setFont(new Font(16));
 
         if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0 && studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0){
@@ -156,7 +160,6 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
             creditpointsBachelorThesis.setText("Creditpoints: ");
             creditpointsKolloquium.setText("Creditpoints: ");
         }
-
 
         averageGradeModules = new Label("Notendurchschnitt der Module: " + studienleistung.getNotendurchschnittModule());
         averageGradeModules.setFont(new Font(16));
@@ -173,6 +176,10 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         averageGradeAll.setText("Notendurchschnitt Gesamt: " + checkAverageGradeAll);
         averageGradeAll.setFont(new Font(16));
 
+        /*------------------------------------------------------------------------------------
+                                               BUTTONS
+        --------------------------------------------------------------------------------------- */
+
         updateBachelor = new Button("Bearbeiten");
         updateBachelor.setMinWidth(150);
         setValignment(updateBachelor, VPos.BOTTOM);
@@ -187,16 +194,21 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         setValignment(updateKolloquium, VPos.BOTTOM);
         updateKolloquium.setOnAction(new updateKolloquiumEvent());
 
-        if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0){
-            updateKolloquium.setDisable(false);
-        }
-        else{
-            updateKolloquium.setDisable(true);
-        }
+        //        Von Intellij verkleinert?
+        //        if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0){
+        //            updateKolloquium.setDisable(false);
+        //        }
+        //        else{
+        //            updateKolloquium.setDisable(true);
+        //        }
+        //        if(studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0){
+        //            updateKolloquium.setDisable(true);
+        //        }
+
+        updateKolloquium.setDisable(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() == 0.0);
         if(studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0){
             updateKolloquium.setDisable(true);
         }
-
 
         saveBachelor = new Button("Speichern");
         saveBachelor.setMinWidth(150);
@@ -217,8 +229,11 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         setHalignment(cancel, HPos.CENTER);
         setValignment(cancel, VPos.BOTTOM);
         cancel.setVisible(false);
-        cancel.setOnAction(new cancelBachelorThesisAndKolloquiumEventHandler());
+        cancel.setOnAction(new cancelBachelorThesisAndKolloquiumEvent());
 
+        /*------------------------------------------------------------------------------------
+                                        ANORDNUNG DER ELEMENTE
+        --------------------------------------------------------------------------------------- */
 
         // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
         add(title, 0, 0, 2, 1);
@@ -274,16 +289,16 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         col2.setMinWidth(400);
 
         getColumnConstraints().addAll(col1, col2);
-
-
-
     }
 
+
+    /*------------------------------------------------------------------------------------
+                                        EVENT-HANLDER KLASSEN
+     --------------------------------------------------------------------------------------- */
     /**
-     * Die Klasse updateBachelorThesisAndKolloquiumEventHandler kümmert sich
-     * um das Verhalten des Bearbeiten-Buttons. Es werden entsprechende Felder
-     * zur Bearbeitung freigeschaltet und der Speichern-Button und
-     * Abbrechen-Button eingeblendet.
+     * Die Klasse updateBachelorEvent kümmert sich um das Verhalten des Bearbeiten-Buttons
+     * für die Bachelorarbeit. Es werden entsprechende Felder zur Bearbeitung der
+     * Bachelorarbeit freigeschaltet und der Speichern-Button und Abbrechen-Button eingeblendet.
      */
     class updateBachelorEvent implements EventHandler<ActionEvent> {
 
@@ -307,18 +322,20 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
                 saveKolloquium.setVisible(false);
                 cancel.setVisible(true);
 
-            }
-            catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                              e.getMessage(), ButtonType.OK);
+            } catch(Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }
 
-
+    /**
+     * Die Klasse updateKolloquiumEvent kümmert sich um das Verhalten des Bearbeiten-Buttons
+     * für das Kolloquium. Es werden entsprechende Felder zur Bearbeitung des Kolloquiums
+     * freigeschaltet und der Speichern-Button und Abbrechen-Button eingeblendet.
+     */
     class updateKolloquiumEvent implements EventHandler<ActionEvent> {
 
         @Override
@@ -340,21 +357,20 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
 
                 saveBachelor.setVisible(false);
                 cancel.setVisible(true);
-            }
-            catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                e.getMessage(), ButtonType.OK);
+            } catch(Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }
 
     /**
-     * Die Klasse saveBachelorThesisAndKolloquiumEventHandler kümmert sich um das Verhalten des
-     * Speichern-Buttons. Er deaktiviert die mögliche Bearbeitung der Notenfelder und speichert
-     * die zuvor eingegebenen Werte. Außerdem wird der Bearbeiten-Button wieder eingeblendet.
+     * Die Klasse saveBachelorEvent kümmert sich um das Verhalten des Speichern-Buttons für die Bachelorarbeit.
+     * Er deaktiviert die mögliche Bearbeitung der Notenfelder und speichert die zuvor eingegebenen Werte.
+     * Außerdem wird der Bearbeiten-Button wieder eingeblendet, sofern noch weitere Noten für die Bachelorarbeit
+     * eingetragen werden können.
      */
     class saveBachelorEvent implements EventHandler<ActionEvent> {
 
@@ -394,17 +410,21 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
                 creditpointsBachelorThesis.setText("Creditpoints: " + studienleistung.getAbschluss().getBachelorarbeit().getCreditpointsBachelorarbeit());
                 String checkAverageGradeAll = studienleistung.getSummeCreditPointsMitAbschluss() != 180 ? " " : String.valueOf(studienleistung.getNotendurchschnittGesamt());
                 averageGradeAll.setText("Notendurchschnitt Gesamt: " + checkAverageGradeAll);
-            }
-            catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                e.getMessage(), ButtonType.OK);
+            } catch(Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }
 
+    /**
+     * Die Klasse saveKolloquiumEvent kümmert sich um das Verhalten des Speichern-Buttons für das Kolloquium.
+     * Er deaktiviert die mögliche Bearbeitung der Notenfelder und speichert die zuvor eingegebenen Werte.
+     * Außerdem wird der Bearbeiten-Button wieder eingeblendet, sofern noch weitere Noten für das Kolloquium
+     * eingetragen werden können.
+     */
     class saveKolloquiumEvent implements EventHandler<ActionEvent> {
 
         @Override
@@ -438,23 +458,21 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
                 creditpointsBachelorThesis.setText("Creditpoints: " + studienleistung.getAbschluss().getKolloquium().getCreditpointsKolloquium());
                 String checkAverageGradeAll = studienleistung.getSummeCreditPointsMitAbschluss() != 180 ? " " : String.valueOf(studienleistung.getNotendurchschnittGesamt());
                 averageGradeAll.setText("Notendurchschnitt Gesamt: " + checkAverageGradeAll);
-            }
-            catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                e.getMessage(), ButtonType.OK);
+            } catch(Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }
 
     /**
-     * Die Klasse saveBachelorThesisAndKolloquiumEventHandler kümmert sich um das Verhalten des
-     * Speichern-Buttons. Er deaktiviert die mögliche Bearbeitung der Notenfelder und verwirft
+     * Die Klasse cancelBachelorThesisAndKolloquiumEvent kümmert sich um das Verhalten des
+     * Abbrechen-Buttons. Er deaktiviert die mögliche Bearbeitung der Notenfelder und verwirft
      * die zuvor eingegebenen Werte. Außerdem wird der Bearbeiten-Button wieder eingeblendet.
      */
-    class cancelBachelorThesisAndKolloquiumEventHandler implements EventHandler<ActionEvent> {
+    class cancelBachelorThesisAndKolloquiumEvent implements EventHandler<ActionEvent> {
 
         @Override
         public void handle(ActionEvent event)
@@ -467,14 +485,11 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
                 cancel.setVisible(false);
                 updateBachelor.setVisible(true);
 
-            }
-            catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + BachelorThesisAndKolloquiumGridPane.class.getSimpleName() +
-                                        ": " + this.getClass().getSimpleName() + " konnte nicht ausgeführt werden.", ButtonType.OK);
+            } catch(Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }

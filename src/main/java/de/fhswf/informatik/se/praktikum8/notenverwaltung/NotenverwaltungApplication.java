@@ -3,13 +3,12 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * TODO:
- *         -  - //Löschen testen und wieder einfügen
- *         - Kommentare machen AUCH DIE TESTS
- *         - Wenn alles implementiert diese Klasse hier alles löschen bis auf die main
+ * Die Klasse NotenverwaltungApplication sorgt dafür, dass die SpringBoot-
+ * Applikation gestartet wird.
  *
- *
- **/
+ * @author Ivonne Kneißig & Ramon Günther
+ * @version 1.0 vom 25. November 2021
+ */
 @SpringBootApplication
 public class NotenverwaltungApplication {
 

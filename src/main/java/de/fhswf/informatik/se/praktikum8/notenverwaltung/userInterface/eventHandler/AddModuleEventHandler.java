@@ -17,12 +17,12 @@ import javafx.stage.Stage;
  * kann, welche Module hinzugefügt werden sollen.
  *
  * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
- * @version 1.2 vom 3. Dezember 2021
+ * @version 1.2 vom 2. Dezember 2021
  */
 public class AddModuleEventHandler implements EventHandler<ActionEvent> {
 
-    private Studienleistung studienleistung;
-    private GradesTableView table;
+    private final Studienleistung studienleistung;
+    private final GradesTableView table;
 
     /**
      * Der Konstruktor von AddModuleEventHandler bekommt
@@ -50,9 +50,7 @@ public class AddModuleEventHandler implements EventHandler<ActionEvent> {
             stage.show();
         }
         catch(Exception e) {
-            Alert alert =
-                    new Alert(Alert.AlertType.ERROR,
-                            "Klasse " + this.getClass().getSimpleName() +
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Klasse " + this.getClass().getSimpleName() +
                                     ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
             alert.setResizable(true);
             alert.showAndWait();

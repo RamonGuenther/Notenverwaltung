@@ -10,19 +10,22 @@ import javafx.scene.control.SplitPane;
  * Seite ist die Tabelle mit den Modulen des Studenten, rechts die Details zu
  * einem ausgewählten Modul.
  *
- * @author Ivonne Kneißig
- * @version 1.1 vom 1. Dezember 2021
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
+ * @version 1.2 vom 2. Dezember 2021
  */
 public class GradeManagementSplitPane extends SplitPane {
 
     private Button updateButton;
 
-    private GradesTableViewBorderPane gradesTable;
-    private GradeDetailsGridPane gradeDetails;
+    private final GradesTableViewBorderPane gradesTable;
+    private final GradeDetailsGridPane gradeDetails;
 
     /**
      * Der Konstruktor von GradeManagementSplitPane initialisiert die Elemente
      * der SplitPane.
+     *
+     * @param studienleistung   Studienleistungsobjekt der Anwendung, das
+     *                          alle Module und den Abschluss enthält.
      */
     public GradeManagementSplitPane(Studienleistung studienleistung){
 
@@ -33,22 +36,16 @@ public class GradeManagementSplitPane extends SplitPane {
         getItems().addAll(gradesTable, gradeDetails);
     }
 
-    //Getter und Setter
+    /*------------------------------------------------------------------------------------
+                                        GETTER UND SETTER
+     -------------------------------------------------------------------------------------*/
 
     public GradesTableViewBorderPane getGradesTableBorderPane() {
         return gradesTable;
     }
 
-    public void setGradesTable(GradesTableViewBorderPane gradesTable) {
-        this.gradesTable = gradesTable;
-    }
-
     public GradeDetailsGridPane getGradeDetails() {
         return gradeDetails;
-    }
-
-    public void setGradeDetails(GradeDetailsGridPane gradeDetails) {
-        this.gradeDetails = gradeDetails;
     }
 
     public Button getUpdateButton() {
@@ -57,6 +54,5 @@ public class GradeManagementSplitPane extends SplitPane {
 
     public void setUpdateButton(Button updateButton) {
         this.updateButton = updateButton;
-        System.out.println(this.getClass().getSimpleName() + ": " + this.updateButton);
     }
 }

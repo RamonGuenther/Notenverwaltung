@@ -15,16 +15,19 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- * ...
+ * Die Klasse DeleteModuleGridPane ist die Basis für die Ansicht zum Entfernen von
+ * Modulen. Es kann zwischen verschiedenen Modularten gewählt werden. Je nach Modulart
+ * werden gleichzeitig mehrere Module entfernt oder es kann ein einzelnes
+ * Modul gewählt werden.
  *
- * @author Ivonne Kneißig
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
  * @version 1.0 vom 1. Dezember 2021
  */
 public class DeleteModuleGridPane extends GridPane {
 
     private final Stage stage;
-    private Studienleistung studienleistung;
-    private GradesTableView table;
+    private final Studienleistung studienleistung;
+    private final GradesTableView table;
     private Alert alert;
 
     private final ComboBox<String> moduleType;
@@ -152,14 +155,10 @@ public class DeleteModuleGridPane extends GridPane {
                         modulesWahlpflichtfach.setVisible(false);
                         modulesWahlfach.setVisible(false);
                         labelModules.setVisible(false);
-                        break;
                     }
                 }
-            }
-            catch(Exception e) {
-                alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + AddModuleGridPane.class.getSimpleName() +
+            } catch(Exception e) {
+                alert = new Alert(Alert.AlertType.ERROR, "Klasse " + AddModuleGridPane.class.getSimpleName() +
                                         ": " + this.getClass().getSimpleName() + " konnte nicht ausgeführt werden.", ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
@@ -168,10 +167,9 @@ public class DeleteModuleGridPane extends GridPane {
     }
 
     /**
-     * Die Klasse saveModulesEventHandler bestimmt das Verhalten des Speichern-Buttons.
-     * Mit dem Klick auf den Button werden die Module anhand der gewählten Angaben erzeugt
-     * und in der Modulübersicht der Modulliste hinzugefügt. Das Fenster zum Hinzufügen
-     * von Modulen wird geschlossen.
+     * Die Klasse deleteModulesEventHandler bestimmt das Verhalten des Speichern-Buttons.
+     * Mit dem Klick auf den Button werden die Module anhand der gewählten Angaben aus
+     * der Modulliste des Studenten entfernt.
      */
     class deleteModulesEventHandler implements EventHandler<ActionEvent> {
 
@@ -179,51 +177,41 @@ public class DeleteModuleGridPane extends GridPane {
         public void handle(ActionEvent event)
         {
             try {
-                switch (moduleType.getValue()){
-                    case "Studienrichtung":
+                switch (moduleType.getValue()) {
+                    case "Studienrichtung" -> {
                         studienleistung.deleteAllByStudienrichtung();
                         alert = new Alert(Alert.AlertType.INFORMATION, "Alle Module der Studienrichtung wurden gelöscht");
                         alert.setResizable(true);
                         alert.showAndWait();
-                        break;
-
-                    case "Wahlpflichtblock":
+                    }
+                    case "Wahlpflichtblock" -> {
                         studienleistung.deleteAllByWahlpflichtblock();
                         alert = new Alert(Alert.AlertType.INFORMATION, "Alle Module des Wahlpflichtblocks wurden gelöscht");
                         alert.setResizable(true);
                         alert.showAndWait();
-                        break;
-                    case "Wahlpflichtmodul":
+                    }
+                    case "Wahlpflichtmodul" -> {
                         studienleistung.deleteWahlpflichtmodul(modulesWahlpflichtfach.getValue());
                         alert = new Alert(Alert.AlertType.INFORMATION, "Das Wahlpflichtfach " + modulesWahlpflichtfach.getValue() + " wurde gelöscht");
                         alert.setResizable(true);
                         alert.showAndWait();
-                        break;
-                    case "Wahlmodul":
+                    }
+                    case "Wahlmodul" -> {
                         studienleistung.deleteWahlmodul(modulesWahlfach.getValue());
                         alert = new Alert(Alert.AlertType.INFORMATION, "Das Wahlpflichtfach " + modulesWahlfach.getValue() + " wurde gelöscht");
                         alert.setResizable(true);
                         alert.showAndWait();
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
                 table.getItems().clear();
-                switch (table.getRadioValue()){
-                    case "Alle Module":
-                        table.getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
-                        break;
-                    case "Offen":
-                        table.getItems().addAll(studienleistung.getOffenePflichtmoduleUndWahlpflichtmodule());
-                        break;
-                    case "Bestanden":
-                        table.getItems().addAll(studienleistung.getBestandenePflichtmoduleUndWahlpflichtmodule());
-                        break;
-                    case "Wahlmodule":
-                        table.getItems().addAll(studienleistung.getWahlmodule());
-                        break;
+                switch (table.getRadioValue()) {
+                    case "Alle Module" -> table.getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
+                    case "Offen" -> table.getItems().addAll(studienleistung.getOffenePflichtmoduleUndWahlpflichtmodule());
+                    case "Bestanden" -> table.getItems().addAll(studienleistung.getBestandenePflichtmoduleUndWahlpflichtmodule());
+                    case "Wahlmodule" -> table.getItems().addAll(studienleistung.getWahlmodule());
                 }
-
                 stage.close();
             }
             catch(Exception e) {
@@ -236,8 +224,8 @@ public class DeleteModuleGridPane extends GridPane {
 
     /**
      * Die Klasse cancelEventHandler bestimmt das Verhalten des Abbrechen-Buttons.
-     * Klickt der Benutzer auf den Button wird das Fenster zum Hinzufügen von Modulen
-     * geschlossen und keine Module hinzugefügt.
+     * Klickt der Benutzer auf den Button wird das Fenster zum Entfernen von Modulen
+     * geschlossen. Sonst wird keine Aktion durchgeführt.
      */
     class cancelEventHandler implements EventHandler<ActionEvent> {
 
@@ -246,14 +234,12 @@ public class DeleteModuleGridPane extends GridPane {
         {
             try {
                 stage.close();
-            }
-            catch(Exception e) {
-//                alert =
-//                        new Alert(Alert.AlertType.ERROR,
-//                                "Klasse " + AddModuleGridPane.class.getSimpleName() +
-//                                        ": " + this.getClass().getSimpleName() + " konnte nicht ausgeführt werden.", ButtonType.OK);
-//                alert.setResizable(true);
-//                alert.showAndWait();
+            } catch(Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Klasse " + this.getClass().getSimpleName() +
+                        ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
+                alert.setResizable(true);
+                alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }

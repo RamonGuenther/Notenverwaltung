@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  * Das Menü-Item öffnet ein Fenster mit Informationen zur Anwendung, die dem Nutzer
  * bei der Verwendung helfen sollen.
  *
- * @author Ivonne Kneißig
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
  * @version 1.1 vom 27. November 2021
  */
 public class HelpMenuItem extends MenuItem {
@@ -55,12 +55,11 @@ public class HelpMenuItem extends MenuItem {
                 stage.show();
             }
             catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + this.getClass().getSimpleName() +
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Klasse " + this.getClass().getSimpleName() +
                                         ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }

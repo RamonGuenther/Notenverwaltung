@@ -1,7 +1,6 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.panes;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Studienrichtung;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.WahlmodulEnum;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Wahlpflichtblock;
@@ -26,14 +25,14 @@ import java.util.regex.Pattern;
  * werden gleichzeitig mehrere Module zur Ansicht hinzugefügt oder es kann ein einzelnes
  * Modul gewählt werden.
  *
- * @author Ivonne Kneißig
- * @version 1.1 vom 1. Dezember 2021
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
+ * @version 1.2 vom 2. November 2021
  */
 public class AddModuleGridPane extends GridPane {
 
     private final Stage stage;
-    private Studienleistung studienleistung;
-    private GradesTableView table;
+    private final Studienleistung studienleistung;
+    private final GradesTableView table;
 
     private final ComboBox<String> moduleType;
     private ComboBox<Studienrichtung> modulesStudienrichtung;
@@ -49,9 +48,11 @@ public class AddModuleGridPane extends GridPane {
      * Im Konstruktor von AddModuleStackPane werden die einzelnen Elemente der Ansicht
      * erzeugt bzw. initialisiert und der GridPane entsprechend hinzugefügt.
      *
-     * @param stage     Stage-Object des Fensters. Wird im cancelEventHandler zum
-     *                  Schließen des Fensters benötigt.
-     * @param studienleistung
+     * @param stage                 Stage-Object des Fensters. Wird im cancelEventHandler zum
+     *                              Schließen des Fensters benötigt.
+     * @param studienleistung       Studienleistungsobjekt der Anwendung, das
+     *                              alle Module und den Abschluss enthält.
+     * @param table                 Tabelle, welche die Module des Studenten anzeigt
      */
     public AddModuleGridPane(Stage stage, Studienleistung studienleistung, GradesTableView table) {
 
@@ -113,8 +114,8 @@ public class AddModuleGridPane extends GridPane {
     /**
      * Die Methode createModuleChoiceBoxes erstellt die Modulauswahlboxen für die
      * jeweiligen Modultypen. Standardmäßig ist die Auswahlbox für den Modultyp
-     * Studienrichtung sichtbar. Die anderen Auswahlboxen werden durch den moduletypeEventHandler
-     * eingeblendet, wenn der Nutzer einen anderen Modultyp auswählt.
+     * Studienrichtung sichtbar. Die anderen Auswahlboxen werden durch den
+     * moduletypeEventHandler eingeblendet, wenn der Nutzer einen anderen Modultyp auswählt.
      */
     private void createModuleChoiceBoxes(){
         modulesStudienrichtung = new ComboBox<>();
@@ -160,6 +161,11 @@ public class AddModuleGridPane extends GridPane {
         setPadding(new Insets(30, 0, 30, 60 ));
         setVgap(20);
     }
+
+
+    /*------------------------------------------------------------------------------------
+                                       EVENT HANDLER
+     -------------------------------------------------------------------------------------*/
 
     /**
      * Die Klasse moduletypeEventHandler wechselt die Auswahlbox für die Module
@@ -211,14 +217,12 @@ public class AddModuleGridPane extends GridPane {
                     default -> {
                     }
                 }
-            }
-            catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + AddModuleGridPane.class.getSimpleName() +
-                                        ": " + this.getClass().getSimpleName() + " konnte nicht ausgeführt werden.", ButtonType.OK);
+            } catch(Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Klasse " + this.getClass().getSimpleName() +
+                    ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }
@@ -244,28 +248,18 @@ public class AddModuleGridPane extends GridPane {
                     }
                 }
                 table.getItems().clear();
-                switch (table.getRadioValue()){
-                    case "Alle Module":
-
-                        table.getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
-                        break;
-                    case "Offen":
-                        table.getItems().addAll(studienleistung.getOffenePflichtmoduleUndWahlpflichtmodule());
-                        break;
-                    case "Bestanden":
-                        table.getItems().addAll(studienleistung.getBestandenePflichtmoduleUndWahlpflichtmodule());
-                        break;
-                    case "Wahlmodule":
-                        table.getItems().addAll(studienleistung.getWahlmodule());
-                        break;
+                switch (table.getRadioValue()) {
+                    case "Alle Module" -> table.getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
+                    case "Offen" -> table.getItems().addAll(studienleistung.getOffenePflichtmoduleUndWahlpflichtmodule());
+                    case "Bestanden" -> table.getItems().addAll(studienleistung.getBestandenePflichtmoduleUndWahlpflichtmodule());
+                    case "Wahlmodule" -> table.getItems().addAll(studienleistung.getWahlmodule());
                 }
-
                 stage.close();
-            }
-            catch(Exception e) {
+            } catch(Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }
@@ -282,14 +276,12 @@ public class AddModuleGridPane extends GridPane {
         {
             try {
                 stage.close();
-            }
-            catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + AddModuleGridPane.class.getSimpleName() +
-                                        ": " + this.getClass().getSimpleName() + " konnte nicht ausgeführt werden.", ButtonType.OK);
+            } catch(Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Klasse " + this.getClass().getSimpleName() +
+                                        ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }

@@ -17,8 +17,8 @@ import javafx.stage.Stage;
  * Die Klasse HelpStackPane öffnet ein Fenster mit Hinweisen zur
  * Anwendung.
  *
- * @author Ivonne Kneißig
- * @version 1.0 vom 27. November 2021
+ * @author Ivonne Kneißig & Ramon Günther (Verantwortlich: Ivonne Kneißig)
+ * @version 1.1 vom 2. Dezember 2021
  */
 public class HelpStackPane extends StackPane {
 
@@ -44,7 +44,7 @@ public class HelpStackPane extends StackPane {
         close.setOnAction(new closeEventHandler());
 
         items.setAlignment(Pos.BASELINE_CENTER);
-        items.setMargin(help, new Insets(20, 0, 20, 0));
+        VBox.setMargin(help, new Insets(20, 0, 20, 0));
         items.setSpacing(50);
 
         items.getChildren().addAll(help, close);
@@ -52,7 +52,7 @@ public class HelpStackPane extends StackPane {
     }
 
     /**
-     * Die Klasse closeEventHandler bestimmt das Verhalten des Schließen-Button.
+     * Die Klasse closeEventHandler bestimmt das Verhalten des Schließen-Buttons.
      * Klickt der Benutzer auf den Button, wird das Hilfe-Fenster geschlossen.
      */
     class closeEventHandler implements EventHandler<ActionEvent> {
@@ -62,14 +62,12 @@ public class HelpStackPane extends StackPane {
         {
             try {
                 stage.close();
-            }
-            catch(Exception e) {
-                Alert alert =
-                        new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + HelpStackPane.class.getSimpleName() +
-                                        ": " + this.getClass().getSimpleName() + " konnte nicht ausgeführt werden.", ButtonType.OK);
+            } catch(Exception e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Klasse " + this.getClass().getSimpleName() +
+                        ": Das Event konnte nicht ausgeführt werden.", ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
+                e.printStackTrace();
             }
         }
     }
