@@ -2,10 +2,10 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums;
 
 /**
  * Die Enumeration Studienrichtung enthält alle wählbaren Studienrichtungen
- * für den Studiengang Informatik B.sc. an der Fachhochschule Südwestfalen nach BPO2019.
+ * für den Studiengang Informatik B.sc. an der Fachhochschule Südwestfalen nach FPO 2019.
  *
- * @author Ramon Günther
- * @version 1.0 vom 20. November 2021
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
 public enum Studienrichtung {
 	ANWENDUNGSENTWICKLUNG ("Anwendungsentwicklung"),

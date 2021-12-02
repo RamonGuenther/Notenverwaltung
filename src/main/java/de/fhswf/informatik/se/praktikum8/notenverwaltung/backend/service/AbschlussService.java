@@ -1,15 +1,21 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.service;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Abschluss;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Notendurchschnitt;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.StudienleistungErgebnisliste;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.AbschlussRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Die Klasse AbschlussService implementiert primär die Methoden aus dem Interface @{@link AbschlussRepository}
+ * und weitere Methoden um die Studienleistung zu bearbeiten. Diese Methoden werden alle von der Klasse
+ *
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
+ */
 @Service
 public class AbschlussService {
 
@@ -29,6 +35,12 @@ public class AbschlussService {
         return repository.findAbschlussById(1L);
     }
 
+    /**
+     * Die Methode holt sich das Abschluss-Objekt und trägt anschließend, wenn
+     * alle Bedingungen zutreffen, die Note für den Bachelor ein.
+     *
+     * @param note einzutragende Note
+     */
     public void setNoteBachelor(Double note) {
         if (!NOTENINTERVALL.contains(note)) {
             throw new IllegalArgumentException("Fehler in " + this.getClass().getSimpleName() +
@@ -42,6 +54,13 @@ public class AbschlussService {
         repository.save(abschluss);
     }
 
+
+    /**
+     * Die Methode holt sich das Abschluss-Objekt und trägt anschließend, wenn
+     * alle Bedingungen zutreffen, die Note für das Kolloquium ein.
+     *
+     * @param note einzutragende Note
+     */
     public void setNoteKolloquium(Double note){
         if (!NOTENINTERVALL.contains(note)) {
             throw new IllegalArgumentException("Fehler in " + this.getClass().getSimpleName() +
@@ -60,16 +79,21 @@ public class AbschlussService {
         repository.save(abschluss);
     }
 
-
-    public List<Notendurchschnitt> getNotenliste(){
+    /**
+     * Die Methode getNotenliste holt sich den Abschluss und prüft diesen auf bestandene
+     * Noten und fügt sie der Liste hinzu.
+     *
+     * @return Liste der Endnoten und Creditpoints der jeweiligen Module
+     */
+    public List<StudienleistungErgebnisliste> getNotenliste(){
         Abschluss abschluss = repository.findAbschlussById(1L);
-        List<Notendurchschnitt> notenListe = new ArrayList<>();
+        List<StudienleistungErgebnisliste> notenListe = new ArrayList<>();
         if(abschluss.getBachelorarbeit().getEndNoteBachelor() != 0.0 && abschluss.getKolloquium().getEndNoteKolloquium() != 0.0) {
-            notenListe.add(new Notendurchschnitt(
+            notenListe.add(new StudienleistungErgebnisliste(
                     abschluss.getBachelorarbeit().getEndNoteBachelor(),
                     abschluss.getBachelorarbeit().getCreditpointsBachelorarbeit()
             ));
-            notenListe.add(new Notendurchschnitt(
+            notenListe.add(new StudienleistungErgebnisliste(
                     abschluss.getKolloquium().getEndNoteKolloquium(),
                     abschluss.getKolloquium().getCreditpointsKolloquium()
             ));

@@ -11,8 +11,8 @@ import java.util.ArrayList;
  * Die Klasse ListeModuleWahlpflichtblock erstellt eine Liste mit den Pflicht-
  * modulen des vom Studenten gewählten Wahlpflichtblocks.
  *
- * @author Ramon Günther
- * @Version 1.0 vom 23. November 2021
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
 
 public class ListeModuleWahlpflichtblock extends ArrayList {

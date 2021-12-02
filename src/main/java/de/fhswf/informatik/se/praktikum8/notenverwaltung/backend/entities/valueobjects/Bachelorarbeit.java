@@ -7,7 +7,7 @@ import javax.persistence.Embeddable;
  * enthält die Studienleistungen der Bachelorarbeit.
  *
  * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
- * @version 1.0 vom 1. Dezember 2021
+ * @version 1.0 vom 2. Dezember 2021
  */
 @Embeddable
 public class Bachelorarbeit {

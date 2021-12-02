@@ -13,11 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Die Testfälle überschreiben den Inhalt der Datenbank!
+ * Die Klasse ModuleAnlegenTests prüft das Anlegen der Module.
  *
- * WICHTIG: Properties auf UPDATE und @Component bei Stageinitializer.class entfernen sonst laufen die Tests nicht
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
-
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ModuleAnlegenTests {

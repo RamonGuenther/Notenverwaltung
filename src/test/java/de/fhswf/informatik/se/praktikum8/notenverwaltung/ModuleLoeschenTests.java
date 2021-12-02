@@ -9,7 +9,6 @@ import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.Ab
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.PflichtmodulRepository;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.WahlmodulRepository;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.WahlpflichtmodulRepository;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,11 +20,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 /**
- * Die Testfälle überschreiben den Inhalt der Datenbank!
+ * Die Klasse ModuleLoeschenTests prüft das Verhalten beim Löschen von Modulen.
  *
- * WICHTIG: Properties auf UPDATE und @Component bei Stageinitializer.class entfernen sonst laufen die Tests nicht
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
-
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ModuleLoeschenTests {
@@ -46,17 +45,17 @@ public class ModuleLoeschenTests {
 
         @BeforeAll
         public void init(){
-            alleModuleLoeschen();
             studienleistung = new Studienleistung(pflichtmodulRepository, wahlpflichtmodulRepository, wahlmodulRepository, abschlussRepository);
-            studienleistung.pflichtmoduleAnlegen();
+
         }
 
         @BeforeEach
         public void alleModuleLoeschen(){
-//            pflichtmodulRepository.deleteAll();
-//            abschlussRepository.deleteAll();
-//            wahlmodulRepository.deleteAll();
-//            wahlpflichtmodulRepository.deleteAll();
+            pflichtmodulRepository.deleteAll();
+            abschlussRepository.deleteAll();
+            wahlmodulRepository.deleteAll();
+            wahlpflichtmodulRepository.deleteAll();
+            studienleistung.pflichtmoduleAnlegen();
         }
 
 
@@ -77,7 +76,7 @@ public class ModuleLoeschenTests {
         }
 
         @Test
-        void wahlpflichtblockFestlegen(){
+        void wahlpflichtblockLoeschen(){
 
             //Darf nicht gehen weil noch keine Studienrichtung angegeben worden ist
             assertThrows(IllegalArgumentException.class, () ->{
@@ -86,20 +85,22 @@ public class ModuleLoeschenTests {
 
             studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
 
+            //Darf nicht gehen, weil Studienrichtung schon Anwendungsentwicklung ist
+            assertThrows(IllegalArgumentException.class, () ->{
+                studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.ANWENDUNGSENTWICKLUNG);
+
+            });
+
             studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.WIRTSCHAFT);
+
+            //Darf nicht gehen weil schon ein Wahlpflichtblock definiert wurde
             assertThrows(IllegalArgumentException.class, () ->{
                 studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.KUENSTLICHE_INTELLIGENZ);
             });
         }
 
         @Test
-        void wahlpflichtmodulAnlegen(){
-
-            studienleistung.pflichtmoduleAnlegen();
-            studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
-
-
-            wahlpflichtmodulRepository.deleteAll();
+        void wahlpflichtmodulLoeschen(){
 
             studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK,5);
 
@@ -108,10 +109,9 @@ public class ModuleLoeschenTests {
                 studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK,5);
             });
 
-            //Schon hinzugefügt durch Studienrichtung Anwendungsentwicklung
-            assertThrows(IllegalArgumentException.class, () ->{
-                studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.FORTGESCHRITTENE_INTERNETTECHNOLOGIEN,5);
-            });
+            studienleistung.deleteWahlpflichtmodul(Wahlpflichtfach.GEOINFORMATIK.label);
+
+            studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK,5);
 
             studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.BETRIEBSSYSTEME3,6);
 
@@ -119,15 +119,24 @@ public class ModuleLoeschenTests {
             assertThrows(IllegalArgumentException.class, () ->{
                 studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.PRAKTISCHE_ANWENDUNG_VON_ALGORITHMEN,6);
             });
+
+            studienleistung.deleteWahlpflichtmodul(Wahlpflichtfach.GEOINFORMATIK.label);
+
+            studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.PRAKTISCHE_ANWENDUNG_VON_ALGORITHMEN,6);
+
+
         }
 
         @Test
-        void wahlmodulAnlegen(){
+        void wahlmodulLoeschen(){
             studienleistung.wahlmodulHinzufuegen(WahlmodulEnum.ENGLISH1, 5);
+
             //Gleiches Wahlmodul hinzufügen
             assertThrows(IllegalArgumentException.class, () ->{
                 studienleistung.wahlmodulHinzufuegen(WahlmodulEnum.ENGLISH1, 5);
             });
+
+            studienleistung.deleteWahlmodul(WahlmodulEnum.ENGLISH1.label);
         }
 
 }

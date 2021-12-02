@@ -6,6 +6,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Die Klasse WahlmodulService implementiert die Methoden aus dem Interface @{@link WahlmodulRepository}
+ * und weitere Methoden um die Studienleistung bearbeiten zu können.
+ *
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
+ */
 @Service
 public class WahlmodulService {
 
@@ -37,6 +44,12 @@ public class WahlmodulService {
         repository.delete(wahlmodul);
     }
 
+    /**
+     * Die Methode holt sich das jeweilige Wahlmodul und trägt anschließend, wenn
+     * alle Bedingungen zutreffen, die Note ein.
+     *
+     * @param note einzutragende Note
+     */
     public void setNote(String modulname, Double note) {
         if(note == null){
             return;

@@ -3,19 +3,19 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.value
 import java.util.ArrayList;
 
 /**
- * Die Klasse Notendurchschnitt wird für Pflichtmodul und Wahlpflichtmodule
+ * Die Klasse StudienleistungErgebnisliste wird für Pflichtmodul und Wahlpflichtmodule
  * verwendet, um die bestandenen Noten mit den zugehörigen Creditpoints in einer
  * Liste zu sammeln.
  *
- * @author Ramon Günther
- * @version 1.0 vom 1. Dezember 2021
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
-public class Notendurchschnitt extends ArrayList {
+public class StudienleistungErgebnisliste extends ArrayList {
 
     private Double endnote;
     private Integer creditpoints;
 
-    public Notendurchschnitt(Double endnote, Integer creditpoints){
+    public StudienleistungErgebnisliste(Double endnote, Integer creditpoints){
         this.endnote = endnote;
         this.creditpoints = creditpoints;
     }

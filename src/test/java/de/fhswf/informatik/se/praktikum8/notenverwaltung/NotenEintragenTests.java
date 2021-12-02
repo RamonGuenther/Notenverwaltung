@@ -4,6 +4,7 @@ import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Studienrichtung;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Wahlpflichtblock;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Wahlpflichtfach;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.test.TestModuleEnum;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.AbschlussRepository;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.PflichtmodulRepository;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.WahlmodulRepository;

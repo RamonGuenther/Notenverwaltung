@@ -11,8 +11,8 @@ import javax.persistence.Transient;
  * Die Klasse Wahlmodul enthält alle wichtigen Daten zu einem
  * Wahlmodul des Studiengangs Informatik B.sc.
  *
- * @author Ramon Günther
- * @version 1.1 vom 1. Dezember 2021
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
 @Entity
 public class Wahlmodul{

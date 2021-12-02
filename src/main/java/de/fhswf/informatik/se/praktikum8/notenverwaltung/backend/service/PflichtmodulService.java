@@ -1,7 +1,7 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.service;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Abschluss;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Notendurchschnitt;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.StudienleistungErgebnisliste;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.PflichtmodulRepository;
 import org.springframework.stereotype.Service;
@@ -9,6 +9,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Die Klasse PflichtmodulService implementiert die Methoden aus dem Interface @{@link PflichtmodulRepository}
+ * und weitere Methoden um die Studienleistung bearbeiten zu können.
+ *
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
+ */
 @Service
 public class PflichtmodulService {
 
@@ -62,12 +69,17 @@ public class PflichtmodulService {
         repository.deleteAll(pflichtmodulList);
     }
 
-
+    /**
+     * Die Methode holt sich das jeweilige Pflichtmodul und trägt anschließend, wenn
+     * alle Bedingungen zutreffen, die Note ein.
+     *
+     * @param note einzutragende Note
+     */
     public void setNote(String modulname, Double note){
+        //Wegen Frontend
         if(note == null){
             return;
         }
-
         if(!NOTENINTERVALL.contains(note)) {
             throw new IllegalArgumentException("Fehler in " + this.getClass().getSimpleName() +
                     ": Die Note ist nicht im Intervall.");
@@ -87,12 +99,18 @@ public class PflichtmodulService {
         repository.save(pflichtmodul);
     }
 
-    public List<Notendurchschnitt> getNotenliste(){
+    /**
+     * Die Methode getNotenliste holt sich alle Pflichtmodule und
+     * prüft diese auf bestandene Noten und fügt sie der Liste hinzu.
+     *
+     * @return Liste der Endnoten und Creditpoints der jeweiligen Module
+     */
+    public List<StudienleistungErgebnisliste> getNotenliste(){
         List<Pflichtmodul> test = repository.findAll();
-        List<Notendurchschnitt> notenListe = new ArrayList<>();
+        List<StudienleistungErgebnisliste> notenListe = new ArrayList<>();
         for(Pflichtmodul pflichtmodul : test){
             if(pflichtmodul.getNote().getEndNote() != 0.0) {
-                notenListe.add(new Notendurchschnitt(
+                notenListe.add(new StudienleistungErgebnisliste(
                         pflichtmodul.getNote().getEndNote(),
                         pflichtmodul.getCreditpoints()
                 ));
@@ -100,4 +118,6 @@ public class PflichtmodulService {
         }
         return notenListe;
     }
+
+
 }

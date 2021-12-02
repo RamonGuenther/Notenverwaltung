@@ -2,10 +2,10 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums;
 
 /**
  * Die Enumeration Wahlpflichtfach enthält alle möglichen Wahlpflichtmodule
- * für den Studiengang Informatik B.sc. der Fachhochschule Südwestfalen BPO2019.
+ * für den Studiengang Informatik B.sc. der Fachhochschule Südwestfalen nach FPO 2019.
  *
- * @author Ramon Günther
- * @version 1.1 vom 22. November 2021
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
 public enum Wahlpflichtfach {
 	PRAKTISCHE_ANWENDUNG_VON_ALGORITHMEN ("Praktische Anwendung von Algorithmen"),

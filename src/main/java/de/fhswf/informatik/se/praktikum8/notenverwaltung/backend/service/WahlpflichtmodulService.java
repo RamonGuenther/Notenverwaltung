@@ -1,7 +1,6 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.service;
 
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.Notendurchschnitt;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.valueobjects.StudienleistungErgebnisliste;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlpflichtmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.WahlpflichtmodulRepository;
 import org.springframework.stereotype.Service;
@@ -9,6 +8,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Die Klasse WahlpflichtmodulService implementiert die Methoden aus dem Interface @{@link WahlpflichtmodulRepository}
+ * und weitere Methoden um die Studienleistung bearbeiten zu können.
+ *
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
+ */
 @Service
 public class WahlpflichtmodulService {
 
@@ -44,6 +50,12 @@ public class WahlpflichtmodulService {
         repository.delete(wahlpflichtmodul);
     }
 
+    /**
+     * Die Methode holt sich das jeweilige Wahlpflichtmodul und trägt anschließend, wenn
+     * alle Bedingungen zutreffen, die Note ein.
+     *
+     * @param note einzutragende Note
+     */
     public void setNote(String modulname, Double note){
 
         if(note == null){
@@ -67,12 +79,18 @@ public class WahlpflichtmodulService {
         repository.save(wahlpflichtmodul);
     }
 
-    public List<Notendurchschnitt> getNotenliste(){
+    /**
+     * Die Methode getNotenliste holt sich alle Wahlpflichtmodule und
+     * prüft diese auf bestandene Noten und fügt sie der Liste hinzu.
+     *
+     * @return Liste der Endnoten und Creditpoints der jeweiligen Module
+     */
+    public List<StudienleistungErgebnisliste> getNotenliste(){
         List<Wahlpflichtmodul> test = repository.findAll();
-        List<Notendurchschnitt> notenListe = new ArrayList<>();
+        List<StudienleistungErgebnisliste> notenListe = new ArrayList<>();
         for(Wahlpflichtmodul wahlpflichtmodul : test){
             if(wahlpflichtmodul.getNote().getEndNote() != 0.0) {
-                notenListe.add(new Notendurchschnitt(
+                notenListe.add(new StudienleistungErgebnisliste(
                         wahlpflichtmodul.getNote().getEndNote(),
                         wahlpflichtmodul.getCreditpoints()
                 ));

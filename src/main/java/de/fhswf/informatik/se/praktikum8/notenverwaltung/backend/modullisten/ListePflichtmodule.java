@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * Pflichtmodulen für den Studiengang Informatik B.sc. an der Fachhochschule
  * Südwestfalen
  *
- * @author Ramon Günther
- * @Version 1.0 vom 23. November 2021
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
 
 public class ListePflichtmodule extends ArrayList {
@@ -22,9 +22,6 @@ public class ListePflichtmodule extends ArrayList {
      * den allgemeinen Pflichtmodulen.
      */
     public ListePflichtmodule() {
-        //Abschluss: bachelor = 12 , Kolloquium 3 =15
-        //Wahlpflichtmodul da = 12
-
         //27
         add(new Pflichtmodul("Basistechniken", 3, 1, PFLICHTMODUL));
         add(new Pflichtmodul("Grundlagen der Informatik 1", 5, 1, PFLICHTMODUL));
@@ -49,9 +46,10 @@ public class ListePflichtmodule extends ArrayList {
         add(new Pflichtmodul("Internettechnologien", 6, 4, PFLICHTMODUL));
         add(new Pflichtmodul("IT-Projektmanagement", 6, 4, PFLICHTMODUL));
 
-        //15
+        //6
         add(new Pflichtmodul("Software Engineering", 6, 5, PFLICHTMODUL));
 
+        //9
         add(new Pflichtmodul("Projektarbeit", 9, 6, PFLICHTMODUL));
     }
 }

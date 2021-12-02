@@ -1,5 +1,13 @@
-package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums;
+package de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.test;
 
+/**
+ * Die Enumeration TestModuleEnum enthält alle Module die für die Tests
+ * in NotendurchschnittTests.class, sowie als Beispiel für die Überprüfung
+ * der Oberfläche.
+ *
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
+ */
 public enum TestModuleEnum {
     BASISTECHNIKEN ("Basistechniken"),
     GRUNDLAGEN_DER_INFORMATIK1 ("Grundlagen der Informatik 1"),

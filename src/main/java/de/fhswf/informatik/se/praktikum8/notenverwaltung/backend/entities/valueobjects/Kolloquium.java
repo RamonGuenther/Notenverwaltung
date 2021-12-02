@@ -6,8 +6,8 @@ import javax.persistence.Embeddable;
  * Die Klasse Bachelorarbeit ist ein Bestandteil der Klasse Abschluss und
  * enthält die Studienleistungen des Kolloquium.
  *
- * @author Ramon Günther
- * @version 1.0 vom 1. Dezember 2021
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
 @Embeddable
 public class Kolloquium {

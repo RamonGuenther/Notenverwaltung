@@ -15,8 +15,8 @@ import javax.persistence.Transient;
  * Die Klasse Abschluss enthält die einzelnen Studienleistungen für die
  * Bachelorarbeit und das Kolloquium des Studenten.
  *
- * @author Ramon Günther
- * @version 1.0 vom 1. Dezember 2021
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
 @Entity
 public class Abschluss {

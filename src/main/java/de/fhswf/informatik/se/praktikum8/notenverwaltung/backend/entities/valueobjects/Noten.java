@@ -7,8 +7,8 @@ import javax.persistence.Embeddable;
  * Die Klasse Note wird für Pflichtmodule, Wahlpflichtmodule
  * und Wahlmodule verwendet, um die jeweiligen Noten zu speichern.
  *
- * @author Ramon Günther
- * @version 1.0 vom 1. Dezember 2021
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
 @Embeddable
 public class Noten {
@@ -43,7 +43,7 @@ public class Noten {
     /**
      * Methode um eine Note für das jeweilige Modul zu speichern
      *
-     * @param note einzutragene Note
+     * @param note einzutragende Note
      */
     public void setNote(Double note){
         if(note1 == 0.0) { //4
