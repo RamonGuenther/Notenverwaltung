@@ -45,7 +45,7 @@ public class AddModuleEventHandler implements EventHandler<ActionEvent> {
             Stage stage = new Stage();
             stage.setTitle("Notenverwaltung Informatik B.sc. - Module hinzufügen");
             Parent root = new AddModuleGridPane(stage, studienleistung, table);
-            Scene scene = new Scene(root, 400, 400);
+            Scene scene = new Scene(root, 450, 400);
             stage.setScene(scene);
             stage.show();
         }

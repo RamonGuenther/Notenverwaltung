@@ -71,7 +71,7 @@ public class AddModuleGridPane extends GridPane {
         moduleType.getItems().addAll("Studienrichtung", "Wahlpflichtblock", "Wahlpflichtmodul", "Wahlmodul");
         moduleType.setValue("Studienrichtung");
         moduleType.isShowing();
-        moduleType.setMinWidth(280);
+        moduleType.setMinWidth(345);
         moduleType.setOnAction(new moduletypeEventHandler());
 
         labelModules = new Label("Richtung");
@@ -121,28 +121,28 @@ public class AddModuleGridPane extends GridPane {
         modulesStudienrichtung = new ComboBox<>();
         modulesStudienrichtung.getItems().addAll(Studienrichtung.values());
         modulesStudienrichtung.setVisible(true);
-        modulesStudienrichtung.setMinWidth(280);
+        modulesStudienrichtung.setMinWidth(345);
         modulesStudienrichtung.setValue(Studienrichtung.ANWENDUNGSENTWICKLUNG);
         modulesStudienrichtung.isShowing();
 
         modulesWahlpflichtblock = new ComboBox<>();
         modulesWahlpflichtblock.getItems().addAll(Wahlpflichtblock.values());
         modulesWahlpflichtblock.setVisible(false);
-        modulesWahlpflichtblock.setMinWidth(280);
+        modulesWahlpflichtblock.setMinWidth(345);
         modulesWahlpflichtblock.setValue(Wahlpflichtblock.ANWENDUNGSENTWICKLUNG);
         modulesWahlpflichtblock.isShowing();
 
         modulesWahlpflichtfach = new ComboBox<>();
         modulesWahlpflichtfach.getItems().addAll(Wahlpflichtfach.values());
         modulesWahlpflichtfach.setVisible(false);
-        modulesWahlpflichtfach.setMinWidth(280);
+        modulesWahlpflichtfach.setMinWidth(345);
         modulesWahlpflichtfach.setValue(Wahlpflichtfach.PRAKTISCHE_ANWENDUNG_VON_ALGORITHMEN);
         modulesWahlpflichtfach.isShowing();
 
         modulesWahlfach = new ComboBox<>();
         modulesWahlfach.getItems().addAll(WahlmodulEnum.values());
         modulesWahlfach.setVisible(false);
-        modulesWahlfach.setMinWidth(280);
+        modulesWahlfach.setMinWidth(340);
         modulesWahlfach.setValue(WahlmodulEnum.ENGLISH1);
         modulesWahlfach.isShowing();
 
@@ -152,13 +152,14 @@ public class AddModuleGridPane extends GridPane {
 
         TextFormatter<Integer> formatter = new TextFormatter<>(
                 new IntegerStringConverter(),
-                0,
+                1,
                 c -> Pattern.matches("\\d*", c.getText()) ? c : null );
         semester = new TextField();
         semester.setTextFormatter(formatter);
         semester.setVisible(false);
+        semester.setMinWidth(345);
 
-        setPadding(new Insets(30, 0, 30, 60 ));
+        setPadding(new Insets(10, 0, 30, 60 ));
         setVgap(20);
     }
 
