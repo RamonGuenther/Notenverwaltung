@@ -20,10 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * Die Testfälle überschreiben den Inhalt der Datenbank!
+ * Die Klasse NotenEintragenTests prüft das Verhalten beim Eintragen der
+ * Modulnoten.
+ *
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
 @SpringBootTest
-public class StudienleistungErgebnislisteTests {
+public class NotendurchschnittCreditpointsTests {
 
     @Autowired
     private PflichtmodulRepository pflichtmodulRepository;
@@ -73,9 +77,8 @@ public class StudienleistungErgebnislisteTests {
         studienleistung.updateNoteKolloquium(5.0);
 
 
-        //Da der Abschluss nicht bestanden wurde gibt die Notenberechnugn eine 0.0 zurück
+        //Da der Abschluss nicht bestanden wurde, gibt die Notenberechnung eine 0.0 zurück
         assertEquals(0.0,studienleistung.getNotendurchschnittAbschluss());
-
 
 
         studienleistung.updateNoteKolloquium(3.7);
@@ -105,8 +108,15 @@ public class StudienleistungErgebnislisteTests {
 
         assertEquals(2.59, studienleistung.getNotendurchschnittModule()); //2.85 mit Einführung in die ..
 
-        studienleistung.updateNoteBachelor(2.0);
-        studienleistung.updateNoteKolloquium(2.0);
+
+        //Darf nicht gehen, weil keine 165 CP
+        assertThrows(IllegalArgumentException.class, () ->{
+            studienleistung.updateNoteBachelor(2.0);
+        });
+        //Darf nicht gehen, weil keine 165 CP & keine Bachelornote
+        assertThrows(IllegalArgumentException.class, () ->{
+            studienleistung.updateNoteKolloquium(2.0);
+        });
 
         //Darf nicht gehen, weil keine 180 CP
         assertThrows(IllegalArgumentException.class, () ->{

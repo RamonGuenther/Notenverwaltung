@@ -349,10 +349,18 @@ public class Studienleistung {
     }
 
     public void updateNoteBachelor(Double note){
+        if(getSummeCreditpointsOhneAbschluss() != 165) {
+            throw new IllegalArgumentException(this.getClass().getSimpleName() +
+                    ": Die erforderlichen Creditpoints sind nicht vorhanden");
+        }
         abschlussService.setNoteBachelor(note);
     }
 
     public void updateNoteKolloquium(Double note){
+        if(getSummeCreditpointsOhneAbschluss() != 165) {
+            throw new IllegalArgumentException(this.getClass().getSimpleName() +
+                    ": Die erforderlichen Creditpoints sind nicht vorhanden");
+        }
         abschlussService.setNoteKolloquium(note);
     }
 

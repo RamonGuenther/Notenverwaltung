@@ -83,7 +83,14 @@ class ModuleAnlegenTests {
 
         studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
 
+        //Darf nicht gehen weil die Studienrichtung schon Anwendungsentwicklung ist
+        assertThrows(IllegalArgumentException.class, () ->{
+            studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.ANWENDUNGSENTWICKLUNG);
+        });
+
         studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.WIRTSCHAFT);
+
+        //Darf nicht gehen weil schon ein Block gewählt wurde
         assertThrows(IllegalArgumentException.class, () ->{
             studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.KUENSTLICHE_INTELLIGENZ);
         });
@@ -95,8 +102,6 @@ class ModuleAnlegenTests {
         studienleistung.pflichtmoduleAnlegen();
         studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
 
-
-        wahlpflichtmodulRepository.deleteAll();
 
         studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK,5);
 

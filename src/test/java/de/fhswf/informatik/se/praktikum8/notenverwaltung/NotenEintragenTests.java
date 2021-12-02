@@ -2,6 +2,7 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Studienrichtung;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.WahlmodulEnum;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Wahlpflichtblock;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Wahlpflichtfach;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.test.TestModuleEnum;
@@ -14,10 +15,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Die Testfälle überschreiben den Inhalt der Datenbank!
+ * Die Klasse NotenEintragenTests prüft das Verhalten beim Eintragen der
+ * Modulnoten.
+ *
+ * @author  Ramon Günther & Ivonne Kneißig (Verantwortlich: Ramon Günther)
+ * @version 1.0 vom 2. Dezember 2021
  */
 @SpringBootTest
 public class NotenEintragenTests {
@@ -97,6 +106,29 @@ public class NotenEintragenTests {
 
     @Test
     void abschlussNotenEintragen() {
+
+        alleModuleLoeschen();
+
+        assertThrows(IllegalArgumentException.class, () ->{
+            studienleistung.updateNoteBachelor(5.0);
+        });
+
+        studienleistung.pflichtmoduleAnlegen();
+        studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
+        studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.WIRTSCHAFT);
+        studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK,5);
+        studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.BETRIEBSSYSTEME3,6);
+        studienleistung.wahlmodulHinzufuegen(WahlmodulEnum.ENGLISH1, 5);
+
+        List<TestModuleEnum> testModuleEnumEnumList =  new ArrayList<>(Arrays.asList(TestModuleEnum.values()));
+        for(TestModuleEnum e : testModuleEnumEnumList){
+            studienleistung.updateNotePflichtmodul(e.label,3.0); //153*3=459
+        }
+
+        studienleistung.updateNoteWahlpflichtmodul(Wahlpflichtfach.BETRIEBSSYSTEME3.label, 4.0); //4*6
+        studienleistung.updateNoteWahlpflichtmodul(Wahlpflichtfach.GEOINFORMATIK.label, 2.3); //2.3 * 6
+
+
         studienleistung.updateNoteBachelor(5.0);
 
 
@@ -107,5 +139,6 @@ public class NotenEintragenTests {
 
         studienleistung.updateNoteBachelor(4.0);
         studienleistung.updateNoteKolloquium(4.0);
+
     }
 }

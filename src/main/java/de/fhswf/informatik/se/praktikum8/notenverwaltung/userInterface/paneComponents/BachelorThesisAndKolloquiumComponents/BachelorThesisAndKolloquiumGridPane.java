@@ -32,6 +32,7 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
 
     private final ComboBoxGrade gradeKolloquium1;
     private final ComboBoxGrade gradeKolloquium2;
+    private final Label creditpointsKolloquium;
 
     private final Label averageGradeModules;
     private final Label averageGradeBachelor;
@@ -149,7 +150,7 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         creditpointsBachelorThesis = new Label();
         creditpointsBachelorThesis.setFont(new Font(16));
 
-        Label creditpointsKolloquium = new Label("Creditpoints: ");
+        creditpointsKolloquium = new Label("Creditpoints: ");
         creditpointsKolloquium.setFont(new Font(16));
 
         if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0 && studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0){
@@ -193,17 +194,6 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         updateKolloquium.setMinWidth(150);
         setValignment(updateKolloquium, VPos.BOTTOM);
         updateKolloquium.setOnAction(new updateKolloquiumEvent());
-
-        //        Von Intellij verkleinert?
-        //        if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0){
-        //            updateKolloquium.setDisable(false);
-        //        }
-        //        else{
-        //            updateKolloquium.setDisable(true);
-        //        }
-        //        if(studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0){
-        //            updateKolloquium.setDisable(true);
-        //        }
 
         updateKolloquium.setDisable(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() == 0.0);
         if(studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0){
@@ -407,7 +397,11 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
                 averageGradeModules.setText("Notendurchschnitt der Module: " + studienleistung.getNotendurchschnittModule());
                 averageGradeBachelor.setText("Notendurchschnitt Bachelorarbeit und Kolloquium: " + studienleistung.getNotendurchschnittAbschluss());
                 sumCreditpoints.setText("Summe der Creditpoints: " + studienleistung.getSummeCreditPointsMitAbschluss());
-                creditpointsBachelorThesis.setText("Creditpoints: " + studienleistung.getAbschluss().getBachelorarbeit().getCreditpointsBachelorarbeit());
+                if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0) {
+                    creditpointsBachelorThesis.setText("Creditpoints: " +
+                            studienleistung.getAbschluss().getBachelorarbeit().getCreditpointsBachelorarbeit());
+                }
+
                 String checkAverageGradeAll = studienleistung.getSummeCreditPointsMitAbschluss() != 180 ? " " : String.valueOf(studienleistung.getNotendurchschnittGesamt());
                 averageGradeAll.setText("Notendurchschnitt Gesamt: " + checkAverageGradeAll);
             } catch(Exception e) {
@@ -455,7 +449,9 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
                 averageGradeModules.setText("Notendurchschnitt der Module: " + studienleistung.getNotendurchschnittModule());
                 averageGradeBachelor.setText("Notendurchschnitt Bachelorarbeit und Kolloquium: " + studienleistung.getNotendurchschnittAbschluss());
                 sumCreditpoints.setText("Summe der Creditpoints: " + studienleistung.getSummeCreditPointsMitAbschluss());
-                creditpointsBachelorThesis.setText("Creditpoints: " + studienleistung.getAbschluss().getKolloquium().getCreditpointsKolloquium());
+                if(studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0) {
+                    creditpointsKolloquium.setText("Creditpoints: " + studienleistung.getAbschluss().getKolloquium().getCreditpointsKolloquium());
+                }
                 String checkAverageGradeAll = studienleistung.getSummeCreditPointsMitAbschluss() != 180 ? " " : String.valueOf(studienleistung.getNotendurchschnittGesamt());
                 averageGradeAll.setText("Notendurchschnitt Gesamt: " + checkAverageGradeAll);
             } catch(Exception e) {

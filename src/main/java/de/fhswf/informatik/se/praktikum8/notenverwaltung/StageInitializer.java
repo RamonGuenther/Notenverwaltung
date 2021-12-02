@@ -2,6 +2,11 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.ChartApplication.StageReadyEvent;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Studienrichtung;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.WahlmodulEnum;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Wahlpflichtblock;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Wahlpflichtfach;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.test.TestModuleEnum;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.AbschlussRepository;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.PflichtmodulRepository;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.WahlmodulRepository;
@@ -14,6 +19,10 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Die Klasse StageInitializer initialisiert die Stage für die Notenverwaltungs-Applikation
@@ -59,18 +68,17 @@ public class StageInitializer implements ApplicationListener<StageReadyEvent> {
                 abschlussRepository
         );
         studienleistung.pflichtmoduleAnlegen();
-//        studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
-//        studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.WIRTSCHAFT);
-//        studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK,5);
-//        studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.BETRIEBSSYSTEME3,6);
-//        studienleistung.wahlmodulHinzufuegen(WahlmodulEnum.ENGLISH1, 5);
-//
-//        List<TestModuleEnum> testModuleEnumEnumList =  new ArrayList<>(Arrays.asList(TestModuleEnum.values()));
-//        for(TestModuleEnum e : testModuleEnumEnumList){
-//            studienleistung.updateNotePflichtmodul(e.label,3.0); //153*3=459
-//        }
-//        studienleistung.updateNoteWahlpflichtmodul(Wahlpflichtfach.BETRIEBSSYSTEME3.label, 4.0); //4*6
-//        studienleistung.updateNoteWahlpflichtmodul(Wahlpflichtfach.GEOINFORMATIK.label, 2.3); //2.3 * 6
+        studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
+        studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.WIRTSCHAFT);
+        studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.GEOINFORMATIK,5);
+        studienleistung.wahlpflichtmodulHinzufuegen(Wahlpflichtfach.BETRIEBSSYSTEME3,6);
+        studienleistung.wahlmodulHinzufuegen(WahlmodulEnum.ENGLISH1, 5);
+
+        List<TestModuleEnum> testModuleEnumEnumList =  new ArrayList<>(Arrays.asList(TestModuleEnum.values()));
+        for(TestModuleEnum e : testModuleEnumEnumList){
+            studienleistung.updateNotePflichtmodul(e.label,3.0); //153*3=459
+        }
+
 
         stage = event.getStage();
         stage.setTitle("Notenverwaltung Informatik B.sc.");

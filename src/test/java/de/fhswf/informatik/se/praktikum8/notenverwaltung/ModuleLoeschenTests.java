@@ -71,25 +71,15 @@ public class ModuleLoeschenTests {
 
             studienleistung.deleteAllByStudienrichtung();
 
-            studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
+            studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.KUENSTLICHE_INTELLIGENZ);
 
         }
 
         @Test
         void wahlpflichtblockLoeschen(){
 
-            //Darf nicht gehen weil noch keine Studienrichtung angegeben worden ist
-            assertThrows(IllegalArgumentException.class, () ->{
-                studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.WIRTSCHAFT);
-            });
-
             studienleistung.pflichtmoduleStudienrichtungFestlegen(Studienrichtung.ANWENDUNGSENTWICKLUNG);
 
-            //Darf nicht gehen, weil Studienrichtung schon Anwendungsentwicklung ist
-            assertThrows(IllegalArgumentException.class, () ->{
-                studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.ANWENDUNGSENTWICKLUNG);
-
-            });
 
             studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.WIRTSCHAFT);
 
@@ -97,6 +87,11 @@ public class ModuleLoeschenTests {
             assertThrows(IllegalArgumentException.class, () ->{
                 studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.KUENSTLICHE_INTELLIGENZ);
             });
+
+            studienleistung.deleteAllByWahlpflichtblock();
+
+            studienleistung.pflichtmoduleWahlpflichtblockFestlegen(Wahlpflichtblock.KUENSTLICHE_INTELLIGENZ);
+
         }
 
         @Test
@@ -137,6 +132,8 @@ public class ModuleLoeschenTests {
             });
 
             studienleistung.deleteWahlmodul(WahlmodulEnum.ENGLISH1.label);
+
+            studienleistung.wahlmodulHinzufuegen(WahlmodulEnum.ENGLISH1, 5);
         }
 
 }
