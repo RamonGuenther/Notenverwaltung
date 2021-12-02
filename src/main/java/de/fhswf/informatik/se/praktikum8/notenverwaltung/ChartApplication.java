@@ -6,6 +6,13 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;
 
+/**
+ * Die Klasse ChartApplication sorgt dafür, dass die JavaFX-Applikation mithilfe
+ * von Spring Boot funktioniert.
+ *
+ * @author Ivonne Kneißig & Ramon Günther
+ * @version 1.0 vom 25. November 2021
+ */
 public class ChartApplication extends javafx.application.Application {
     private ConfigurableApplicationContext applicationContext;
 
