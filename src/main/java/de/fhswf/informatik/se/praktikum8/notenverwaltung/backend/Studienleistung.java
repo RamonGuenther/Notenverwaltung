@@ -286,8 +286,7 @@ public class Studienleistung {
     public Double getNotendurchschnittAbschluss(){
         Abschluss abschluss = abschlussService.findAbschluss();
         if(abschluss.getBachelorarbeit().getEndNoteBachelor() == 0 || abschluss.getKolloquium().getEndNoteKolloquium() == 0){
-            throw new IllegalArgumentException(this.getClass().getSimpleName() +
-                    ": Der Notendurchschnitt vom Abschluss lässt sich nicht berechnen, da die erforderlichen Leistungen fehlen!");
+            return 0.0;
         }
         double note1 = abschluss.getBachelorarbeit().notenFaktor();
         double note2 = abschluss.getKolloquium().notenFaktor();
@@ -315,6 +314,9 @@ public class Studienleistung {
     }
 
     private Double berechneNote(List<Notendurchschnitt> notenListe, Integer summeCreditpoints){
+        if(notenListe.isEmpty()){
+            return 0.0;
+        }
         double zaehler = 0.0;
         double notendurchschnitt;
         for(Notendurchschnitt n : notenListe){

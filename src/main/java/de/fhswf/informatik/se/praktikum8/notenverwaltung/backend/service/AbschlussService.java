@@ -6,6 +6,8 @@ import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.repositories.Ab
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -62,14 +64,19 @@ public class AbschlussService {
     public List<Notendurchschnitt> getNotenliste(){
         Abschluss abschluss = repository.findAbschlussById(1L);
         List<Notendurchschnitt> notenListe = new ArrayList<>();
-        notenListe.add(new Notendurchschnitt(
-                abschluss.getBachelorarbeit().getEndNoteBachelor(),
-                abschluss.getBachelorarbeit().getCreditpointsBachelorarbeit()
-        ));
-        notenListe.add(new Notendurchschnitt(
-                abschluss.getKolloquium().getEndNoteKolloquium(),
-                abschluss.getKolloquium().getCreditpointsKolloquium()
-        ));
-        return notenListe;
+        if(abschluss.getBachelorarbeit().getEndNoteBachelor() != 0.0 && abschluss.getKolloquium().getEndNoteKolloquium() != 0.0) {
+            notenListe.add(new Notendurchschnitt(
+                    abschluss.getBachelorarbeit().getEndNoteBachelor(),
+                    abschluss.getBachelorarbeit().getCreditpointsBachelorarbeit()
+            ));
+            notenListe.add(new Notendurchschnitt(
+                    abschluss.getKolloquium().getEndNoteKolloquium(),
+                    abschluss.getKolloquium().getCreditpointsKolloquium()
+            ));
+            return  notenListe;
+        }
+        else{
+            return Collections.emptyList();
+        }
     }
 }

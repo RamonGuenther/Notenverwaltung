@@ -74,10 +74,10 @@ public class NotendurchschnittTests {
 
         studienleistung.updateNoteKolloquium(5.0);
 
-        //Da das Kolloquium nicht bestanden ist kann der Notendurchschnitt nicht berechnet werden
-        assertThrows(IllegalArgumentException.class, () ->{
-            studienleistung.getNotendurchschnittAbschluss();
-        });
+
+        //Da der Abschluss nicht bestanden wurde gibt die Notenberechnugn eine 0.0 zurück
+        assertEquals(0.0,studienleistung.getNotendurchschnittAbschluss());
+
 
 
         studienleistung.updateNoteKolloquium(3.7);

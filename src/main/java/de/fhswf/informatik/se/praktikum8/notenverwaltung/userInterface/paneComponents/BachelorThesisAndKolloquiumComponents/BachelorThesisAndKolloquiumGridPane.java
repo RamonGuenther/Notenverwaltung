@@ -2,6 +2,8 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComp
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.ComboBoxGrade;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -24,22 +26,22 @@ import javafx.scene.text.Font;
  */
 public class BachelorThesisAndKolloquiumGridPane extends GridPane {
 
-    private Studienleistung studienleistung;
+    private final Studienleistung studienleistung;
 
-    private ComboBoxGrade gradeBachelorThesis1;
-    private ComboBoxGrade gradeBachelorThesis2;
-    private Label creditpointsBachelorThesis;
+    private final ComboBoxGrade gradeBachelorThesis1; //TODO IVONNE DAS MIT FINAL ZEIGEN
+    private final ComboBoxGrade gradeBachelorThesis2;
+    private final Label creditpointsBachelorThesis;
 
-    private ComboBoxGrade gradeKolloquium;
-    private Label creditpointsKolloquium;
+    private final ComboBoxGrade gradeKolloquium;
+    private final Label creditpointsKolloquium;
 
-    private Label averageGradeModules;
-    private Label averageGradeBachelor;
-    private Label sumCreditpoints;
+    private final Label averageGradeModules;
+    private final Label averageGradeBachelor;
+    private final Label sumCreditpoints;
 
-    private Button update;
-    private Button save;
-    private Button cancel;
+    private final Button update;
+    private final Button save;
+    private final Button cancel;
 
     /**
      * Im Konstruktor von BachelorThesisAndKolloquiumGridPane werden
@@ -57,7 +59,17 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         Label labelGradeBachelorThesis1 = new Label("Note der Bachelorarbeit");
         labelGradeBachelorThesis1.setFont(new Font(16));
         gradeBachelorThesis1 = new ComboBoxGrade();
-        gradeBachelorThesis1.setValue(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor());
+
+        gradeBachelorThesis1.setValue(studienleistung
+                .getAbschluss()
+                .getBachelorarbeit()
+                .getNoteBachelorarbeit1()
+                != 0.0 ? studienleistung
+                .getAbschluss()
+                .getBachelorarbeit()
+                .getNoteBachelorarbeit1() : null
+        );
+
         gradeBachelorThesis1.setMinWidth(150);
         setValignment(gradeBachelorThesis1, VPos.TOP);
         gradeBachelorThesis1.setDisable(true);
@@ -65,7 +77,16 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         Label labelGradeBachelorThesis2 = new Label("Note der Bachelorarbeit");
         labelGradeBachelorThesis2.setFont(new Font(16));
         gradeBachelorThesis2 = new ComboBoxGrade();
-        gradeBachelorThesis2.setValue(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor());
+
+        gradeBachelorThesis2.setValue(studienleistung
+                .getAbschluss()
+                .getBachelorarbeit()
+                .getNoteBachelorarbeit2()
+                != 0.0 ? studienleistung
+                .getAbschluss()
+                .getBachelorarbeit()
+                .getNoteBachelorarbeit2() : null
+        );
         gradeBachelorThesis2.setMinWidth(150);
         setValignment(gradeBachelorThesis2, VPos.TOP);
         gradeBachelorThesis2.setDisable(true);
@@ -73,21 +94,46 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         Label labelGradeKolloquium = new Label("Note des Kolloquiums");
         labelGradeKolloquium.setFont(new Font(16));
         gradeKolloquium = new ComboBoxGrade();
+
+        gradeKolloquium.setValue(studienleistung
+                .getAbschluss()
+                .getKolloquium()
+                .getEndNoteKolloquium()
+                != 0.0 ? studienleistung
+                .getAbschluss().getKolloquium()
+                .getEndNoteKolloquium() : null
+        );
+
         gradeKolloquium.setMinWidth(150);
         setValignment(gradeKolloquium, VPos.TOP);
         gradeKolloquium.setDisable(true);
 
-        creditpointsBachelorThesis = new Label("Creditpoints: ");
+
+        creditpointsBachelorThesis = new Label();
         creditpointsBachelorThesis.setFont(new Font(16));
 
         creditpointsKolloquium = new Label("Creditpoints: ");
         creditpointsKolloquium.setFont(new Font(16));
 
-        averageGradeModules = new Label("Notendurchschnitt der Module: ");
+        if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0 && studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0){
+            creditpointsBachelorThesis.setText("Creditpoints: " + studienleistung.getAbschluss().getBachelorarbeit().getCreditpointsBachelorarbeit());
+            creditpointsKolloquium.setText("Creditpoints: " + studienleistung.getAbschluss().getKolloquium().getCreditpointsKolloquium());
+        }
+        else{
+            creditpointsBachelorThesis.setText("Creditpoints: ");
+            creditpointsKolloquium.setText("Creditpoints: ");
+        }
+
+
+        averageGradeModules = new Label("Notendurchschnitt der Module: " + studienleistung.getNotendurchschnittModule());
         averageGradeModules.setFont(new Font(16));
-        averageGradeBachelor = new Label("Notendurchschnitt der bachelorarbeit: ");
+
+        averageGradeBachelor = new Label("Notendurchschnitt der Bachelorarbeit: ");
+        averageGradeBachelor.setText("Notendurchschnitt der Bachelorarbeit: " + studienleistung.getNotendurchschnittAbschluss());
         averageGradeBachelor.setFont(new Font(16));
+
         sumCreditpoints =  new Label("Summe der Creditpoints: ");
+        sumCreditpoints.setText("Summe der Creditpoints: " + studienleistung.getSummeCreditPointsMitAbschluss());
         sumCreditpoints.setFont(new Font(16));
 
         update = new Button("Bearbeiten");
@@ -172,8 +218,34 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         @Override
         public void handle(ActionEvent event)
         {
+
+
+
             try {
-                gradeBachelorThesis1.setDisable(false);
+                save.disableProperty().bind(
+                        gradeBachelorThesis1.valueProperty().isNull()
+                                .and(gradeKolloquium.valueProperty().isNull()));
+
+//                //Damit der Save Button grau bleibt bis die Felder gesetzt wurden
+//                //TODO: WENN MAN DIREKT WIEDER DEN BEARBEITEN BUTTON DRÜCK WIRD DER SAFE BUTTON NICHT GRAU BEIM VERLASSEN UND HINGEHEN SCHON
+//                if(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor() != 0.0 && studienleistung.getAbschluss().getKolloquium().getEndNoteKolloquium() != 0.0){
+//                    save.setDisable(true);
+//                }
+//                else {
+//
+//                    );
+//                }
+
+                if(gradeBachelorThesis1.getValue() != null){
+                    gradeBachelorThesis1.setDisable(true);
+                    gradeBachelorThesis2.setDisable(false);
+
+                }
+                else{
+                    gradeBachelorThesis1.setDisable(false);
+                    gradeBachelorThesis2.setDisable(true);
+                }
+
                 gradeKolloquium.setDisable(false);
 
                 update.setVisible(false);
@@ -185,8 +257,7 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
             catch(Exception e) {
                 Alert alert =
                         new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + BachelorThesisAndKolloquiumGridPane.class.getSimpleName() +
-                                ": " + this.getClass().getSimpleName() + " konnte nicht ausgeführt werden.", ButtonType.OK);
+                              e.getMessage(), ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
             }
@@ -204,21 +275,39 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         public void handle(ActionEvent event)
         {
             try {
-                gradeBachelorThesis1.setDisable(true);
-                gradeKolloquium.setDisable(true);
 
                 save.setVisible(false);
                 cancel.setVisible(false);
                 update.setVisible(true);
 
-                studienleistung.updateNoteBachelor(gradeBachelorThesis1.getValue());
+                //TODO: DIE IFS ERGEBEN KEINEN SINN, DA SIE BEIM ZWEITEN RUN BEIDE ZUTREFFEN AU?ER ERSTE
+                if(gradeBachelorThesis1.getValue() == null ||
+                        gradeKolloquium.getValue() == null ){
+
+                    throw new IllegalArgumentException("Die Note für den Bachelor oder für das Kolloquium wurde nicht ausgewählt.");
+                }
+                else if(gradeBachelorThesis1.getValue()!= null &&
+                        gradeKolloquium.getValue() != null){
+                    gradeBachelorThesis1.setValue(gradeBachelorThesis1.getValue());
+                    studienleistung.updateNoteBachelor(gradeBachelorThesis1.getValue());
+                    studienleistung.updateNoteKolloquium(gradeKolloquium.getValue());
+                }
+                else if(gradeBachelorThesis2.getValue()!= null &&
+                        gradeKolloquium.getValue() != null){
+                    System.out.println("Hallol");
+                    studienleistung.updateNoteBachelor(gradeBachelorThesis2.getValue());
+                    studienleistung.updateNoteKolloquium(gradeKolloquium.getValue());
+                }
+
+                gradeBachelorThesis1.setDisable(true);
+                gradeBachelorThesis2.setDisable(true);
+                gradeKolloquium.setDisable(true);
 
             }
             catch(Exception e) {
                 Alert alert =
                         new Alert(Alert.AlertType.ERROR,
-                                "Klasse " + BachelorThesisAndKolloquiumGridPane.class.getSimpleName() +
-                                        ": " + this.getClass().getSimpleName() + " konnte nicht ausgeführt werden.", ButtonType.OK);
+                                e.getMessage(), ButtonType.OK);
                 alert.setResizable(true);
                 alert.showAndWait();
             }
