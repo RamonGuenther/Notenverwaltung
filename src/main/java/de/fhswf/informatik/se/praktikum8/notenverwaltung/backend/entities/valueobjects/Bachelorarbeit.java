@@ -70,4 +70,19 @@ public class Bachelorarbeit {
         }
     }
 
+    public double getNoteBachelorarbeit1() {
+        return noteBachelorarbeit1;
+    }
+
+    public void setNoteBachelorarbeit1(double noteBachelorarbeit1) {
+        this.noteBachelorarbeit1 = noteBachelorarbeit1;
+    }
+
+    public double getNoteBachelorarbeit2() {
+        return noteBachelorarbeit2;
+    }
+
+    public void setNoteBachelorarbeit2(double noteBachelorarbeit2) {
+        this.noteBachelorarbeit2 = noteBachelorarbeit2;
+    }
 }

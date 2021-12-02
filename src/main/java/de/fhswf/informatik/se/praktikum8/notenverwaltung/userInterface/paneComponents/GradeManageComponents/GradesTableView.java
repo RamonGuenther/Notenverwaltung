@@ -4,6 +4,7 @@ import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Pflichtmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlpflichtmodul;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,6 +19,8 @@ import javafx.scene.input.MouseEvent;
  */
 public class GradesTableView extends TableView<Object> {
 
+    private GradeManagementSplitPane splitPane;
+
     private TableColumn<Object, Integer> columnCreditpoints;
 
     private GradeDetailsGridPane gradeDetails;
@@ -25,13 +28,16 @@ public class GradesTableView extends TableView<Object> {
     private Studienleistung studienleistung;
 
     private String radioValue;
+
     /**
      * Im Konstruktor von GradesTableView wird die Tabelle initialisiert.
      */
-    public GradesTableView(Studienleistung studienleistung, GradeDetailsGridPane gradeDetails){
+    public GradesTableView(Studienleistung studienleistung, GradeDetailsGridPane gradeDetails, GradeManagementSplitPane splitPane){
 
         this.studienleistung = studienleistung;
         this.gradeDetails = gradeDetails;
+        this.splitPane = splitPane;
+        gradeDetails.setTable(this);
         radioValue = "Alle Module";
 
         TableColumn<Object, String> columnModule = new TableColumn<>("Modul");
@@ -83,7 +89,14 @@ public class GradesTableView extends TableView<Object> {
         if( getSelectionModel().getSelectedItem() == null){
             return;
         }
-
+        splitPane.getUpdateButton().setDisable(false);
+        gradeDetails.getGradeOneValue().setDisable(true);
+        gradeDetails.getGradeTwoValue().setDisable(true);
+        gradeDetails.getGradeThreeValue().setDisable(true);
+        gradeDetails.getSave().setVisible(false);
+        gradeDetails.getCancel().setVisible(false);
         gradeDetails.setDetails(getSelectionModel().getSelectedItem(),radioValue);
     }
+
+
 }

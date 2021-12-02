@@ -38,5 +38,7 @@ public class GradeManagementBorderPane extends BorderPane {
 
         GradeManagementButtonBox buttonBox = new GradeManagementButtonBox(gradesTable, studienleistung);
         setBottom(buttonBox);
+
+        gradesTable.setUpdateButton(buttonBox.getUpdateModule());
     }
 }

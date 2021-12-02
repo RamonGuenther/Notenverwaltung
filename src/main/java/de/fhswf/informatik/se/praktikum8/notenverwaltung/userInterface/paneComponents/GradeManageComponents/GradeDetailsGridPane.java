@@ -25,6 +25,10 @@ import javafx.scene.text.Font;
  */
 public class GradeDetailsGridPane extends GridPane {
 
+    private Button updateButton;
+    GradeManagementSplitPane gradeManagementSplitPane;
+    GradesTableView table;
+
     private Studienleistung studienleistung;
 
     private Label grade;
@@ -47,8 +51,9 @@ public class GradeDetailsGridPane extends GridPane {
      * Der Konstruktor erstellt bzw. initialisiert die einzelnen
      * Elemente der Detailansicht.
      */
-    public GradeDetailsGridPane(Studienleistung studienleistung) {
+    public GradeDetailsGridPane(Studienleistung studienleistung, GradeManagementSplitPane gradeManagementSplitPane) {
 
+        this.gradeManagementSplitPane = gradeManagementSplitPane;
         this.studienleistung = studienleistung;
 
         Label details = new Label("Details");
@@ -90,6 +95,7 @@ public class GradeDetailsGridPane extends GridPane {
         gradeOneValue = new ComboBoxGrade();
         gradeOneValue.setDisable(true);
         gradeOneValue.setMinWidth(250);
+        gradeOneValue.setValue(null);
 
         gradeTwoValue = new ComboBoxGrade();
         gradeTwoValue.setDisable(true);
@@ -223,6 +229,13 @@ public class GradeDetailsGridPane extends GridPane {
         this.cancel = cancel;
     }
 
+    public GradesTableView getTable() {
+        return table;
+    }
+
+    public void setTable(GradesTableView table) {
+        this.table = table;
+    }
 
     /**
      * Die Klasse UpdateGradeDetailsEventHandler bestimmt das Verhalten des
@@ -235,34 +248,68 @@ public class GradeDetailsGridPane extends GridPane {
         @Override
         public void handle(ActionEvent actionEvent) {
 
-            gradeOneValue.setDisable(true);
-            gradeTwoValue.setDisable(true);
-            gradeThreeValue.setDisable(true);
-
             save.setDisable(true);
             save.setVisible(false);
             cancel.setDisable(true);
             cancel.setVisible(false);
 
-
             try {
+                if (moduleType == null || moduleType.equals("")){
+                    throw new IllegalArgumentException("Es wurde kein Modul ausgewählt");
+                }
                 switch (moduleType) {
                     case "Pflichtmodul":
-                        studienleistung.updateNotePflichtmodul(moduleName, gradeOneValue.getValue());
-                        studienleistung.updateNotePflichtmodul(moduleName, gradeTwoValue.getValue());
-                        studienleistung.updateNotePflichtmodul(moduleName, gradeThreeValue.getValue());
+                        studienleistung.updateNotePflichtmodul(moduleName, gradeOneValue.isDisable() == true ? null : gradeOneValue.getValue());
+                        studienleistung.updateNotePflichtmodul(moduleName, gradeTwoValue.isDisable() == true ? null : gradeTwoValue.getValue());
+                        studienleistung.updateNotePflichtmodul(moduleName, gradeThreeValue.isDisable() == true ? null : gradeThreeValue.getValue());
+                        if(studienleistung.getPflichtmodulByModulname(moduleName).isBestanden()){
+                            updateButton.setDisable(true);
+                            setDetails(studienleistung.getPflichtmodulByModulname(moduleName), table.getRadioValue());
+                        }
                         break;
                     case "Wahlpflichtmodul":
-                        studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeOneValue.getValue());
-                        studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeTwoValue.getValue());
-                        studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeThreeValue.getValue());
+                        studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeOneValue.isDisable() == true ? null : gradeOneValue.getValue());
+                        studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeTwoValue.isDisable() == true ? null : gradeTwoValue.getValue());
+                        studienleistung.updateNoteWahlpflichtmodul(moduleName, gradeThreeValue.isDisable() == true ? null : gradeThreeValue.getValue());
+                        if(studienleistung.getWahlpflichtmodulByModulname(moduleName).isBestanden()){
+                            updateButton.setDisable(true);
+                            setDetails(studienleistung.getWahlpflichtmodulByModulname(moduleName), table.getRadioValue());
+                        }
                         break;
                     case "Wahlmodul":
-                        studienleistung.updateNoteWahlmodul(moduleName, gradeOneValue.getValue());
-                        studienleistung.updateNoteWahlmodul(moduleName, gradeTwoValue.getValue());
-                        studienleistung.updateNoteWahlmodul(moduleName, gradeThreeValue.getValue());
+                        studienleistung.updateNoteWahlmodul(moduleName, gradeOneValue.isDisable() == true ? null : gradeOneValue.getValue());
+                        studienleistung.updateNoteWahlmodul(moduleName, gradeTwoValue.isDisable() == true ? null : gradeTwoValue.getValue());
+                        studienleistung.updateNoteWahlmodul(moduleName, gradeThreeValue.isDisable() == true ? null : gradeThreeValue.getValue());
+                        if(studienleistung.getWahlmodulByModulname(moduleName).isBestanden()){
+                            updateButton.setDisable(true);
+                            setDetails(studienleistung.getWahlmodulByModulname(moduleName), table.getRadioValue());
+                        }
+                        break;
+                    default:
                         break;
                 }
+                gradeOneValue.setDisable(true);
+                gradeTwoValue.setDisable(true);
+                gradeThreeValue.setDisable(true);
+
+                table.getItems().clear();
+                switch (table.getRadioValue()){
+                    case "Alle Module":
+                        table.getItems().addAll(studienleistung.getAllePflichtmoduleUndWahlpflichtmodule());
+                        break;
+                    case "Offen":
+                        table.getItems().addAll(studienleistung.getOffenePflichtmoduleUndWahlpflichtmodule());
+                        break;
+                    case "Bestanden":
+                        table.getItems().addAll(studienleistung.getBestandenePflichtmoduleUndWahlpflichtmodule());
+                        break;
+                    case "Wahlmodule":
+                        table.getItems().addAll(studienleistung.getWahlmodule());
+                        break;
+                }
+                gradeManagementSplitPane.getGradesTableBorderPane().getAverageGrade().setText("Notendurchschnitt " + studienleistung.getNotendurchschnittModule());
+                gradeManagementSplitPane.getGradesTableBorderPane().getSumCreditpoints().setText("Creditpoints " + studienleistung.getSummeCreditpointsOhneAbschluss());
+
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
                 alert.setResizable(true);
@@ -296,6 +343,9 @@ public class GradeDetailsGridPane extends GridPane {
 
     public void setDetails(Object module, String radioValue) {
 
+        updateButton = gradeManagementSplitPane.getUpdateButton();
+        updateButton.setDisable(false);
+
         if (radioValue.equals("Wahlmodule")) {
             Wahlmodul wahlmodul = (Wahlmodul) module;
             setItems(wahlmodul.getModulname(), wahlmodul.getModulart(), String.valueOf(wahlmodul.getSemester()),
@@ -303,24 +353,35 @@ public class GradeDetailsGridPane extends GridPane {
             creditpoints.setText("");
             moduleName = wahlmodul.getModulname();
             moduleType = "Wahlmodul";
+
+            if(wahlmodul.isBestanden() || wahlmodul.getNote().getNote3() == 5.0){
+                updateButton.setDisable(true);
+            }
+
         } else {
             try {
                 Wahlpflichtmodul wahlpflichtmodul = (Wahlpflichtmodul) module;
                 setItems(wahlpflichtmodul.getModulname(), wahlpflichtmodul.getModulart(),
                         String.valueOf(wahlpflichtmodul.getSemester()), wahlpflichtmodul.getNote(), wahlpflichtmodul.getEndNote());
-                creditpoints.setText(wahlpflichtmodul.isBestanden() == false ? "Creditpoints: " : "Creditpoints: " + wahlpflichtmodul.getCreditpoints());
+                creditpoints.setText(!wahlpflichtmodul.isBestanden() ? "Creditpoints: " : "Creditpoints: " + wahlpflichtmodul.getCreditpoints());
                 moduleName = wahlpflichtmodul.getModulname();
                 moduleType = "Wahlpflichtmodul";
 
+                if(wahlpflichtmodul.isBestanden() || wahlpflichtmodul.getNote().getNote3() == 5.0){
+                    updateButton.setDisable(true);
+                }
 
             } catch (Exception e) {
                 Pflichtmodul pflichtmodul = (Pflichtmodul) module;
                 setItems(pflichtmodul.getModulname(), pflichtmodul.getModulart(),
                         String.valueOf(pflichtmodul.getSemester()), pflichtmodul.getNote(), pflichtmodul.getEndNote());
-                creditpoints.setText(pflichtmodul.isBestanden() == false ? "Creditpoints: " : "Creditpoints: " + pflichtmodul.getCreditpoints());
+                creditpoints.setText(!pflichtmodul.isBestanden() ? "Creditpoints: " : "Creditpoints: " + pflichtmodul.getCreditpoints());
                 moduleName = pflichtmodul.getModulname();
                 moduleType = "Pflichtmodul";
 
+                if(pflichtmodul.isBestanden() || pflichtmodul.getNote().getNote3() == 5.0){
+                    updateButton.setDisable(true);
+                }
             }
         }
     }

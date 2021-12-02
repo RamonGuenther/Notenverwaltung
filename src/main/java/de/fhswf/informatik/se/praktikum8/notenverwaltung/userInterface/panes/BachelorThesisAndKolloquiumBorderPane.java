@@ -30,7 +30,7 @@ public class BachelorThesisAndKolloquiumBorderPane extends BorderPane {
         GradeManagementMenuBar menuBar = new GradeManagementMenuBar(initializer);
         setTop(menuBar);
 
-        BachelorThesisAndKolloquiumGridPane bachelorThesisAndKolloquiumDetails = new BachelorThesisAndKolloquiumGridPane();
+        BachelorThesisAndKolloquiumGridPane bachelorThesisAndKolloquiumDetails = new BachelorThesisAndKolloquiumGridPane(studienleistung);
         setCenter(bachelorThesisAndKolloquiumDetails);
     }
 }

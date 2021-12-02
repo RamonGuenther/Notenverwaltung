@@ -19,6 +19,7 @@ import javafx.scene.layout.HBox;
  */
 public class GradeManagementButtonBox extends HBox {
 
+    private Button updateModule;
     /**
      * Der Konstruktor von GradeManagementSplitPane initialisiert die Elemente
      * der Buttonzeile
@@ -33,22 +34,30 @@ public class GradeManagementButtonBox extends HBox {
         Button addModule = new Button("Module hinzufügen");
         addModule.setMinWidth(180);
         setMargin(addModule, new Insets(20, 0, 20, 0));
-        addModule.setOnAction(new AddModuleEventHandler(studienleistung));
+        addModule.setOnAction(new AddModuleEventHandler(studienleistung, pane.getGradesTableBorderPane().getTableView()));
 
         Button deleteModule = new Button("Modul entfernen");
         deleteModule.setMinWidth(180);
         setMargin(deleteModule, new Insets(20, 0, 20, 0));
         deleteModule.setOnAction(new DeleteModuleEventHandler(studienleistung));
 
-        Button updateModule = new Button ("Prüfungsleistung aktualisieren");
+        updateModule = new Button ("Prüfungsleistung aktualisieren");
         updateModule.setMinWidth(180);
         setMargin(updateModule, new Insets(20, 0, 20, 0));
         updateModule.setOnAction(new GradeDetailsEventHandler(pane));
-
         setAlignment(Pos.BASELINE_CENTER);
         setWidth(800);
         setSpacing(100);
+        updateModule.setDisable(true);
 
         getChildren().addAll(addModule, deleteModule, updateModule);
+    }
+
+    public Button getUpdateModule() {
+        return updateModule;
+    }
+
+    public void setUpdateModule(Button updateModule) {
+        this.updateModule = updateModule;
     }
 }

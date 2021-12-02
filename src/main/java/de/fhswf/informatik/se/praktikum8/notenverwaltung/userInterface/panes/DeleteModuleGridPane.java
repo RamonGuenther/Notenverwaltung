@@ -1,11 +1,8 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.panes;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlmodul;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.entities.Wahlpflichtmodul;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Studienrichtung;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.WahlmodulEnum;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Wahlpflichtblock;
-import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.enums.Wahlpflichtfach;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -29,10 +26,8 @@ public class DeleteModuleGridPane extends GridPane {
     private Alert alert;
 
     private final ComboBox<String> moduleType;
-    private ComboBox<Studienrichtung> modulesStudienrichtung;
-    private ComboBox<Wahlpflichtblock> modulesWahlpflichtblock;
     private ComboBox<String> modulesWahlpflichtfach;
-    private ComboBox<WahlmodulEnum> modulesWahlfach;
+    private ComboBox<String> modulesWahlfach;
 
     private final Label labelModules;
 
@@ -62,8 +57,9 @@ public class DeleteModuleGridPane extends GridPane {
         moduleType.setMinWidth(280);
         moduleType.setOnAction(new moduletypeEventHandler());
 
-        labelModules = new Label("Richtung");
+        labelModules = new Label("Modul");
         labelModules.setFont(new Font(16));
+        labelModules.setVisible(false);
 
         createModuleChoiceBoxes();
 
@@ -86,8 +82,6 @@ public class DeleteModuleGridPane extends GridPane {
         add(labelModuleType, 0, 1, 1, 1);
         add(moduleType, 0, 2, 1, 1);
         add(labelModules, 0, 3, 1, 1);
-        add(modulesStudienrichtung, 0, 4, 1, 1);
-        add(modulesWahlpflichtblock, 0, 4, 1, 1);
         add(modulesWahlpflichtfach, 0, 4, 1, 1);
         add(modulesWahlfach, 0, 4, 1, 1);
         add(buttons, 0,5,1,1);
@@ -102,38 +96,29 @@ public class DeleteModuleGridPane extends GridPane {
      * eingeblendet, wenn der Nutzer einen anderen Modultyp auswählt.
      */
     private void createModuleChoiceBoxes(){
-        modulesStudienrichtung = new ComboBox<>();
-        modulesStudienrichtung.getItems().addAll(Studienrichtung.values());
-        modulesStudienrichtung.setVisible(true);
-        modulesStudienrichtung.setMinWidth(280);
-        modulesStudienrichtung.setValue(Studienrichtung.ANWENDUNGSENTWICKLUNG);
-        modulesStudienrichtung.isShowing();
-
-        modulesWahlpflichtblock = new ComboBox<>();
-        modulesWahlpflichtblock.getItems().addAll(Wahlpflichtblock.values());
-        modulesWahlpflichtblock.setVisible(false);
-        modulesWahlpflichtblock.setMinWidth(280);
-        modulesWahlpflichtblock.setValue(Wahlpflichtblock.ANWENDUNGSENTWICKLUNG);
-        modulesWahlpflichtblock.isShowing();
 
         modulesWahlpflichtfach = new ComboBox<>();
         if(!studienleistung.getWahlpflichtmodule().isEmpty()){
             for(Wahlpflichtmodul wahlpflichtmodul: studienleistung.getWahlpflichtmodule()) {
                 modulesWahlpflichtfach.getItems().add(wahlpflichtmodul.getModulname());
             }
-            modulesWahlpflichtfach.setValue(studienleistung.getWahlpflichtmodule().get(0).getModulname());
-            modulesWahlpflichtfach.isShowing();
         }
         modulesWahlpflichtfach.setVisible(false);
         modulesWahlpflichtfach.setMinWidth(280);
+        modulesWahlpflichtfach.setValue("Kein Modul ausgewählt");
+        modulesWahlpflichtfach.isShowing();
 
 
         modulesWahlfach = new ComboBox<>();
-        modulesWahlfach.getItems().addAll(WahlmodulEnum.values());
+        if(!studienleistung.getWahlmodule().isEmpty()){
+            for(Wahlmodul wahlmodul: studienleistung.getWahlmodule()) {
+                modulesWahlfach.getItems().add(wahlmodul.getModulname());
+            }
+        }
         modulesWahlfach.setVisible(false);
         modulesWahlfach.setMinWidth(280);
-        modulesWahlfach.setValue(WahlmodulEnum.ENGLISH1);
-        modulesWahlfach.isShowing();
+        modulesWahlpflichtfach.setValue("Kein Modul ausgewählt");
+        modulesWahlpflichtfach.isShowing();
 
         setPadding(new Insets(30, 0, 30, 60 ));
         setVgap(20);
@@ -150,46 +135,31 @@ public class DeleteModuleGridPane extends GridPane {
         {
             try {
                 switch (moduleType.getValue()) {
-                    case "Studienrichtung" -> {
-                        modulesWahlpflichtblock.setVisible(false);
-                        modulesStudienrichtung.setVisible(true);
-                        modulesWahlpflichtfach.setVisible(false);
-                        modulesWahlfach.setVisible(false);
-                        labelModules.setText("Richtung");
-                    }
-                    case "Wahlpflichtblock" -> {
-                        modulesWahlpflichtblock.setVisible(true);
-                        modulesStudienrichtung.setVisible(false);
-                        modulesWahlpflichtfach.setVisible(false);
-                        modulesWahlfach.setVisible(false);
-                        labelModules.setText("Richtung");
-                    }
                     case "Wahlpflichtmodul" -> {
-                        modulesWahlpflichtblock.setVisible(false);
-                        modulesStudienrichtung.setVisible(false);
                         modulesWahlpflichtfach.setVisible(true);
                         modulesWahlfach.setVisible(false);
-                        labelModules.setText("Modul");
+                        labelModules.setVisible(true);
                     }
                     case "Wahlmodul" -> {
-                        modulesWahlpflichtblock.setVisible(false);
-                        modulesStudienrichtung.setVisible(false);
                         modulesWahlpflichtfach.setVisible(false);
                         modulesWahlfach.setVisible(true);
-                        labelModules.setText("Modul");
+                        labelModules.setVisible(true);
                     }
                     default -> {
+                        modulesWahlpflichtfach.setVisible(false);
+                        modulesWahlfach.setVisible(false);
+                        labelModules.setVisible(false);
                         break;
                     }
                 }
             }
             catch(Exception e) {
-//                alert =
-//                        new Alert(Alert.AlertType.ERROR,
-//                                "Klasse " + AddModuleGridPane.class.getSimpleName() +
-//                                        ": " + this.getClass().getSimpleName() + " konnte nicht ausgeführt werden.", ButtonType.OK);
-//                alert.setResizable(true);
-//                alert.showAndWait();
+                alert =
+                        new Alert(Alert.AlertType.ERROR,
+                                "Klasse " + AddModuleGridPane.class.getSimpleName() +
+                                        ": " + this.getClass().getSimpleName() + " konnte nicht ausgeführt werden.", ButtonType.OK);
+                alert.setResizable(true);
+                alert.showAndWait();
             }
         }
     }
@@ -221,14 +191,14 @@ public class DeleteModuleGridPane extends GridPane {
                         alert.showAndWait();
                         break;
                     case "Wahlpflichtmodul":
-//                        studienleistung.deleteWahlpflichtmodul();
-//                        alert = new Alert(Alert.AlertType.INFORMATION, "Das Wahlpflichtfach " + modulesWahlpflichtfach.getValue().label + " wurde gelöscht");
+                        studienleistung.deleteWahlpflichtmodul(modulesWahlpflichtfach.getValue());
+                        alert = new Alert(Alert.AlertType.INFORMATION, "Das Wahlpflichtfach " + modulesWahlpflichtfach.getValue() + " wurde gelöscht");
                         alert.setResizable(true);
                         alert.showAndWait();
                         break;
                     case "Wahlmodul":
-                        studienleistung.deleteWahlmodul(modulesWahlfach.getValue().label);
-                        alert = new Alert(Alert.AlertType.INFORMATION, "Das Wahlpflichtfach " + modulesWahlfach.getValue().label + " wurde gelöscht");
+                        studienleistung.deleteWahlmodul(modulesWahlfach.getValue());
+                        alert = new Alert(Alert.AlertType.INFORMATION, "Das Wahlpflichtfach " + modulesWahlfach.getValue() + " wurde gelöscht");
                         alert.setResizable(true);
                         alert.showAndWait();
                         break;
@@ -238,9 +208,9 @@ public class DeleteModuleGridPane extends GridPane {
                 stage.close();
             }
             catch(Exception e) {
-//                alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
-////                alert.setResizable(true);
-//                alert.showAndWait();
+                alert = new Alert(Alert.AlertType.ERROR, e.getMessage());
+                alert.setResizable(true);
+                alert.showAndWait();
             }
         }
     }

@@ -3,6 +3,7 @@ package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.eventHan
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents.GradeManagementSplitPane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 
 /**
  * Die Klasse GradeDetailsEventHandler ist für das Verhalten des Buttons
@@ -26,18 +27,26 @@ public class GradeDetailsEventHandler implements EventHandler<ActionEvent> {
      */
     public GradeDetailsEventHandler(GradeManagementSplitPane pane){
         this.pane = pane;
-
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
 
-        pane.getGradeDetails().getModuleValue().setDisable(false);
-        pane.getGradeDetails().getModuleTypeValue().setDisable(false);
-        pane.getGradeDetails().getSemesterValue().setDisable(false);
-        pane.getGradeDetails().getGradeOneValue().setDisable(false);
-        pane.getGradeDetails().getGradeTwoValue().setDisable(false);
-        pane.getGradeDetails().getGradeThreeValue().setDisable(false);
+        if(pane.getGradeDetails().getGradeOneValue().getValue() == null){
+            pane.getGradeDetails().getGradeOneValue().setDisable(false);
+        }
+
+        if(pane.getGradeDetails().getGradeOneValue().getValue() != null
+                && pane.getGradeDetails().getGradeOneValue().getValue() > 4.0
+                && pane.getGradeDetails().getGradeTwoValue().getValue() == null){
+            pane.getGradeDetails().getGradeTwoValue().setDisable(false);
+        }
+
+        if(pane.getGradeDetails().getGradeOneValue().getValue() != null && pane.getGradeDetails().getGradeOneValue().getValue() > 4.0 &&
+                pane.getGradeDetails().getGradeTwoValue().getValue() != null && pane.getGradeDetails().getGradeTwoValue().getValue() > 4.0
+                && pane.getGradeDetails().getGradeThreeValue().getValue() == null ){
+            pane.getGradeDetails().getGradeThreeValue().setDisable(false);
+        }
 
         pane.getGradeDetails().getSave().setDisable(false);
         pane.getGradeDetails().getSave().setVisible(true);

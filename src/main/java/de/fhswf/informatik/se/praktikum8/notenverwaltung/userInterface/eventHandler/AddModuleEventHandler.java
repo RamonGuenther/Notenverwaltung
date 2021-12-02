@@ -1,6 +1,7 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.eventHandler;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents.GradesTableView;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.panes.AddModuleGridPane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,16 +20,18 @@ import javafx.stage.Stage;
 public class AddModuleEventHandler implements EventHandler<ActionEvent> {
 
     private Studienleistung studienleistung;
+    private GradesTableView table;
 
-    public AddModuleEventHandler(Studienleistung studienleistung) {
+    public AddModuleEventHandler(Studienleistung studienleistung, GradesTableView table) {
         this.studienleistung = studienleistung;
+        this.table = table;
     }
 
     @Override
     public void handle(ActionEvent actionEvent) {
         Stage stage = new Stage();
         stage.setTitle("Notenverwaltung Informatik B.sc. - Module hinzufügen");
-        Parent root = new AddModuleGridPane(stage, studienleistung);
+        Parent root = new AddModuleGridPane(stage, studienleistung, table);
         Scene scene = new Scene(root, 400, 400);
         stage.setScene(scene);
         stage.show();

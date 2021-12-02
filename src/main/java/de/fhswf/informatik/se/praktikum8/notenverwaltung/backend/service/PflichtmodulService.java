@@ -43,14 +43,16 @@ public class PflichtmodulService {
         if(repository.findAllByModulart(WAHLPFLICHTBLOCK).isEmpty()){
             throw new IllegalArgumentException("Es wurden keine Module vom Typ Wahlpflichtblock gefunden.");
         }
-        repository.deleteAllByModulart(WAHLPFLICHTBLOCK);
+        List<Pflichtmodul> pflichtmodulList = repository.findAllByModulart(WAHLPFLICHTBLOCK);
+        repository.deleteAll(pflichtmodulList);
     }
 
     public void deleteAllByStudienrichtung(){
         if(repository.findAllByModulart(STUDIENRICHTUNG).isEmpty()){
             throw new IllegalArgumentException("Es wurden keine Module vom Typ Studienrichtung gefunden.");
         }
-        repository.deleteAllByModulart(STUDIENRICHTUNG);
+        List<Pflichtmodul> pflichtmodulList = repository.findAllByModulart(STUDIENRICHTUNG);
+        repository.deleteAll(pflichtmodulList);
     }
 
 

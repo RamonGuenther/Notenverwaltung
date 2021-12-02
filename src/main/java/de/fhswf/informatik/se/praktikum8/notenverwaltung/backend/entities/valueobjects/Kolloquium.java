@@ -70,7 +70,19 @@ public class Kolloquium {
         }
     }
 
+    public double getNoteKolloquium1() {
+        return noteKolloquium1;
+    }
 
+    public void setNoteKolloquium1(double noteKolloquium1) {
+        this.noteKolloquium1 = noteKolloquium1;
+    }
 
+    public double getNoteKolloquium2() {
+        return noteKolloquium2;
+    }
 
+    public void setNoteKolloquium2(double noteKolloquium2) {
+        this.noteKolloquium2 = noteKolloquium2;
+    }
 }

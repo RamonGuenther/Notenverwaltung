@@ -9,6 +9,5 @@ public interface PflichtmodulRepository extends JpaRepository<Pflichtmodul,Strin
     Pflichtmodul findByModulname(String modulname);
     List<Pflichtmodul> findAllByBestandenIsTrue();
     List<Pflichtmodul> findAllByBestandenIsFalse();
-    void deleteAllByModulart(String modulart);
     List<Pflichtmodul> findAllByModulart(String modulart);
 }

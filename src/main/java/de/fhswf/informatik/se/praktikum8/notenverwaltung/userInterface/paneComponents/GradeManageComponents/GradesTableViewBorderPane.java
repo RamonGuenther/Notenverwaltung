@@ -1,12 +1,10 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -22,18 +20,23 @@ import javafx.scene.layout.HBox;
  */
 public class GradesTableViewBorderPane extends BorderPane {
 
-    String radioValue;
+    private String radioValue;
+    private GradesTableView tableView;
+
+    private Label averageGrade;
+    private Label sumCreditpoints;
+
     /**
      * Im Konstruktor von GradesTableViewBorderPane werden die einzelnen Elemente der
      * Ansicht erzeugt bzw. initialisiert und der BorderPane entsprechend hinzugefügt.
      */
-    public GradesTableViewBorderPane(Studienleistung studienleistung, GradeDetailsGridPane gradeDetails){
+    public GradesTableViewBorderPane(Studienleistung studienleistung, GradeDetailsGridPane gradeDetails, GradeManagementSplitPane gradeManagementSplitPane){
 
-        GradesTableView tableView = new GradesTableView(studienleistung, gradeDetails);
+        tableView = new GradesTableView(studienleistung, gradeDetails, gradeManagementSplitPane);
         setCenter(tableView);
 
-        Label averageGrade = new Label("Notendurchschnitt: ");
-        Label sumCreditpoints = new Label("Creditpoints: ");
+        averageGrade = new Label("Notendurchschnitt: " + studienleistung.getNotendurchschnittModule());
+        sumCreditpoints = new Label("Creditpoints: " + studienleistung.getSummeCreditpointsOhneAbschluss());
 
         HBox labelBox = new HBox();
         labelBox.getChildren().addAll(averageGrade, sumCreditpoints);
@@ -83,7 +86,7 @@ public class GradesTableViewBorderPane extends BorderPane {
                         break;
                     case "Wahlmodule":
                         tableView.getItems().clear();
-                        tableView.getItems().addAll(studienleistung.getWahlmodule());
+                        tableView.getItems().addAll(studienleistung.getWahlmoduleForTable());
                         tableView.setColumnsWahlmodule();
                         tableView.setRadioValue(radioValue);
                         break;
@@ -104,4 +107,35 @@ public class GradesTableViewBorderPane extends BorderPane {
         setTop(radioButtonBox);
     }
 
+    public GradesTableView getTableView() {
+        return tableView;
+    }
+
+    public void setTableView(GradesTableView tableView) {
+        this.tableView = tableView;
+    }
+
+    public String getRadioValue() {
+        return radioValue;
+    }
+
+    public void setRadioValue(String radioValue) {
+        this.radioValue = radioValue;
+    }
+
+    public Label getAverageGrade() {
+        return averageGrade;
+    }
+
+    public void setAverageGrade(Label averageGrade) {
+        this.averageGrade = averageGrade;
+    }
+
+    public Label getSumCreditpoints() {
+        return sumCreditpoints;
+    }
+
+    public void setSumCreditpoints(Label sumCreditpoints) {
+        this.sumCreditpoints = sumCreditpoints;
+    }
 }

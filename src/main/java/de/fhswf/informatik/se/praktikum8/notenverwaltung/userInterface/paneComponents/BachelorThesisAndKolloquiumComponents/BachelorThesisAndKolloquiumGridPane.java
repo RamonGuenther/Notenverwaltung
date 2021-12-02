@@ -1,5 +1,6 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.BachelorThesisAndKolloquiumComponents;
 
+import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.ComboBoxGrade;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -23,7 +24,10 @@ import javafx.scene.text.Font;
  */
 public class BachelorThesisAndKolloquiumGridPane extends GridPane {
 
-    private ComboBoxGrade gradeBachelorThesis;
+    private Studienleistung studienleistung;
+
+    private ComboBoxGrade gradeBachelorThesis1;
+    private ComboBoxGrade gradeBachelorThesis2;
     private Label creditpointsBachelorThesis;
 
     private ComboBoxGrade gradeKolloquium;
@@ -42,18 +46,29 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
      * die einzelnen Elemente der ansicht erzeugt bzw. initialisiert und
      * auf der GridPane entsprechend angeordnet.
      */
-    public BachelorThesisAndKolloquiumGridPane(){
+    public BachelorThesisAndKolloquiumGridPane(Studienleistung studienleistung){
+
+        this.studienleistung = studienleistung;
 
         Label title = new Label("Abschluss & Kolloquium");
         title.setFont(new Font(30));
         title.setStyle("-fx-font-weight: bold");
 
-        Label labelGradeBachelorThesis = new Label("Note der Bachelorarbeit");
-        labelGradeBachelorThesis.setFont(new Font(16));
-        gradeBachelorThesis = new ComboBoxGrade();
-        gradeBachelorThesis.setMinWidth(150);
-        setValignment(gradeBachelorThesis, VPos.TOP);
-        gradeBachelorThesis.setDisable(true);
+        Label labelGradeBachelorThesis1 = new Label("Note der Bachelorarbeit");
+        labelGradeBachelorThesis1.setFont(new Font(16));
+        gradeBachelorThesis1 = new ComboBoxGrade();
+        gradeBachelorThesis1.setValue(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor());
+        gradeBachelorThesis1.setMinWidth(150);
+        setValignment(gradeBachelorThesis1, VPos.TOP);
+        gradeBachelorThesis1.setDisable(true);
+
+        Label labelGradeBachelorThesis2 = new Label("Note der Bachelorarbeit");
+        labelGradeBachelorThesis2.setFont(new Font(16));
+        gradeBachelorThesis2 = new ComboBoxGrade();
+        gradeBachelorThesis2.setValue(studienleistung.getAbschluss().getBachelorarbeit().getEndNoteBachelor());
+        gradeBachelorThesis2.setMinWidth(150);
+        setValignment(gradeBachelorThesis2, VPos.TOP);
+        gradeBachelorThesis2.setDisable(true);
 
         Label labelGradeKolloquium = new Label("Note des Kolloquiums");
         labelGradeKolloquium.setFont(new Font(16));
@@ -99,21 +114,23 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         // page.add(Node, colIndex, rowIndex, colSpan, rowSpan):
         add(title, 0, 0, 2, 1);
 
-        add(labelGradeBachelorThesis,0,1,2,1);
-        add(gradeBachelorThesis,0,2,2,1);
-        add(creditpointsBachelorThesis,0,3,2,1);
+        add(labelGradeBachelorThesis1,0,1,2,1);
+        add(gradeBachelorThesis1,0,2,2,1);
+        add(labelGradeBachelorThesis2,0,3,2,1);
+        add(gradeBachelorThesis2,0,4,2,1);
+        add(creditpointsBachelorThesis,0,5,2,1);
 
         add(labelGradeKolloquium,1,1,2,1);
         add(gradeKolloquium,1,2,2,1);
-        add(creditpointsKolloquium,1,3,2,1);
+        add(creditpointsKolloquium,1,5,2,1);
 
-        add(averageGradeModules,0,4,4,1);
-        add(averageGradeBachelor,0,5,4,1);
-        add(sumCreditpoints,0,6,4,1);
+        add(averageGradeModules,0,6,4,1);
+        add(averageGradeBachelor,0,7,4,1);
+        add(sumCreditpoints,0,8,4,1);
 
-        add(update,0,7,2,10);
-        add(save,0,7, 1,10);
-        add(cancel,1,7, 1,10);
+        add(update,0,9,2,10);
+        add(save,0,9, 1,10);
+        add(cancel,1,9, 1,10);
 
         setPadding(new Insets(30, 0, 30, 50 ));
         setVgap(10);
@@ -123,15 +140,15 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         RowConstraints row2 = new RowConstraints();
         row2.setMinHeight(20);
         RowConstraints row3 = new RowConstraints();
-        row3.setMinHeight(60);
+        row3.setMinHeight(20);
         RowConstraints row4 = new RowConstraints();
-        row4.setMinHeight(60);
+        row4.setMinHeight(20);
         RowConstraints row5 = new RowConstraints();
         row5.setMinHeight(20);
         RowConstraints row6 = new RowConstraints();
         row6.setMinHeight(20);
         RowConstraints row7 = new RowConstraints();
-        row7.setMinHeight(100);
+        row7.setMinHeight(20);
 
         getRowConstraints().addAll(row1, row2, row3, row4, row5, row6, row7);
 
@@ -156,12 +173,14 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         public void handle(ActionEvent event)
         {
             try {
-                gradeBachelorThesis.setDisable(false);
+                gradeBachelorThesis1.setDisable(false);
                 gradeKolloquium.setDisable(false);
 
                 update.setVisible(false);
                 save.setVisible(true);
                 cancel.setVisible(true);
+
+
             }
             catch(Exception e) {
                 Alert alert =
@@ -185,12 +204,15 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         public void handle(ActionEvent event)
         {
             try {
-                gradeBachelorThesis.setDisable(true);
+                gradeBachelorThesis1.setDisable(true);
                 gradeKolloquium.setDisable(true);
 
                 save.setVisible(false);
                 cancel.setVisible(false);
                 update.setVisible(true);
+
+                studienleistung.updateNoteBachelor(gradeBachelorThesis1.getValue());
+
             }
             catch(Exception e) {
                 Alert alert =
@@ -214,7 +236,7 @@ public class BachelorThesisAndKolloquiumGridPane extends GridPane {
         public void handle(ActionEvent event)
         {
             try {
-                gradeBachelorThesis.setDisable(true);
+                gradeBachelorThesis1.setDisable(true);
                 gradeKolloquium.setDisable(true);
 
                 save.setVisible(false);

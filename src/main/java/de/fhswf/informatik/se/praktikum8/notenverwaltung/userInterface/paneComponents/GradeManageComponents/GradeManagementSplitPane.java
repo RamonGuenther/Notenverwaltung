@@ -1,6 +1,7 @@
 package de.fhswf.informatik.se.praktikum8.notenverwaltung.userInterface.paneComponents.GradeManageComponents;
 
 import de.fhswf.informatik.se.praktikum8.notenverwaltung.backend.Studienleistung;
+import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 
 /**
@@ -14,6 +15,8 @@ import javafx.scene.control.SplitPane;
  */
 public class GradeManagementSplitPane extends SplitPane {
 
+    private Button updateButton;
+
     private GradesTableViewBorderPane gradesTable;
     private GradeDetailsGridPane gradeDetails;
 
@@ -23,8 +26,8 @@ public class GradeManagementSplitPane extends SplitPane {
      */
     public GradeManagementSplitPane(Studienleistung studienleistung){
 
-        this.gradeDetails = new GradeDetailsGridPane(studienleistung);
-        this.gradesTable = new GradesTableViewBorderPane(studienleistung, gradeDetails);
+        this.gradeDetails = new GradeDetailsGridPane(studienleistung, this);
+        this.gradesTable = new GradesTableViewBorderPane(studienleistung, gradeDetails, this);
 
         setDividerPositions(0.56);
         getItems().addAll(gradesTable, gradeDetails);
@@ -32,7 +35,7 @@ public class GradeManagementSplitPane extends SplitPane {
 
     //Getter und Setter
 
-    public GradesTableViewBorderPane getGradesTable() {
+    public GradesTableViewBorderPane getGradesTableBorderPane() {
         return gradesTable;
     }
 
@@ -46,5 +49,14 @@ public class GradeManagementSplitPane extends SplitPane {
 
     public void setGradeDetails(GradeDetailsGridPane gradeDetails) {
         this.gradeDetails = gradeDetails;
+    }
+
+    public Button getUpdateButton() {
+        return updateButton;
+    }
+
+    public void setUpdateButton(Button updateButton) {
+        this.updateButton = updateButton;
+        System.out.println(this.getClass().getSimpleName() + ": " + this.updateButton);
     }
 }

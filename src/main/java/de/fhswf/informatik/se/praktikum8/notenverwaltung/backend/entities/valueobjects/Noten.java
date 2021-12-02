@@ -46,10 +46,10 @@ public class Noten {
      * @param note einzutragene Note
      */
     public void setNote(Double note){
-        if(note1 == 0.0) {
+        if(note1 == 0.0) { //4
             note1 = note;
         }
-        else if( note1 > 4 && note2 == 0.0) {
+        else if( note1 > 4 && note2 == 0.0) { //2
             note2 = note;
         }
         else if(note2 > 4 && note3 == 0.0) {

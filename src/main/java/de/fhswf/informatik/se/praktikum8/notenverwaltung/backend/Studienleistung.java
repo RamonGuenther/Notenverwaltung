@@ -43,11 +43,30 @@ public class Studienleistung {
         abschlussService = new AbschlussService(abschlussRepository);
     }
 
+    public Pflichtmodul getPflichtmodulByModulname(String modulname){
+        return pflichtmodulService.findByModulname(modulname);
+    }
+
+    public Wahlpflichtmodul getWahlpflichtmodulByModulname(String modulname){
+        return wahlpflichtmodulService.findByModulname(modulname);
+    }
+    public Wahlmodul getWahlmodulByModulname(String modulname){
+        return wahlmodulService.findByModulname(modulname);
+    }
+
+    public Abschluss getAbschluss(){
+       return abschlussService.findAbschluss();
+    }
+
     public List<Wahlpflichtmodul> getWahlpflichtmodule() {
         return wahlpflichtmodulService.findAllWahlpflichtModule();
     }
 
-    public List<Object> getWahlmodule(){
+    public List<Wahlmodul> getWahlmodule(){
+        return wahlmodulService.findAllWahlmodule();
+    }
+
+    public List<Object> getWahlmoduleForTable(){
         List<Wahlmodul> wahlmodulList =wahlmodulService.findAllWahlmodule();
         List<Object> objectList = new ArrayList<>();
 
